@@ -43,24 +43,37 @@
         </div>
 
         <!-- software che utilizziamo -->
-        <div class="text-[#2c2c2c] text-4xl tracking-tighter container mx-auto mb-2">
+        <div class="text-[#2c2c2c] text-4xl tracking-tighter container mx-auto mb-2" ref="titleWrapper">
             <h2>
-                Alcuni dei software che utilizziamo per te e la tua azienda <span
-                    class="text-5xl text-gradient">...</span>
+                Alcuni dei software che utilizziamo per te e la tua azienda <span class="text-5xl text-gradient"
+                    ref="dots">...</span>
             </h2>
         </div>
 
         <!-- cards dei software -->
         <div class="bg-[#FAFAFA] py-12 flex justify-center gap-10 flex-wrap">
-            <BigSlotLight v-for="(soft, index) in software">
+            <BigSlotLight v-for="(soft, index) in  software " class="slide-item"
+                :style="{ 'transition-delay': index * 100 + 'ms', 'opacity': soft.visible ? '1' : '0' }">
+                <!-- img -->
                 <div class="w-full mb-12">
                     <img :src="soft.img" alt="">
                 </div>
 
+                <!-- description -->
                 <div class="text-center">
                     <p>
                         {{ soft.description }}
                     </p>
+                </div>
+
+                <!-- link -->
+                <div class="pt-10 flex justify-end w-full text-[#4790D9] text-[18px]">
+                    <a :href="soft.siteUrl" target="_blank" class="flex items-center gap-1 hover:underline">
+                        Scopri di più
+                        <span class="pt-1 text-[12px]">
+                            <font-awesome-icon icon="fa-solid fa-caret-right" />
+                        </span>
+                    </a>
                 </div>
             </BigSlotLight>
         </div>
@@ -81,20 +94,27 @@ export default {
         return {
             titleShow: false,
             whoSistemistisInView: false,
+            dotsVisible: false,
             software: [
                 {
                     img: '../src/img/services/sistemists/dolibarr.png',
-                    description: "Dolibarr è un software open source di gestione aziendale (ERP) e CRM (Customer Relationship Management) che offre una vasta gamma di funzionalità per la gestione di una piccola o media impresa."
+                    description: "Dolibarr è un software open source di gestione aziendale (ERP) e CRM (Customer Relationship Management) che offre una vasta gamma di funzionalità per la gestione di una piccola o media impresa.",
+                    visible: false,
+                    siteUrl: "https://www.dolibarr.org/"
                 },
 
                 {
                     img: '../src/img/services/sistemists/odoo.png',
-                    description: " Odoo è una vasta raccolta di applicazioni aziendali tra cui CRM, gestione delle vendite, eCommerce, gestione del magazzino, gestione degli acquisti, suite di contabilità, gestione della produzione e risorse umane."
+                    description: " Odoo è una vasta raccolta di applicazioni aziendali tra cui CRM, gestione delle vendite, eCommerce, gestione del magazzino, gestione degli acquisti, suite di contabilità, gestione della produzione e risorse umane.",
+                    visible: false,
+                    siteUrl: "https://www.odoo.com/it_IT"
                 },
 
                 {
                     img: '../src/img/services/sistemists/openkm.png',
-                    description: "OpenKM è un software di gestione dei documenti che integra tutte le funzionalità essenziali di gestione dei documenti, collaborazione e ricerca avanzata in un'unica soluzione facile da usare."
+                    description: "OpenKM è un software di gestione dei documenti che integra tutte le funzionalità essenziali di gestione dei documenti, collaborazione e ricerca avanzata in un'unica soluzione facile da usare.",
+                    visible: false,
+                    siteUrl: "https://www.openkm.it/"
                 }
             ]
         };
@@ -110,8 +130,9 @@ export default {
             }, 500)
         },
 
-        // animazione testo chi è il sistemista
-        checkWhoSistemistVisibility() {
+
+        handleScroll() {
+            // animazione testo chi è il sistemista
             const whoSistemistSection = this.$refs.whoSistemistSection;
             if (whoSistemistSection) {
                 const bounding = whoSistemistSection.getBoundingClientRect();
@@ -124,13 +145,36 @@ export default {
                     whoSistemistSection.classList.add('show-who-sistemist')
                 }
             }
-        }
+
+            //animazione card software
+            const scrollPosition = window.innerHeight + window.scrollY;
+            const fullHeight = document.documentElement.scrollHeight;
+            const threshold = 200; // Imposta la soglia per quanto vicino al fondo vuoi arrivare prima di chiamare la funzione
+            if (scrollPosition >= fullHeight - threshold) {
+                this.showAllSoftware();
+            }
+        },
+
+        // mostrami le card dei software
+        showSoftware(index) {
+            setTimeout(() => {
+                this.software[index].visible = true;
+            }, index * 200); //delay dell'animazione
+        },
+
+        showAllSoftware() {
+            this.software.forEach((soft, index) => {
+                this.showSoftware(index);
+            });
+        },
     },
 
     mounted() {
         // animazione titolo iniziale
         this.showTitle();
-        window.addEventListener('scroll', this.checkWhoSistemistVisibility);
+
+        // animazione testo chi è il sistemista
+        window.addEventListener('scroll', this.handleScroll);
     },
 
     beforeDestroy() {
@@ -170,5 +214,11 @@ export default {
 .show-who-sistemist .who-sistemist-text {
     animation: falling 2s forwards;
     opacity: 0;
+}
+
+/* comparsa delle card */
+.slide-item {
+    opacity: 0;
+    transition: opacity 2.5s ease;
 }
 </style>

@@ -12,27 +12,32 @@ export default {
                     subCategories: [
                         {
                             name: "Sistemisti",
-                            icon: "server"
+                            icon: "server",
+                            routeName: "sistemists"
                         },
 
                         {
                             name: "Integrazione tra sistemi informatici diversi",
-                            icon: "network-wired"
+                            icon: "network-wired",
+                            routeName: "integration"
                         },
 
                         {
                             name: "Analisti, Consulenti ed Insegnanti",
-                            icon: "person-chalkboard"
+                            icon: "person-chalkboard",
+                            routeName: "analyst"
                         },
 
                         {
                             name: "Sicurezza Informatica (Cybersecurity)",
-                            icon: "shield-halved"
+                            icon: "shield-halved",
+                            routeName: "cybersecurity"
                         },
 
                         {
                             name: "Sviluppatori",
-                            icon: "code"
+                            icon: "code",
+                            routeName: "developers"
                         },
                     ],
                     icon: "ranking-star"
@@ -162,7 +167,7 @@ export default {
 
 
                         <span v-if="canOpenMenu() && item.isMenuOpen && activeIndex === index"
-                            class="absolute bg-gradient-to-r from-[#232324] via-[#141415] to-[#232324]  p-2 shadow-lg mt-1 top-[30px] left-0 right-0 flex flex-col z-40"
+                            class="absolute bg-gradient-to-r from-[#232324] via-[#141415] to-[#232324] mt-1 top-[30px] left-0 right-0 flex flex-col z-40"
                             @mouseleave="hideMenu(index)">
 
                             <!-- titolo dropdown -->
@@ -186,10 +191,12 @@ export default {
                                 <ul class="p-4 w-[30%] text-white flex flex-col items-center gap-6 mt-6 min-h-[40vh]">
                                     <li v-for="(subItem, subIndex) in item.subCategories" :key="subIndex"
                                         class="hover:text-[#D1D1D1]">
-                                        <span>{{ subItem.name }}</span>
-                                        <span>
-                                            <font-awesome-icon :icon="['fas', subItem.icon]" class="pl-2" />
-                                        </span>
+                                        <router-link :to="{ name: subItem.routeName }" @click="clickMenu()">
+                                            <span>{{ subItem.name }}</span>
+                                            <span>
+                                                <font-awesome-icon :icon="['fas', subItem.icon]" class="pl-2" />
+                                            </span>
+                                        </router-link>
                                     </li>
                                 </ul>
                             </div>

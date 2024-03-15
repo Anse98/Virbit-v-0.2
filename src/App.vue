@@ -26,7 +26,14 @@ export default {
 
 <style>
 .title-gradient {
-  background: linear-gradient(to right, #95A4B9, #E6ECF2);
+  background: linear-gradient(to right, #95a4b9, #dce4eb);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient {
+  background: linear-gradient(to right, #49515c, #929da7);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

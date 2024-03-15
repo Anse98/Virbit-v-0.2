@@ -1,21 +1,33 @@
 <template>
-    <section>
+    <section class="min-h-[100vh]">
         <div class="container mx-auto">
-            <transition-group name="slide">
-                <div class="p-2 flex justify-center flex-wrap gap-12" v-if="products.length > 0">
-                    <LittleSlotLight v-for="(product, index) in products" :key="index" class="slide-item"
-                        :style="{ 'transition-delay': index * 0.1 + 's' }">
-                        <div>
-                            <img :src="product.img" alt="">
-                        </div>
+            <!-- little cards -->
+            <div class="p-2 flex justify-center flex-wrap gap-12" v-if="products.length > 0">
+                <LittleSlotLight v-for="(product, index) in products" :key="index" class="slide-item"
+                    :style="{ 'transition-delay': index * 100 + 'ms', 'opacity': product.visible ? '1' : '0' }">
+                    <div>
+                        <img :src="product.img" alt="">
+                    </div>
 
-                        <div>
-                            <span>{{ product.title }}</span>
-                        </div>
+                    <div>
+                        <span>{{ product.title }}</span>
+                    </div>
+                </LittleSlotLight>
+            </div>
+        </div>
 
-                    </LittleSlotLight>
-                </div>
-            </transition-group>
+        <!-- page title small -->
+        <div class="tracking-tighter py-10">
+            <div class="container mx-auto flex font-medium justify-between items-center px-20">
+                <!-- title -->
+                <span class="text-3xl text-[#454545]">
+                    <font-awesome-icon icon="fa-solid fa-rocket" />
+                </span>
+                <!-- icon -->
+                <span class="text-xl text-[#4d4c4c]">
+                    Prodotti
+                </span>
+            </div>
         </div>
     </section>
 </template>
@@ -24,62 +36,59 @@
 import LittleSlotLight from '../components/slots/LittleSlotLight.vue';
 
 export default {
-
     components: {
         LittleSlotLight,
     },
-
     data() {
         return {
             products: [
                 {
                     title: "Gestionali",
-                    img: "src/img/products/gestional.png"
+                    img: "src/img/products/gestional.png",
+                    visible: false
                 },
-
                 {
                     title: "Internet",
-                    img: "src/img/products/internet.png"
+                    img: "src/img/products/internet.png",
+                    visible: false
                 },
-
                 {
                     title: "Telefonia",
-                    img: "src/img/products/telephony.png"
+                    img: "src/img/products/telephony.png",
+                    visible: false
                 },
-
                 {
                     title: "GDPR",
-                    img: "src/img/products/gdpr-2.png"
+                    img: "src/img/products/gdpr-2.png",
+                    visible: false
                 },
             ]
         };
     },
-
     methods: {
 
+        showProduct(index) {
+            setTimeout(() => {
+                this.products[index].visible = true;
+            }, index * 100); //delay dell'animazione
+        },
+
+        showAllProducts() {
+            this.products.forEach((product, index) => {
+                this.showProduct(index);
+            });
+        },
     },
     mounted() {
-        this.products.forEach((product, index) => {
-            setTimeout(() => {
-                const slideItems = document.querySelectorAll('.slide-item');
-                slideItems[index].classList.add('slide-enter');
-            }, index * 7); // Adjust the delay as needed
-        });
-    },
+        this.showAllProducts();
+    }
 }
 </script>
 
 <style scoped>
+/* comparsa delle card */
 .slide-item {
-    transform: translateY(-148px);
-    transition: transform 0.5s ease;
-}
-
-.slide-enter-active {
-    transition: transform 0.5s ease;
-}
-
-.slide-enter {
-    transform: translateY(0);
+    opacity: 0;
+    transition: opacity 1.5s ease;
 }
 </style>

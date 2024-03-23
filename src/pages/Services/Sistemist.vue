@@ -1,15 +1,15 @@
 <template>
-    <section class="min-h-[100vh]">
+    <section class="min-h-[85vh]">
         <div class="container mx-auto py-12">
             <!-- titolo iniziale -->
             <div class="text-6xl flex flex-col gap-2 tracking-tighter">
                 <span class="text-gray-300 show-title" :style="{ 'opacity': titleShow ? '1' : '0' }">
-                    Un pò di chiarezza<span class="text-[#2c2c2c]">.</span>
+                    Un po di chiarezza<span class="text-[#2c2c2c]">.</span>
                 </span>
 
                 <div class="w-[60%] flex justify-end">
                     <span class="text-[#2c2c2c] show-title" :style="{ 'opacity': titleShow ? '1' : '0' }">
-                        Chi sono i sistemisti
+                        Chi sono i <span>sistemisti</span>
                     </span>
                     <span class="question-mark flex justify-end">?</span>
                 </div>
@@ -43,10 +43,9 @@
         </div>
 
         <!-- software che utilizziamo -->
-        <div class="text-[#2c2c2c] text-4xl tracking-tighter container mx-auto mb-2" ref="titleWrapper">
+        <div class="text-[#2c2c2c] text-4xl tracking-tighter container mx-auto mb-2 soft-title" ref="titleSoftware">
             <h2>
-                Alcuni dei software che utilizziamo per te e la tua azienda <span class="text-5xl text-gradient"
-                    ref="dots">...</span>
+                Alcuni dei software che utilizziamo per te e la tua azienda
             </h2>
         </div>
 
@@ -56,7 +55,7 @@
                 :style="{ 'transition-delay': index * 100 + 'ms', 'opacity': soft.visible ? '1' : '0' }">
                 <!-- img -->
                 <div class="w-full mb-12">
-                    <img :src="soft.img" alt="">
+                    <img :src="soft.img" alt="Immagine Software che utilizziamo">
                 </div>
 
                 <!-- description -->
@@ -94,7 +93,7 @@ export default {
         return {
             titleShow: false,
             whoSistemistisInView: false,
-            dotsVisible: false,
+            softwareTitleIsInView: false,
             software: [
                 {
                     img: '../src/img/services/sistemists/dolibarr.png',
@@ -146,6 +145,20 @@ export default {
                 }
             }
 
+            // animazione titolo software
+            const titleSoftwareSection = this.$refs.titleSoftware;
+            if (titleSoftwareSection) {
+                const softBounding = titleSoftwareSection.getBoundingClientRect();
+                const softwareTitleIsInView = (
+                    softBounding.top <= 730 &&
+                    softBounding.bottom >= 0
+                )
+
+                if (softwareTitleIsInView) {
+                    titleSoftwareSection.classList.add('show-soft-title')
+                }
+            }
+
             //animazione card software
             const scrollPosition = window.innerHeight + window.scrollY;
             const fullHeight = document.documentElement.scrollHeight;
@@ -189,7 +202,7 @@ export default {
 /* anmazione titolo iniziale */
 @keyframes moveQuestion {
     0% {
-        transform: translateY(-300%);
+        transform: translateY(-200%);
     }
 
     100% {
@@ -216,9 +229,13 @@ export default {
     opacity: 0;
 }
 
-/* comparsa delle card */
-.slide-item {
+.soft-title {
     opacity: 0;
-    transition: opacity 2.5s ease;
+    transition: opacity 0, 2s ease;
+}
+
+.soft-title.show-soft-title {
+    animation: emerge 2s forwards;
+    opacity: 0;
 }
 </style>

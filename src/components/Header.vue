@@ -109,7 +109,6 @@ export default {
         showMenu(index) {
             this.headerItems[index].isMenuOpen = true;
             this.activeIndex = index;
-
         },
 
         hideMenu(index) {
@@ -163,12 +162,12 @@ export default {
                             </span>
                         </router-link>
 
+
+
                         <!-- dropdown -->
-
-
                         <span v-if="canOpenMenu() && item.isMenuOpen && activeIndex === index"
                             class="absolute bg-gradient-to-r from-[#232324] via-[#141415] to-[#232324] mt-1 top-[30px] left-0 right-0 flex flex-col z-40"
-                            @mouseleave="hideMenu(index)">
+                            @mouseleave="hideMenu(index)" id="dropdownn">
 
                             <!-- titolo dropdown -->
                             <div class="py-8 flex justify-evenly items-center px-10">

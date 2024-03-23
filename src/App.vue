@@ -38,4 +38,10 @@ export default {
   background-clip: text;
   color: transparent;
 }
+
+/* comparsa delle card */
+.slide-item {
+  opacity: 0;
+  transition: opacity 2s ease;
+}
 </style>

@@ -6,7 +6,7 @@
             <div class="max-w-[50%] flex flex-col gap-24">
                 <!-- text -->
                 <div class="pt-12">
-                    <span class="text-6xl title-gradient pl-10">
+                    <span class="text-6xl title-gradient pl-10 font-semibold">
                         Virbit S.r.l.
                     </span>
                 </div>
@@ -41,7 +41,7 @@
             <div class="max-w-[50%] flex flex-col gap-24 h-[100%]">
 
                 <div class="title">
-                    <span class="text-6xl title-gradient pl-10">
+                    <span class="text-6xl title-gradient pl-10 font-semibold">
                         Virbit S.r.l.
                     </span>
                 </div>
@@ -125,7 +125,7 @@ export default {
 }
 
 .text-show .text {
-    animation: falling 3.5s forwards;
+    animation: emerge 3.5s forwards;
     opacity: 0;
 }
 

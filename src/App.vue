@@ -1,11 +1,13 @@
 <script>
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
+import ScrollToTop from './components/ScrollToTop.vue';
 
 export default {
   components: {
     Header,
-    Footer
+    Footer,
+    ScrollToTop
   },
   data() {
     return {
@@ -21,6 +23,7 @@ export default {
 <template>
   <Header />
   <router-view></router-view>
+  <ScrollToTop />
   <Footer />
 </template>
 

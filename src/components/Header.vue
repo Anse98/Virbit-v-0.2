@@ -1,6 +1,8 @@
 <script>
+import { gsap } from 'gsap';
 
 export default {
+
     data() {
         return {
 
@@ -12,31 +14,26 @@ export default {
                     subCategories: [
                         {
                             name: "Sistemisti",
-                            icon: "server",
                             routeName: "sistemists"
                         },
 
                         {
                             name: "Integrazione tra sistemi informatici diversi",
-                            icon: "network-wired",
                             routeName: "integration"
                         },
 
                         {
                             name: "Analisti, Consulenti ed Insegnanti",
-                            icon: "person-chalkboard",
                             routeName: "analyst"
                         },
 
                         {
-                            name: "Sicurezza Informatica (Cybersecurity)",
-                            icon: "shield-halved",
+                            name: "Sicurezza Informatica",
                             routeName: "cybersecurity"
                         },
 
                         {
                             name: "Sviluppatori",
-                            icon: "code",
                             routeName: "developers"
                         },
                     ],
@@ -50,21 +47,17 @@ export default {
                     subCategories: [
                         {
                             name: "Gestionali",
-                            icon: "gears"
                         },
 
                         {
                             name: "Internet",
-                            icon: "globe"
                         },
                         {
                             name: "Telefonia",
-                            icon: "mobile-screen-button"
                         },
 
                         {
                             name: "GDPR",
-                            icon: "vault"
                         },
                     ],
                     icon: "rocket"
@@ -79,17 +72,14 @@ export default {
                     subCategories: [
                         {
                             name: "Dove ci Trovi",
-                            icon: "location-dot"
                         },
 
                         {
                             name: "Contattaci",
-                            icon: "paper-plane"
                         },
 
                         {
                             name: "Informazioni",
-                            icon: "cash-register"
                         },
 
 
@@ -98,14 +88,26 @@ export default {
                 }
             ],
 
+            isMobileMenuVisible: false,
             isMenuOpen: false,
             activeIndex: null,
-            linkClickedRecently: false
+            linkClickedRecently: false,
+            currentIcon: 'fa-solid fa-bars',
 
         }
     },
 
     methods: {
+        // mobile
+        toggleMobileMenu() {
+            this.isMobileMenuVisible = !this.isMobileMenuVisible;
+        },
+
+        hideMobileMenu() {
+            this.isMobileMenuVisible = false;
+        },
+
+        // pc
         showMenu(index) {
             this.headerItems[index].isMenuOpen = true;
             this.activeIndex = index;
@@ -142,7 +144,8 @@ export default {
 <template>
     <header>
         <nav class="text-[#D1D1D1] bg-gradient-to-r from-[#232324] via-[#141415] to-[#232324] select-none">
-            <div class="flex container mx-auto justify-center items-center  text-[12px] gap-16 tracking-tight">
+            <div
+                class="flex container mx-auto justify-between items-center text-[14px] gap-16 tracking-tight sm:justify-center p-4">
                 <!-- logo -->
                 <a href="/">
                     <div>
@@ -150,15 +153,44 @@ export default {
                     </div>
                 </a>
 
+                <!-- header items mobile -->
+                <div class="sm:hidden">
+                    <div @click="toggleMobileMenu()" class="relative pr-4">
+                        <font-awesome-icon :icon="currentIcon" />
+                    </div>
 
-                <!--header items -->
-                <ul class="flex items-center">
-                    <li v-for="(item, index) in headerItems" key="index" @mouseover="showMenu(index)"
+                    <div class="fixed w-full right-0 left-0 top-0 bg-[#FAFAFA] z-20 p-2 text-[20px] text-[#545456] tracking-tighter flex flex-col items-center justify-between text-center font-semibold h-[50vh]"
+                        v-show="isMobileMenuVisible">
+
+                        <ul class="pt-10">
+                            <li class="mb-4" v-for="(   item, index   ) in    headerItems   " :key="index">
+                                <router-link :to="{ name: item.routeName }" @click="hideMobileMenu()">
+                                    {{ item.title }}
+                                    <span class="text-[12px] pl-2">
+                                        <font-awesome-icon :icon="['fas', item.icon]" />
+                                    </span>
+                                </router-link>
+                            </li>
+                        </ul>
+
+                        <div class="pb-6">
+                            <span @click="hideMobileMenu()">
+                                <font-awesome-icon icon="fa-solid fa-xmark" />
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!--header items PC-->
+                <ul class="sm:flex items-center hidden text-[16px]">
+                    <li v-for="(   item, index   ) in    headerItems   " key="index" @mouseover="showMenu(index)"
                         class="py-2  hover:text-white">
                         <router-link :to="{ name: item.routeName }" @click="clickMenu()">
                             <span class="py-2 px-6">
                                 {{ item.title }}
-                                <font-awesome-icon :icon="['fas', item.icon]" class="pl-1" />
+                                <font-awesome-icon :icon="['fas', item.icon]" class="pl-1 text-[14px]" />
                             </span>
                         </router-link>
 
@@ -166,7 +198,7 @@ export default {
 
                         <!-- dropdown -->
                         <span v-if="canOpenMenu() && item.isMenuOpen && activeIndex === index"
-                            class="absolute bg-gradient-to-r from-[#232324] via-[#141415] to-[#232324] mt-1 top-[30px] left-0 right-0 flex flex-col z-40"
+                            class="absolute bg-gradient-to-r from-[#232324] via-[#141415] to-[#232324] mt-1 top-[50px] left-0 right-0 flex flex-col z-40 text-[22px] font-semibold tracking-wide"
                             @mouseleave="hideMenu(index)" id="dropdownn">
 
                             <!-- titolo dropdown -->
@@ -187,20 +219,17 @@ export default {
 
                             <!-- lista dropdown -->
                             <div class="flex justify-center">
-                                <ul class="p-4 w-[30%] text-white flex flex-col items-center gap-6 mt-6 min-h-[40vh]">
-                                    <li v-for="(subItem, subIndex) in item.subCategories" :key="subIndex"
-                                        class="hover:text-[#D1D1D1]">
+                                <ul class="p-4 w-[30%] text-white flex flex-col  gap-6 mt-6 min-h-[40vh]">
+                                    <li v-for="(   subItem, subIndex   ) in    item.subCategories   " :key="subIndex">
                                         <router-link :to="{ name: subItem.routeName }" @click="clickMenu()">
-                                            <span>{{ subItem.name }}</span>
-                                            <span>
-                                                <font-awesome-icon :icon="['fas', subItem.icon]" class="pl-2" />
+                                            <span class="border-gray-400 hover:border-b">
+                                                {{ subItem.name }}
                                             </span>
                                         </router-link>
                                     </li>
                                 </ul>
                             </div>
                         </span>
-
                     </li>
 
                 </ul>

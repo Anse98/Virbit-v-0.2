@@ -3,49 +3,54 @@
         <div class="container mx-auto">
 
             <!-- little cards -->
-            <div class="p-2 flex justify-center flex-wrap gap-12" v-if="services.length > 0">
-                <router-link v-for="(service, index) in services" :key="index" :to="service.routeName">
-                    <LittleSlotLight class="slide-item h-[100%]"
-                        :style="{ 'transition-delay': index * 100 + 'ms', 'opacity': service.visible ? '1' : '0' }">
-                        <div>
-                            <img :src="service.img" alt="">
-                        </div>
+            <div class="overflow-x-auto scrollbar" v-if="services.length > 0">
+                <div class="flex justify-start gap-10">
+                    <router-link v-for="(service, index) in services" :key="index" :to="service.routeName">
+                        <LittleSlotLight class="slide-item h-[100%]"
+                            :style="{ 'transition-delay': index * 100 + 'ms', 'opacity': service.visible ? '1' : '0' }">
+                            <div>
+                                <img :src="service.img" alt="">
+                            </div>
 
-                        <div>
-                            <span>{{ service.title }}</span>
-                        </div>
-                    </LittleSlotLight>
-                </router-link>
-            </div>
-        </div>
-
-        <!-- page title small -->
-        <div class="tracking-tighter py-10">
-            <div class="container mx-auto flex font-medium justify-between items-center px-20">
-                <!-- title -->
-                <span class="text-xl text-[#4d4c4c]">
-                    Servizi
-                </span>
-                <!-- icon -->
-                <span class="text-3xl text-[#454545]">
-                    <font-awesome-icon icon="fa-solid fa-ranking-star" />
-                </span>
-            </div>
-        </div>
-
-        <!-- page title big -->
-        <div class="flex flex-col py-3 ">
-            <div class="text-6xl flex flex-col items-center show-title tracking-tight text-[#2c2c2c]"
-                :style="{ 'opacity': titleShow ? '1' : '0' }">
-                <h1>Specializzati nell'ambito tech
-                    <span class="title-gradient">...</span>
-                </h1>
-                <!-- subtitle -->
-                <div class="tracking-tight flex w-[50%] justify-end show-sub-title"
-                    :style="{ 'opacity': subTitleShow ? '1' : '0' }">
-                    <h4 class="text-gray-300 tracking-tighter">e non solo<span class="text-[#4d4c4c]">.</span></h4>
+                            <div>
+                                <span>{{ service.title }}</span>
+                            </div>
+                        </LittleSlotLight>
+                    </router-link>
                 </div>
             </div>
+
+            <!-- page title small -->
+            <div class="tracking-tighter py-10 hidden md:block">
+                <div class="container mx-auto flex font-medium justify-between items-center px-4 md:px-20">
+                    <!-- title -->
+                    <span class="text-xl text-[#4d4c4c]">
+                        Servizi
+                    </span>
+                    <!-- icon -->
+                    <span class="text-[#454545] md:text-xl lg:text-3xl">
+                        <font-awesome-icon icon="fa-solid fa-ranking-star" />
+                    </span>
+                </div>
+            </div>
+
+            <!-- page title big -->
+            <div class="flex flex-col py-3 ">
+                <div class="text-4xl flex flex-col items-center show-title tracking-tight text-[#2c2c2c] px-2 md:text-5xl lg:text-6xl "
+                    :style="{ 'opacity': titleShow ? '1' : '0' }">
+                    <h1 class="text-center leading-tight">
+                        Specializzati nell'ambito tech
+                        <span class="title-gradient">...</span>
+                    </h1>
+                    <!-- subtitle -->
+                    <div class="tracking-tight flex justify-center show-sub-title lg:justify-end pt-6"
+                        :style="{ 'opacity': subTitleShow ? '1' : '0' }">
+                        <h4 class="text-gray-300 tracking-tighter">e non solo<span class="text-[#4d4c4c]">.</span></h4>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
 
 
@@ -54,6 +59,10 @@
 
 <script>
 import LittleSlotLight from '../components/slots/LittleSlotLight.vue';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+
 
 export default {
     components: {
@@ -64,31 +73,31 @@ export default {
             services: [
                 {
                     title: "Sistemisti",
-                    img: "src/img/services/sistemist-2.png",
+                    img: "/img/services/sistemist-2.png",
                     visible: false,
                     routeName: 'services/system-engineers'
                 },
                 {
                     title: "Integrazione",
-                    img: "src/img/services/integration-2.png",
+                    img: "/img/services/integration-2.png",
                     visible: false,
                     routeName: 'services/integration'
                 },
                 {
                     title: "Analisti",
-                    img: "src/img/services/analyst.png",
+                    img: "/img/services/analyst.png",
                     visible: false,
                     routeName: 'services/analyst'
                 },
                 {
                     title: "Cybersecurity",
-                    img: "src/img/services/cybersecurity-2.png",
+                    img: "/img/services/cybersecurity-2.png",
                     visible: false,
                     routeName: 'services/cybersecurity'
                 },
                 {
                     title: "Sviluppatori",
-                    img: "src/img/services/developers-2.png",
+                    img: "/img/services/developers-2.png",
                     visible: false,
                     routeName: 'services/developers'
                 },
@@ -106,11 +115,16 @@ export default {
                 this.services[index].visible = true;
             }, index * 100); // delay animazione
         },
+
         showAllServices() {
             this.services.forEach((service, index) => {
                 this.showService(index);
             });
         },
+
+
+
+
 
         // animazione titolo
         showTitle() {
@@ -128,6 +142,7 @@ export default {
     },
 
     mounted() {
+        gsap.registerPlugin(ScrollTrigger);
         this.showAllServices();
         this.showTitle();
         this.showSubTitle();
@@ -149,5 +164,9 @@ export default {
 .show-sub-title {
     opacity: 0;
     transition: opacity 2s ease-in-out;
+}
+
+.scrollbar::-webkit-scrollbar {
+    display: none;
 }
 </style>

@@ -2,22 +2,26 @@
     <section class="min-h-[100vh]">
         <div class="container mx-auto">
             <!-- little cards -->
-            <div class="p-2 flex justify-center flex-wrap gap-12" v-if="products.length > 0">
-                <LittleSlotLight v-for="(product, index) in products" :key="index" class="slide-item"
-                    :style="{ 'transition-delay': index * 100 + 'ms', 'opacity': product.visible ? '1' : '0' }">
-                    <div>
-                        <img :src="product.img" alt="">
-                    </div>
+            <div class="overflow-x-auto scrollbar" v-if="products.length > 0">
+                <div class="flex justify-start gap-10">
+                    <router-link v-for="(product, index) in products" :key="index" :to="product.routeName">
+                        <LittleSlotLight class="slide-item h-[100%]"
+                            :style="{ 'transition-delay': index * 100 + 'ms', 'opacity': product.visible ? '1' : '0' }">
+                            <div>
+                                <img :src="product.img" alt="">
+                            </div>
 
-                    <div>
-                        <span>{{ product.title }}</span>
-                    </div>
-                </LittleSlotLight>
+                            <div>
+                                <span>{{ product.title }}</span>
+                            </div>
+                        </LittleSlotLight>
+                    </router-link>
+                </div>
             </div>
         </div>
 
         <!-- page title small -->
-        <div class="tracking-tighter py-10">
+        <div class="tracking-tighter py-10 hidden md:block">
             <div class="container mx-auto flex font-medium justify-between items-center px-20">
                 <!-- title -->
                 <span class="text-3xl text-[#454545]">
@@ -44,23 +48,27 @@ export default {
             products: [
                 {
                     title: "Gestionali",
-                    img: "src/img/products/gestional.png",
-                    visible: false
+                    img: "/img/products/gestional.png",
+                    visible: false,
+                    routeName: 'products/gestional'
                 },
                 {
                     title: "Internet",
-                    img: "src/img/products/internet.png",
-                    visible: false
+                    img: "/img/products/internet.png",
+                    visible: false,
+                    routeName: 'products/internet'
                 },
                 {
                     title: "Telefonia",
-                    img: "src/img/products/telephony.png",
-                    visible: false
+                    img: "/img/products/telephony.png",
+                    visible: false,
+                    routeName: 'products/telephony'
                 },
                 {
                     title: "GDPR",
-                    img: "src/img/products/gdpr-2.png",
-                    visible: false
+                    img: "/img/products/gdpr-2.png",
+                    visible: false,
+                    routeName: 'products/gdpr'
                 },
             ]
         };
@@ -90,5 +98,9 @@ export default {
 .slide-item {
     opacity: 0;
     transition: opacity 1.5s ease;
+}
+
+.scrollbar::-webkit-scrollbar {
+    display: none;
 }
 </style>

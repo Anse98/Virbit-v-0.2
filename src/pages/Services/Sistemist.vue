@@ -2,12 +2,12 @@
     <section class="min-h-[85vh]">
         <div class="container mx-auto py-12">
             <!-- titolo iniziale -->
-            <div class="text-6xl flex flex-col gap-2 tracking-tighter">
-                <span class="text-gray-300 show-title" :style="{ 'opacity': titleShow ? '1' : '0' }">
+            <div class="text-4xl sm:text-5xl flex flex-col items-center lg:items-start gap-2 tracking-tighter">
+                <span class="text-gray-300 show-title me-10" :style="{ 'opacity': titleShow ? '1' : '0' }">
                     Un po di chiarezza<span class="text-[#2c2c2c]">.</span>
                 </span>
 
-                <div class="w-[60%] flex justify-end">
+                <div class="w-[90%] flex justify-end lg:justify-start lg:ps-10">
                     <span class="text-[#2c2c2c] show-title" :style="{ 'opacity': titleShow ? '1' : '0' }">
                         Chi sono i <span>sistemisti</span>
                     </span>
@@ -17,25 +17,32 @@
         </div>
 
         <!-- chi è il sistemista -->
-        <div class="flex flex-col items-center py-6" ref="whoSistemistSection">
-            <!-- image -->
-            <div class="w-[350px] pb-12">
-                <img src="../../img/services/sistemists/software-engineer.png" alt="">
+        <div class="flex flex-col items-center py-6">
+
+
+            <div class="flex lg:flex-col-reverse lg:items-center">
+
+                <!-- image -->
+                <div class="ps-12 lg:ps-0 lg:pe-40 pt-12 ">
+                    <img src="../../img/services/sistemists/software-engineer.png" alt=""
+                        class="w-[190px] sm:w-[250px]">
+                </div>
+
+                <!-- text -->
+                <div class="container mx-auto flex justify-end tracking-tighter text-[#2c2c2c] text-center pr-16 sm:text-[20px] lg:text-3xl opacity-0"
+                    ref="whoIsSistemist">
+                    <p class="w-[90%] lg:w-[70%]">
+                        Il sistemista non è altro che un professionista che si occupa della progettazione, installazione
+                        e configurazione
+                        di un sistema informatico.
+                    </p>
+                </div>
+
             </div>
 
-            <!-- text -->
             <div
-                class="container mx-auto flex justify-end tracking-tighter text-2xl text-gray-500 text-center pr-16 who-sistemist-text">
-                <p class="w-[40%]">
-                    I sistemisti non sono altro che professionisti che si occupano della progettazione, installazione
-                    e configurazione
-                    di un sistema informatico.
-                </p>
-            </div>
-
-            <div
-                class="container mx-auto flex justify-center tracking-tighter text-2xl text-[#2c2c2c] text-center pt-28 pb-20 who-sistemist-2text">
-                <p class="w-[40%]">
+                class="container mx-auto flex justify-center lg:justify-end  tracking-tighter text-[#2c2c2c] text-center pt-4 pb-10 who-sistemist-2text sm:text-[20px] lg:text-3xl lg:pt-20 lg:pb-28">
+                <p class="lg:w-[70%] px-2" ref="whoIsSistemist2">
                     Il suo compito fondamentale è quindi assicurare la qualità e il funzionamento dell'infrastruttura
                     digitale.
                 </p>
@@ -43,16 +50,16 @@
         </div>
 
         <!-- software che utilizziamo -->
-        <div class="text-[#2c2c2c] text-4xl tracking-tighter container mx-auto mb-2 soft-title" ref="titleSoftware">
+        <div class="text-[#2c2c2c] text-3xl sm:text-4xl tracking-tighter container mx-auto mb-2 soft-title text-center lg:text-start px-2 font-semibold"
+            ref="titleSoftware">
             <h2>
                 Alcuni dei software che utilizziamo per te e la tua azienda
             </h2>
         </div>
 
         <!-- cards dei software -->
-        <div class="bg-[#FAFAFA] py-12 flex justify-center gap-10 flex-wrap">
-            <BigSlotLight v-for="(soft, index) in  software " class="slide-item"
-                :style="{ 'transition-delay': index * 100 + 'ms', 'opacity': soft.visible ? '1' : '0' }">
+        <div class="bg-[#FAFAFA] py-12 flex justify-center gap-10 flex-wrap px-2">
+            <BigSlotLight v-for="(soft, index) in  software " class="softCards">
                 <!-- img -->
                 <div class="w-full mb-12">
                     <img :src="soft.img" alt="Immagine Software che utilizziamo">
@@ -67,7 +74,7 @@
 
                 <!-- link -->
                 <div class="pt-10 flex justify-end w-full text-[#4790D9] text-[18px]">
-                    <a :href="soft.siteUrl" target="_blank" class="flex items-center gap-1 hover:underline">
+                    <a :href="soft.siteUrl" class="flex items-center gap-1 hover:underline">
                         Scopri di più
                         <span class="pt-1 text-[12px]">
                             <font-awesome-icon icon="fa-solid fa-caret-right" />
@@ -82,6 +89,10 @@
 
 <script>
 import BigSlotLight from '../../components/slots/BigSlotLight.vue';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+
 
 export default {
 
@@ -92,25 +103,23 @@ export default {
     data() {
         return {
             titleShow: false,
-            whoSistemistisInView: false,
-            softwareTitleIsInView: false,
             software: [
                 {
-                    img: '../src/img/services/sistemists/dolibarr.png',
+                    img: '/img/services/sistemists/dolibarr.png',
                     description: "Dolibarr è un software open source di gestione aziendale (ERP) e CRM (Customer Relationship Management) che offre una vasta gamma di funzionalità per la gestione di una piccola o media impresa.",
                     visible: false,
                     siteUrl: "https://www.dolibarr.org/"
                 },
 
                 {
-                    img: '../src/img/services/sistemists/odoo.png',
+                    img: '/img/services/sistemists/odoo.png',
                     description: " Odoo è una vasta raccolta di applicazioni aziendali tra cui CRM, gestione delle vendite, eCommerce, gestione del magazzino, gestione degli acquisti, suite di contabilità, gestione della produzione e risorse umane.",
                     visible: false,
                     siteUrl: "https://www.odoo.com/it_IT"
                 },
 
                 {
-                    img: '../src/img/services/sistemists/openkm.png',
+                    img: '/img/services/sistemists/openkm.png',
                     description: "OpenKM è un software di gestione dei documenti che integra tutte le funzionalità essenziali di gestione dei documenti, collaborazione e ricerca avanzata in un'unica soluzione facile da usare.",
                     visible: false,
                     siteUrl: "https://www.openkm.it/"
@@ -129,71 +138,82 @@ export default {
             }, 500)
         },
 
-
-        handleScroll() {
-            // animazione testo chi è il sistemista
-            const whoSistemistSection = this.$refs.whoSistemistSection;
-            if (whoSistemistSection) {
-                const bounding = whoSistemistSection.getBoundingClientRect();
-                const whoSistemistIsInView = (
-                    bounding.top <= 50 &&
-                    bounding.bottom >= 0
-                )
-
-                if (whoSistemistIsInView) {
-                    whoSistemistSection.classList.add('show-who-sistemist')
-                }
-            }
-
-            // animazione titolo software
-            const titleSoftwareSection = this.$refs.titleSoftware;
-            if (titleSoftwareSection) {
-                const softBounding = titleSoftwareSection.getBoundingClientRect();
-                const softwareTitleIsInView = (
-                    softBounding.top <= 730 &&
-                    softBounding.bottom >= 0
-                )
-
-                if (softwareTitleIsInView) {
-                    titleSoftwareSection.classList.add('show-soft-title')
-                }
-            }
-
-            //animazione card software
-            const scrollPosition = window.innerHeight + window.scrollY;
-            const fullHeight = document.documentElement.scrollHeight;
-            const threshold = 200; // Imposta la soglia per quanto vicino al fondo vuoi arrivare prima di chiamare la funzione
-            if (scrollPosition >= fullHeight - threshold) {
-                this.showAllSoftware();
-            }
+        // animazione primo testo chi è il sistemista
+        showWhoSistemistIs() {
+            const whoIsSistemist = this.$refs.whoIsSistemist;
+            gsap.to(whoIsSistemist, {
+                autoAlpha: 1,
+                y: -30,
+                duration: 1.2,
+                ease: "power1.inOut",
+                scrollTrigger: {
+                    trigger: whoIsSistemist,
+                    start: 'top 80%', // Avvia l'animazione quando l'elemento è a 80% dall'inizio della viewport
+                    end: '+=100', // La fine dell'animazione è dopo uno scroll di 100px
+                    toggleActions: "play none none none",
+                },
+            });
         },
 
-        // mostrami le card dei software
-        showSoftware(index) {
-            setTimeout(() => {
-                this.software[index].visible = true;
-            }, index * 200); //delay dell'animazione
+        // animazione secondo testo chi è il sistemista
+        showWhoSistemistIs2() {
+            const whoIsSistemist2 = this.$refs.whoIsSistemist2;
+            gsap.from(whoIsSistemist2, {
+                autoAlpha: 0,
+                y: 30,
+                duration: 1.3,
+                ease: "power1.inOut",
+                scrollTrigger: {
+                    trigger: whoIsSistemist2,
+                    start: 'top 80%', // Avvia l'animazione quando l'elemento è a 80% dall'inizio della viewport
+                    end: '+=100', // La fine dell'animazione è dopo uno scroll di 100px
+                    toggleActions: "play none none none",
+                },
+            });
         },
 
-        showAllSoftware() {
-            this.software.forEach((soft, index) => {
-                this.showSoftware(index);
+        // animazione titolo software
+        ShowTitleSoftware() {
+            const titleSoftware = this.$refs.titleSoftware;
+            gsap.from(titleSoftware, {
+                scrollTrigger: {
+                    trigger: titleSoftware,
+                    toggleActions: "play none none none"
+                },
+                autoAlpha: 0,
+                y: 40,
+                duration: 1,
+                ease: "power1.inOut",
+            });
+        },
+
+        // animazioni card software
+        ShowSoftCards() {
+            const softCards = document.querySelectorAll('.softCards');
+            gsap.from(softCards, {
+                opacity: 0,
+                y: 40,
+                duration: 1.5,
+                stagger: 0.35,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: softCards,
+                    start: "top bottom-=150",
+                    end: "top center",
+                    toggleActions: "play none none none",
+                },
             });
         },
     },
 
     mounted() {
-        // animazione titolo iniziale
+        gsap.registerPlugin(ScrollTrigger);
         this.showTitle();
-
-        // animazione testo chi è il sistemista
-        window.addEventListener('scroll', this.handleScroll);
+        this.showWhoSistemistIs();
+        this.showWhoSistemistIs2();
+        this.ShowTitleSoftware();
+        this.ShowSoftCards();
     },
-
-    beforeDestroy() {
-        // rimuovi l'ascoltatore dell'evento prima di distruggere l'istanza
-        window.removeEventListener('scroll', this.checkWhoSistemistVisibility);
-    }
 }
 </script>
 
@@ -217,25 +237,5 @@ export default {
 
 .question-mark {
     animation: moveQuestion 2s ease forwards;
-}
-
-.who-sistemist-text {
-    opacity: 0;
-    transition: opacity 0, 2s ease;
-}
-
-.show-who-sistemist .who-sistemist-text {
-    animation: falling 2s forwards;
-    opacity: 0;
-}
-
-.soft-title {
-    opacity: 0;
-    transition: opacity 0, 2s ease;
-}
-
-.soft-title.show-soft-title {
-    animation: emerge 2s forwards;
-    opacity: 0;
 }
 </style>

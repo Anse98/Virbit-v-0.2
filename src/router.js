@@ -9,11 +9,15 @@ import Sistemist from './pages/Services/Sistemist.vue';
 import Integration from './pages/Services/Integration.vue';
 import Analyst from './pages/Services/Analyst.vue';
 import Cybersecurity from './pages/Services/Cybersecurity.vue';
+import Gestional from './pages/Products/Gestional.vue';
+import Internet from './pages/Products/Internet.vue';
+import Gdpr from './pages/Products/Gdpr.vue';
+import Telephony from './pages/Products/Telephony.vue';
 
 const router = createRouter({
     history: createWebHistory(),
     routes: [
-        // pagine principali
+        ///////////////////////////////// pagine principali
         {
             path: '/',
             name: 'home',
@@ -38,7 +42,9 @@ const router = createRouter({
             component: About
         },
 
-        // pagine secondarie
+        //////////////////////////////// pagine secondarie
+
+        // servizi
         {
             path: '/services/developers',
             name: 'developers',
@@ -67,6 +73,31 @@ const router = createRouter({
             path: '/services/cybersecurity',
             name: 'cybersecurity',
             component: Cybersecurity
+        },
+
+        // prodotti
+        {
+            path: '/products/gestional',
+            name: 'gestional',
+            component: Gestional
+        },
+
+        {
+            path: '/products/internet',
+            name: 'internet',
+            component: Internet
+        },
+
+        {
+            path: '/products/gdpr',
+            name: 'gdpr',
+            component: Gdpr
+        },
+
+        {
+            path: '/products/telephony',
+            name: 'telephony',
+            component: Telephony
         },
 
         //MODO PER DEFINIRE PATH NOT FOUND, SEMPRE IN FONDO

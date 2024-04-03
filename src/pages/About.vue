@@ -2,22 +2,24 @@
     <section class="min-h-[100vh]">
         <div class="container mx-auto">
             <!--little cards -->
-            <div class="p-2 flex justify-center flex-wrap gap-12" v-if="informations.length > 0">
-                <LittleSlotLight v-for="(info, index) in informations" :key="index" class="slide-item"
-                    :style="{ 'transition-delay': index * 100 + 'ms', 'opacity': info.visible ? '1' : '0' }">
-                    <div>
-                        <img :src="info.img" alt="">
-                    </div>
+            <div class="overflow-x-auto scrollbar" v-if="informations.length > 0">
+                <div class="flex justify-center gap-10">
+                    <LittleSlotLight v-for="(info, index) in informations" :key="index" class="slide-item"
+                        :style="{ 'transition-delay': index * 100 + 'ms', 'opacity': info.visible ? '1' : '0' }">
+                        <div>
+                            <img :src="info.img" alt="">
+                        </div>
 
-                    <div>
-                        <span>{{ info.title }}</span>
-                    </div>
-                </LittleSlotLight>
+                        <div>
+                            <span>{{ info.title }}</span>
+                        </div>
+                    </LittleSlotLight>
+                </div>
             </div>
         </div>
 
         <!-- page title small -->
-        <div class="tracking-tighter py-10">
+        <div class="tracking-tighter py-10 hidden md:block">
             <div class="container mx-auto flex font-medium justify-between items-center px-20">
                 <!-- title -->
                 <span class="text-xl text-[#454545]">
@@ -44,19 +46,19 @@ export default {
             informations: [
                 {
                     title: "Dove Siamo",
-                    img: "src/img/about/where-we-are.png",
+                    img: "/img/About/where-we-are.png",
                     visible: false
                 },
 
                 {
                     title: "Contatti",
-                    img: "src/img/about/contact-us.png",
+                    img: "/img/About/contact-us.png",
                     visible: false
                 },
 
                 {
                     title: "Informazioni",
-                    img: "src/img/about/information.png",
+                    img: "/img/About/information.png",
                     visible: false
                 },
             ]
@@ -87,5 +89,9 @@ export default {
 .slide-item {
     opacity: 0;
     transition: opacity 1.5s ease;
+}
+
+.scrollbar::-webkit-scrollbar {
+    display: none;
 }
 </style>

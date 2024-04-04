@@ -3,9 +3,9 @@
         <HeaderServices></HeaderServices>
         <!-- title -->
         <div
-            class="container mx-auto text-4xl tracking-tighter text-[#2c2c2c] flex flex-col items-center justify-center md:text-4xl lg:text-5xl lg:items-start">
-            <h1 class="pb-6 show-title" :style="{ 'opacity': titleShow ? '1' : '0' }">Sviluppatori</h1>
-            <h1 class="pl-16 title-gradient of-what-title" id="ofWhat">
+            class="container mx-auto text-4xl tracking-tighter text-[#2c2c2c] flex flex-col justify-center md:text-4xl lg:text-5xl lg:items-start mb-5">
+            <h1 class="show-title pl-6 md:pb-6" :style="{ 'opacity': titleShow ? '1' : '0' }">Sviluppatori</h1>
+            <h1 class="pl-36 title-gradient of-what-title" id="ofWhat">
                 Ma di cosa
                 <span class="text-[#2c2c2c]">?</span>
             </h1>

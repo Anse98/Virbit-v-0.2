@@ -1,6 +1,5 @@
 <template>
-    <div
-        class="border-b bg-[#dbdddf] px-2 tracking-tighter flex justify-between text-[#4d4c4c] mb-3 text-[12px] sm:hidden">
+    <div class="py-1 bg-[#F5F5F7] px-2 tracking-tighter flex justify-between text-[#4d4c4c] mb-3 text-[12px] sm:hidden">
         <span class="font-semibold ">
             Servizi
         </span>

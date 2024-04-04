@@ -89,6 +89,7 @@ export default {
             ],
 
             isMobileMenuVisible: false,
+            isOverlayVisible: false,
             isMenuOpen: false,
             activeIndex: null,
             linkClickedRecently: false,
@@ -105,6 +106,7 @@ export default {
 
         hideMobileMenu() {
             this.isMobileMenuVisible = false;
+            this.isOverlayVisible = false;
         },
 
         // pc
@@ -136,6 +138,12 @@ export default {
 
         canOpenMenu() {
             return !this.linkClickedRecently;
+        },
+
+        showOverlay() {
+
+            this.isOverlayVisible = true;
+
         }
     }
 };
@@ -149,7 +157,7 @@ export default {
                 <!-- logo -->
                 <a href="/">
                     <div>
-                        <img src="../img/logo-3.png" alt="" class="w-[22px]">
+                        <img src="../img/logo-3.png" alt="" class="w-[22px] lg:w-[26px]">
                     </div>
                 </a>
 
@@ -159,7 +167,7 @@ export default {
                         <font-awesome-icon :icon="currentIcon" />
                     </div>
 
-                    <transition name="slide-down">
+                    <transition name="slide-down" @enter="showOverlay">
                         <div class="fixed w-full right-0 left-0 top-0 bg-[#FAFAFA] z-20 p-2 text-[20px] text-[#545456] tracking-tighter flex flex-col items-center justify-between text-center font-semibold h-[50vh]"
                             v-show="isMobileMenuVisible">
 
@@ -183,9 +191,11 @@ export default {
                     </transition>
                 </div>
 
+                <div class="overlay" v-show="isOverlayVisible" @click="hideMobileMenu"></div>
 
 
                 <!--header items PC-->
+
                 <ul class="sm:flex items-center hidden text-[16px]">
                     <li v-for="(   item, index   ) in    headerItems   " key="index" @mouseover="showMenu(index)"
                         class="py-2  hover:text-white">
@@ -233,7 +243,6 @@ export default {
                             </div>
                         </span>
                     </li>
-
                 </ul>
             </div>
         </nav>
@@ -248,15 +257,27 @@ export default {
 }
 
 .slide-down-enter-from {
-    opacity: 0;
+    opacity: 0.4;
 }
 
-.slide-down-enter {
-    transition: opacity 0.5s ease;
+.slide-down-enter-to {
+    transition: opacity 0.3s ease;
 }
 
 .slide-down-leave-to {
     opacity: 0;
     transform: translateY(-100%);
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Colore di sfondo scuro semi-trasparente */
+    z-index: 10;
+    /* Assicura che l'overlay sia sopra tutti gli altri contenuti */
 }
 </style>

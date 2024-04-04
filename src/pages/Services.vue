@@ -18,29 +18,83 @@
 
             <!-- page title big -->
             <div class="flex flex-col py-3 ">
-                <div class="text-4xl flex flex-col items-center show-title tracking-tight text-[#2c2c2c] px-2 md:text-5xl lg:text-6xl "
+                <div class="text-4xl flex flex-col items-center show-title tracking-tight text-[#2c2c2c] px-2 md:text-5xl lg:text-6xl"
                     :style="{ 'opacity': titleShow ? '1' : '0' }">
                     <h1 class="text-center leading-tight">
                         Specializzati nell'ambito tech
                         <span class="title-gradient">...</span>
                     </h1>
                     <!-- subtitle -->
-                    <div class="tracking-tight flex justify-center show-sub-title lg:justify-end pt-2"
+                    <div class="tracking-tight flex justify-center show-sub-title lg:justify-end pt-2 mb-4"
                         :style="{ 'opacity': subTitleShow ? '1' : '0' }">
                         <h4 class="text-gray-300 tracking-tighter">e non solo<span class="text-[#4d4c4c]">.</span></h4>
                     </div>
                 </div>
             </div>
-
-
         </div>
 
+        <!-- video mobile -->
+        <div class="flex justify-center py-6 md:hidden">
+            <div class="relative max-w-[90vw]">
+                <video autoplay muted class="rounded-lg" @ended="restartVideo()" id="service-video-mob">
+                    <source src="/Videos/Services-video-mob.mp4" type="video/mp4">
+                    Il tuo browser non supporta la riproduzione video.
+                </video>
 
+                <button @click="toggleVideo()"
+                    class="border w-[26px] h-[26px] rounded-full flex justify-center items-center shadow-lg absolute bottom-[8px] right-[10px] bg-white">
+                    <font-awesome-icon icon="fa-solid fa-pause" v-show="isVideoPlaying" class="text-[#4d4c4c]" />
+                    <font-awesome-icon icon="fa-solid fa-play" v-show="!isVideoPlaying"
+                        class="text-[#4d4c4c] ps-[2px]" />
+                </button>
+            </div>
+        </div>
+
+        <!-- video desktop -->
+        <div class="hidden md:flex justify-center bg-[#F5F5F7] py-6">
+            <div class="relative flex justify-center" ref="videoContainer">
+                <video autoplay muted class="rounded-lg w-full" @ended="restartVideo()" id="service-video-dek"
+                    ref="video">
+                    <source src="/Videos/Services-video-dek.mp4" type="video/mp4">
+                    Il tuo browser non supporta la riproduzione video.
+                </video>
+
+                <button @click="toggleVideo()"
+                    class="border w-[26px] h-[26px] rounded-full flex justify-center items-center shadow-lg absolute bottom-[8px] right-[10px] bg-white">
+                    <font-awesome-icon icon="fa-solid fa-pause" v-show="isVideoPlaying" class="text-[#4d4c4c]" />
+                    <font-awesome-icon icon="fa-solid fa-play" v-show="!isVideoPlaying"
+                        class="text-[#4d4c4c] ps-[2px]" />
+                </button>
+            </div>
+        </div>
+
+        <!-- <div class="flex justify-center mt-32">
+            <p class="w-1/2">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos enim blanditiis consectetur,
+                excepturi, commodi libero iusto eius suscipit vero, aspernatur distinctio animi? Nihil, aliquid sint.
+                Deserunt assumenda aspernatur consequatur debitis?
+            </p>
+        </div>
+
+        <div class="flex justify-center mt-32">
+            <p class="w-1/2">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos enim blanditiis consectetur,
+                excepturi, commodi libero iusto eius suscipit vero, aspernatur distinctio animi? Nihil, aliquid sint.
+                Deserunt assumenda aspernatur consequatur debitis?
+            </p>
+        </div>
+
+        <div class="flex justify-center mt-32">
+            <p class="w-1/2">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos enim blanditiis consectetur,
+                excepturi, commodi libero iusto eius suscipit vero, aspernatur distinctio animi? Nihil, aliquid sint.
+                Deserunt assumenda aspernatur consequatur debitis?
+            </p>
+        </div> -->
     </section>
 </template>
 
 <script>
-import LittleSlotLight from '../components/slots/LittleSlotLight.vue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import HeaderServices from '../components/HeaderServices.vue';
@@ -88,7 +142,8 @@ export default {
 
             titleShow: false,
             subTitleShow: false,
-            colorLittleTitle: false
+            colorLittleTitle: false,
+            isVideoPlaying: true
         };
     },
     methods: {
@@ -117,6 +172,43 @@ export default {
             setTimeout(() => {
                 this.subTitleShow = true
             }, 1700)
+        },
+
+        // stop/play del video
+        toggleVideo() {
+            const videoMob = document.getElementById('service-video-mob');
+            const videoDek = document.getElementById('service-video-dek');
+
+            if (this.isVideoPlaying) {
+                videoMob.pause(); // Ferma la riproduzione del video
+                videoDek.pause();
+            } else {
+                videoMob.play(); // Avvia la riproduzione del video
+                videoDek.play();
+            }
+
+            this.isVideoPlaying = !this.isVideoPlaying;
+        },
+
+        // quando finisce riparte
+        restartVideo() {
+            const videoMob = document.getElementById('service-video-mob');
+            const videoDek = document.getElementById('service-video-dek');
+            videoMob.currentTime = 0;
+            videoDek.currentTime = 0;
+            videoMob.play();
+            videoDek.play();
+        },
+
+        handleScroll() {
+            // Ottieni l'elemento da ridurre
+            const element = this.$refs.videoContainer;
+
+            // Calcola la nuova larghezza in base allo scrolling della finestra
+            const newWidth = 100 - (window.scrollY * 0.05);
+
+            // Utilizza GSAP per animare la larghezza dell'elemento gradualmente
+            gsap.to(element, { duration: 0.5, width: `${newWidth}%` });
         }
     },
 
@@ -125,6 +217,8 @@ export default {
         this.showAllServices();
         this.showTitle();
         this.showSubTitle();
+
+        window.addEventListener('scroll', this.handleScroll);
     }
 }
 </script>

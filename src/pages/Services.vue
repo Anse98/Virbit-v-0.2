@@ -1,25 +1,7 @@
 <template>
     <section class="min-h-[100vh]">
         <div class="container mx-auto">
-
-            <!-- little cards -->
-            <div class="overflow-x-auto scrollbar" v-if="services.length > 0">
-                <div class="flex justify-start gap-10">
-                    <router-link v-for="(service, index) in services" :key="index" :to="service.routeName">
-                        <LittleSlotLight class="slide-item h-[100%]"
-                            :style="{ 'transition-delay': index * 100 + 'ms', 'opacity': service.visible ? '1' : '0' }">
-                            <div>
-                                <img :src="service.img" alt="">
-                            </div>
-
-                            <div>
-                                <span>{{ service.title }}</span>
-                            </div>
-                        </LittleSlotLight>
-                    </router-link>
-                </div>
-            </div>
-
+            <HeaderServices></HeaderServices>
             <!-- page title small -->
             <div class="tracking-tighter py-10 hidden md:block">
                 <div class="container mx-auto flex font-medium justify-between items-center px-4 md:px-20">
@@ -43,7 +25,7 @@
                         <span class="title-gradient">...</span>
                     </h1>
                     <!-- subtitle -->
-                    <div class="tracking-tight flex justify-center show-sub-title lg:justify-end pt-6"
+                    <div class="tracking-tight flex justify-center show-sub-title lg:justify-end pt-2"
                         :style="{ 'opacity': subTitleShow ? '1' : '0' }">
                         <h4 class="text-gray-300 tracking-tighter">e non solo<span class="text-[#4d4c4c]">.</span></h4>
                     </div>
@@ -61,12 +43,13 @@
 import LittleSlotLight from '../components/slots/LittleSlotLight.vue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import HeaderServices from '../components/HeaderServices.vue';
 
 
 
 export default {
     components: {
-        LittleSlotLight,
+        HeaderServices
     },
     data() {
         return {
@@ -121,10 +104,6 @@ export default {
                 this.showService(index);
             });
         },
-
-
-
-
 
         // animazione titolo
         showTitle() {

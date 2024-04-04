@@ -149,7 +149,7 @@ export default {
                 <!-- logo -->
                 <a href="/">
                     <div>
-                        <img src="../img/logo-3.png" alt="" class="w-[26px]">
+                        <img src="../img/logo-3.png" alt="" class="w-[22px]">
                     </div>
                 </a>
 
@@ -159,26 +159,28 @@ export default {
                         <font-awesome-icon :icon="currentIcon" />
                     </div>
 
-                    <div class="fixed w-full right-0 left-0 top-0 bg-[#FAFAFA] z-20 p-2 text-[20px] text-[#545456] tracking-tighter flex flex-col items-center justify-between text-center font-semibold h-[50vh]"
-                        v-show="isMobileMenuVisible">
+                    <transition name="slide-down">
+                        <div class="fixed w-full right-0 left-0 top-0 bg-[#FAFAFA] z-20 p-2 text-[20px] text-[#545456] tracking-tighter flex flex-col items-center justify-between text-center font-semibold h-[50vh]"
+                            v-show="isMobileMenuVisible">
 
-                        <ul class="pt-10">
-                            <li class="mb-4" v-for="(   item, index   ) in    headerItems   " :key="index">
-                                <router-link :to="{ name: item.routeName }" @click="hideMobileMenu()">
-                                    {{ item.title }}
-                                    <span class="text-[12px] pl-2">
-                                        <font-awesome-icon :icon="['fas', item.icon]" />
-                                    </span>
-                                </router-link>
-                            </li>
-                        </ul>
+                            <ul class="pt-10">
+                                <li class="mb-4" v-for="(   item, index   ) in    headerItems   " :key="index">
+                                    <router-link :to="{ name: item.routeName }" @click="hideMobileMenu()">
+                                        {{ item.title }}
+                                        <span class="text-[12px] pl-2">
+                                            <font-awesome-icon :icon="['fas', item.icon]" />
+                                        </span>
+                                    </router-link>
+                                </li>
+                            </ul>
 
-                        <div class="pb-6">
-                            <span @click="hideMobileMenu()">
-                                <font-awesome-icon icon="fa-solid fa-xmark" />
-                            </span>
+                            <div class="pb-6">
+                                <span @click="hideMobileMenu()">
+                                    <font-awesome-icon icon="fa-solid fa-xmark" />
+                                </span>
+                            </div>
                         </div>
-                    </div>
+                    </transition>
                 </div>
 
 
@@ -219,7 +221,7 @@ export default {
 
                             <!-- lista dropdown -->
                             <div class="flex justify-center">
-                                <ul class="p-4 w-[30%] text-white flex flex-col  gap-6 mt-6 min-h-[40vh]">
+                                <ul class="p-4 w-[30%] text-white flex flex-col  gap-6 mt-6 min-h-[50vh]">
                                     <li v-for="(   subItem, subIndex   ) in    item.subCategories   " :key="subIndex">
                                         <router-link :to="{ name: subItem.routeName }" @click="clickMenu()">
                                             <span class="border-gray-400 hover:border-b">
@@ -238,4 +240,23 @@ export default {
     </header>
 </template>
 
-<style scoped></style>
+<style scoped>
+/* Aggiungi le seguenti regole CSS per la transizione */
+.slide-down-enter-active,
+.slide-down-leave-active {
+    transition: all 0.5s ease;
+}
+
+.slide-down-enter-from {
+    opacity: 0;
+}
+
+.slide-down-enter {
+    transition: opacity 0.5s ease;
+}
+
+.slide-down-leave-to {
+    opacity: 0;
+    transform: translateY(-100%);
+}
+</style>

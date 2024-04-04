@@ -1,8 +1,9 @@
 <template>
     <section class="min-h-[85vh]">
+        <HeaderServices></HeaderServices>
         <!-- title -->
         <div
-            class="container mx-auto text-4xl tracking-tighter text-[#2c2c2c] flex flex-col items-center justify-center py-8 md:text-4xl lg:text-5xl lg:items-start">
+            class="container mx-auto text-4xl tracking-tighter text-[#2c2c2c] flex flex-col items-center justify-center md:text-4xl lg:text-5xl lg:items-start">
             <h1 class="pb-6 show-title" :style="{ 'opacity': titleShow ? '1' : '0' }">Sviluppatori</h1>
             <h1 class="pl-16 title-gradient of-what-title" id="ofWhat">
                 Ma di cosa
@@ -47,24 +48,26 @@
             </div>
 
             <!-- cards -->
-            <div class="flex flex-wrap gap-24 justify-center py-10 lg:gap-36">
-                <LittleSlotLight v-for="(card, index) in langCards" :key="index" class="lang-card">
-                    <!-- card title -->
-                    <div class="text-2xl mb-10 text-slate-700">
-                        <h4>{{ card.name }}</h4>
-                    </div>
+            <div class="px-2 overflow-x-auto scrollbar">
+                <div class="flex gap-24 justify-start py-10 md:justify-center md:flex-wrap lg:gap-36">
+                    <LittleSlotLight v-for="(card, index) in langCards" :key="index" class="lang-card">
+                        <!-- card title -->
+                        <div class="text-2xl mb-10 text-slate-700">
+                            <h4>{{ card.name }}</h4>
+                        </div>
 
-                    <!-- card img -->
-                    <div class="w-[100px]">
-                        <img :src="card.img" alt="">
-                    </div>
+                        <!-- card img -->
+                        <div class="w-[100px]">
+                            <img :src="card.img" alt="">
+                        </div>
 
-                    <!-- card description -->
-                    <div class="description inset-0 flex items-center justify-center text-center leading-6 text-[#2C2C2C]"
-                        :ref="'description_' + index" v-show="activeLangDescriptionIndex === index">
-                        <p class="bg-white border p-2">{{ card.description }}</p>
-                    </div>
-                </LittleSlotLight>
+                        <!-- card description -->
+                        <div class="description inset-0 flex items-center justify-center text-center leading-6 text-[#2C2C2C]"
+                            :ref="'description_' + index" v-show="activeLangDescriptionIndex === index">
+                            <p class="bg-white border p-2">{{ card.description }}</p>
+                        </div>
+                    </LittleSlotLight>
+                </div>
             </div>
         </div>
 
@@ -79,9 +82,12 @@
                 </h2>
 
                 <div class="relative">
-                    <span class="text-[20px] text-[#4790D9] cursor-pointer lg:pe-10" @mouseenter="showInfoFramework()"
-                        @mouseleave="hideInfoFramework()">
-                        <font-awesome-icon icon="fa-solid fa-lightbulb" />
+                    <span class="text-[20px] text-[#4790D9] cursor-pointer lg:pe-10 flex flex-col items-center"
+                        @click="toggleInfoFramework()">
+                        <font-awesome-icon icon="fa-solid fa-lightbulb"
+                            class="hidden lg:block bg-white shadow-lg p-2 rounded-full w-[14px] h-[14px]" />
+                        <font-awesome-icon icon="fa-solid fa-info"
+                            class="lg:hidden bg-white shadow-lg p-2 rounded-full w-[14px] h-[14px]" />
                     </span>
 
                     <div class="bg-white border absolute rounded-md text-[14px] p-2 leading-4 text-[#9c9a9a] w-[300px] lg:w-[200px] left-[-140px] text-center"
@@ -96,24 +102,27 @@
             </div>
 
             <!-- cards -->
-            <div class="flex flex-wrap gap-24 justify-center py-20 lg:gap-40">
-                <LittleSlotLight v-for="(card, index) in frameworkCards" :key="index" class="framework-card relative">
-                    <!-- card title -->
-                    <div class="text-2xl mb-10 text-slate-700 text-center z-10">
-                        <h4>{{ card.name }}</h4>
-                    </div>
+            <div class="overflow-x-auto px-2 scrollbar">
+                <div class="flex gap-24 justify-start md:justify-center py-20 lg:gap-40">
+                    <LittleSlotLight v-for="(card, index) in frameworkCards" :key="index"
+                        class="framework-card relative ps-10">
+                        <!-- card title -->
+                        <div class="text-2xl mb-10 text-slate-700 text-center z-10">
+                            <h4>{{ card.name }}</h4>
+                        </div>
 
-                    <!-- card img -->
-                    <div class="w-[100px]">
-                        <img :src="card.img" alt="">
-                    </div>
+                        <!-- card img -->
+                        <div class="w-[100px]">
+                            <img :src="card.img" alt="">
+                        </div>
 
-                    <!-- card description -->
-                    <!-- <div class=" inset-0 flex items-center justify-center text-center leading-6 text-[#2C2C2C]"
+                        <!-- card description -->
+                        <!-- <div class=" inset-0 flex items-center justify-center text-center leading-6 text-[#2C2C2C]"
                         :ref="'frameworkDescription_' + index">
                         <p>{{ card.description }}</p>
                     </div> -->
-                </LittleSlotLight>
+                    </LittleSlotLight>
+                </div>
             </div>
         </div>
     </section>
@@ -124,6 +133,7 @@ import BigSlotLight from '../../components/slots/BigSlotLight.vue';
 import LittleSlotLight from '../../components/slots/LittleSlotLight.vue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import HeaderServices from '../../components/HeaderServices.vue';
 
 
 
@@ -131,7 +141,8 @@ export default {
 
     components: {
         BigSlotLight,
-        LittleSlotLight
+        LittleSlotLight,
+        HeaderServices
     },
 
     data() {
@@ -281,6 +292,7 @@ export default {
                 },
                 autoAlpha: 0,
                 y: 40,
+                stagger: 0.35,
                 duration: 1,
                 ease: "power1.inOut",
             });
@@ -313,20 +325,15 @@ export default {
             });
         },
 
-        showInfoFramework() {
-            gsap.to(this.$refs.infoFramework,
-                {
-                    opacity: 1,
-                    duration: 1
-                });
-        },
+        toggleInfoFramework() {
+            const element = this.$refs.infoFramework;
+            const currentOpacity = parseFloat(window.getComputedStyle(element).getPropertyValue('opacity'));
+            const targetOpacity = currentOpacity === 0 ? 1 : 0;
 
-        hideInfoFramework() {
-            gsap.to(this.$refs.infoFramework,
-                {
-                    opacity: 0,
-                    duration: 1
-                });
+            gsap.to(element, {
+                opacity: targetOpacity,
+                duration: 1
+            });
         },
 
         // animazione cards dei framework

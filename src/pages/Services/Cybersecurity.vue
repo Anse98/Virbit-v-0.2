@@ -1,6 +1,7 @@
 <template>
     <section>
-        <div class="container mx-auto text-center py-3 tracking-tighter">
+        <div class="container mx-auto text-center tracking-tighter">
+            <HeaderServices></HeaderServices>
             <!-- title -->
             <div class="pb-4 lg:pb-10">
                 <h1 class="main-title text-4xl lg:text-5xl text-[#2c2c2c]">
@@ -52,11 +53,13 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import LittleSlotLight from '../../components/slots/LittleSlotLight.vue';
+import HeaderServices from '../../components/HeaderServices.vue';
 
 export default {
 
     components: {
-        LittleSlotLight
+        LittleSlotLight,
+        HeaderServices
     },
 
     data() {

@@ -1,5 +1,6 @@
 <template>
     <section>
+        <HeaderProducts></HeaderProducts>
         <div>
             Telefonia
         </div>
@@ -7,8 +8,12 @@
 </template>
 
 <script>
+import HeaderProducts from '../../components/HeaderProducts.vue';
 
 export default {
+    components: {
+        HeaderProducts
+    },
 
     data() {
         return {

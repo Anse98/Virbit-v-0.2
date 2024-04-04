@@ -1,5 +1,6 @@
 <template>
     <section>
+        <HeaderProducts></HeaderProducts>
         <div class="container mx-auto">
             <div class="tracking-tighter text-center py-6 flex items-end">
                 <h1 class="text-4xl leading-normal text-[#2c2c2c] title">
@@ -17,8 +18,13 @@
 <script>
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import HeaderProducts from '../../components/HeaderProducts.vue';
 
 export default {
+
+    components: {
+        HeaderProducts
+    },
 
     data() {
         return {

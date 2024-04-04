@@ -1,8 +1,9 @@
 <template>
     <section class="min-h-[85vh]">
-        <div class="container mx-auto py-12">
+        <div class="container mx-auto">
+            <HeaderServices></HeaderServices>
             <!-- titolo iniziale -->
-            <div class="text-4xl sm:text-5xl flex flex-col items-center lg:items-start gap-2 tracking-tighter">
+            <div class="text-4xl sm:text-5xl flex flex-col items-center lg:items-start gap-2 tracking-tighter pb-20">
                 <span class="text-gray-300 show-title me-10" :style="{ 'opacity': titleShow ? '1' : '0' }">
                     Un po di chiarezza<span class="text-[#2c2c2c]">.</span>
                 </span>
@@ -91,13 +92,14 @@
 import BigSlotLight from '../../components/slots/BigSlotLight.vue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
+import HeaderServices from '../../components/HeaderServices.vue';
 
 
 export default {
 
     components: {
         BigSlotLight,
+        HeaderServices
     },
 
     data() {

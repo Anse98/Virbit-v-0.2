@@ -47,4 +47,8 @@ export default {
   opacity: 0;
   transition: opacity 2s ease;
 }
+
+.scrollbar::-webkit-scrollbar {
+  display: none;
+}
 </style>

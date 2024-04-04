@@ -34,24 +34,24 @@
         </div>
 
         <!-- video mobile -->
-        <div class="flex justify-center py-6 md:hidden">
+        <div class="flex justify-center py-6 md:hidden video-services">
             <div class="relative max-w-[90vw]">
-                <video autoplay muted class="rounded-lg" @ended="restartVideo()" id="service-video-mob">
+                <video muted class="rounded-2xl" @ended="restartVideo()" id="service-video-mob">
                     <source src="/Videos/Services-video-mob.mp4" type="video/mp4">
-                    Il tuo browser non supporta la riproduzione video.
+                    <i>Il tuo browser non supporta la riproduzione video.</i>
                 </video>
 
-                <button @click="toggleVideo()"
+                <button @click="toggleVideoMob()"
                     class="border w-[26px] h-[26px] rounded-full flex justify-center items-center shadow-lg absolute bottom-[8px] right-[10px] bg-white">
-                    <font-awesome-icon icon="fa-solid fa-pause" v-show="isVideoPlaying" class="text-[#4d4c4c]" />
-                    <font-awesome-icon icon="fa-solid fa-play" v-show="!isVideoPlaying"
+                    <font-awesome-icon icon="fa-solid fa-pause" v-show="isVideoPlayingMob" class="text-[#4d4c4c]" />
+                    <font-awesome-icon icon="fa-solid fa-play" v-show="!isVideoPlayingMob"
                         class="text-[#4d4c4c] ps-[2px]" />
                 </button>
             </div>
         </div>
 
         <!-- video desktop -->
-        <div class="hidden md:flex justify-center bg-[#F5F5F7] py-6">
+        <div class="hidden md:flex justify-center bg-[#F5F5F7] py-6" id="videoDekContainer">
             <div class="relative flex justify-center" ref="videoContainer">
                 <video autoplay muted class="rounded-lg w-full" @ended="restartVideo()" id="service-video-dek"
                     ref="video">
@@ -59,10 +59,10 @@
                     Il tuo browser non supporta la riproduzione video.
                 </video>
 
-                <button @click="toggleVideo()"
+                <button @click="toggleVideoDek()"
                     class="border w-[26px] h-[26px] rounded-full flex justify-center items-center shadow-lg absolute bottom-[8px] right-[10px] bg-white">
-                    <font-awesome-icon icon="fa-solid fa-pause" v-show="isVideoPlaying" class="text-[#4d4c4c]" />
-                    <font-awesome-icon icon="fa-solid fa-play" v-show="!isVideoPlaying"
+                    <font-awesome-icon icon="fa-solid fa-pause" v-show="isVideoPlayingDek" class="text-[#4d4c4c]" />
+                    <font-awesome-icon icon="fa-solid fa-play" v-show="!isVideoPlayingDek"
                         class="text-[#4d4c4c] ps-[2px]" />
                 </button>
             </div>
@@ -143,7 +143,8 @@ export default {
             titleShow: false,
             subTitleShow: false,
             colorLittleTitle: false,
-            isVideoPlaying: true
+            isVideoPlayingMob: false,
+            isVideoPlayingDek: true
         };
     },
     methods: {
@@ -174,20 +175,30 @@ export default {
             }, 1700)
         },
 
-        // stop/play del video
-        toggleVideo() {
+        // stop/play del video mobile
+        toggleVideoMob() {
             const videoMob = document.getElementById('service-video-mob');
-            const videoDek = document.getElementById('service-video-dek');
 
-            if (this.isVideoPlaying) {
+            if (this.isVideoPlayingMob) {
                 videoMob.pause(); // Ferma la riproduzione del video
-                videoDek.pause();
             } else {
                 videoMob.play(); // Avvia la riproduzione del video
+            }
+
+            this.isVideoPlayingMob = !this.isVideoPlayingMob;
+        },
+
+        // stop/play del video desktop
+        toggleVideoDek() {
+            const videoDek = document.getElementById('service-video-dek');
+
+            if (this.isVideoPlayingDek) {
+                videoDek.pause();
+            } else {
                 videoDek.play();
             }
 
-            this.isVideoPlaying = !this.isVideoPlaying;
+            this.isVideoPlayingDek = !this.isVideoPlayingDek;
         },
 
         // quando finisce riparte
@@ -200,15 +211,37 @@ export default {
             videoDek.play();
         },
 
-        handleScroll() {
+        // animazione titolo dei framework
+        animateVideo() {
+            gsap.from('.video-services', {
+                autoAlpha: 0,
+                y: 20,
+                duration: 1.3,
+                ease: "power1.inOut",
+                scrollTrigger: {
+                    trigger: '.video-services',
+                    start: 'top 60%',
+                    end: '+=100',
+                    toggleActions: "play none none none",
+                },
+            });
+        },
+
+        handleScrollVideoWith() {
+
             // Ottieni l'elemento da ridurre
-            const element = this.$refs.videoContainer;
+            const videoContainer = this.$refs.videoContainer;
 
-            // Calcola la nuova larghezza in base allo scrolling della finestra
-            const newWidth = 100 - (window.scrollY * 0.05);
+            // verifico che videoContainer sia presente per evitare errori quando scrollo nelle altre pagine
+            if (videoContainer) {
+                // Calcola la nuova larghezza in base allo scrolling della finestra
+                const newWidth = 100 - (window.scrollY * 0.05);
 
-            // Utilizza GSAP per animare la larghezza dell'elemento gradualmente
-            gsap.to(element, { duration: 0.5, width: `${newWidth}%` });
+                // Utilizza GSAP per animare la larghezza dell'elemento gradualmente
+                gsap.to(videoContainer, { duration: 0.5, width: `${newWidth}%` });
+
+            }
+
         }
     },
 
@@ -217,9 +250,17 @@ export default {
         this.showAllServices();
         this.showTitle();
         this.showSubTitle();
+        this.animateVideo();
 
-        window.addEventListener('scroll', this.handleScroll);
-    }
+        window.addEventListener('scroll', this.handleScrollVideoWith);
+    },
+
+    beforeDestroy() {
+        // Rimuovi l'evento di scorrimento quando il componente viene distrutto
+        window.removeEventListener('scroll', this.handleScrollVideoWith);
+    },
+
+
 }
 </script>
 

@@ -8,9 +8,11 @@
         </span>
     </div>
 
-    <!-- little services cards -->
+
+    <!-- container cards -->
     <div class="overflow-x-auto scrollbar" v-if="services.length > 0">
-        <div class="flex justify-start gap-10 sm:justify-center sm:gap-20 mb-10">
+        <div class="flex justify-start gap-10 sm:justify-center sm:gap-20 relative">
+            <!-- cards -->
             <router-link v-for="(service, index) in services" :key="index" :to="service.routeName">
                 <LittleSlotLight class="slide-item h-[100%]"
                     :style="{ 'transition-delay': index * 100 + 'ms', 'opacity': service.visible ? '1' : '0' }">
@@ -25,6 +27,9 @@
             </router-link>
         </div>
     </div>
+
+
+
 </template>
 
 <script>
@@ -73,7 +78,9 @@ export default {
 
             titleShow: false,
             subTitleShow: false,
-            colorLittleTitle: false
+            colorLittleTitle: false,
+            currentIndex: 0, // Indice corrente delle card visualizzate
+            cardsToShow: 3 // Numero di card da visualizzare contemporaneamente
         };
     },
     methods: {
@@ -89,12 +96,32 @@ export default {
                 this.showService(index);
             });
         },
+
+        // Metodo per scorrere avanti o indietro nell'array delle card
+        scroll(direction) {
+            const lastIndex = this.services.length - this.cardsToShow;
+            if (direction === -1 && this.currentIndex > 0) {
+                this.currentIndex--;
+            } else if (direction === 1 && this.currentIndex < lastIndex) {
+                this.currentIndex++;
+            }
+        }
+
     },
 
     mounted() {
         gsap.registerPlugin(ScrollTrigger);
         this.showAllServices();
-    }
+    },
+
+    computed: {
+        // Calcola l'array delle card da visualizzare in base all'indice corrente
+        visibleServices() {
+            const startIndex = this.currentIndex;
+            const endIndex = startIndex + this.cardsToShow;
+            return this.services.slice(startIndex, endIndex);
+        }
+    },
 }
 </script>
 

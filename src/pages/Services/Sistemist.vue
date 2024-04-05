@@ -1,7 +1,9 @@
 <template>
     <section class="min-h-[85vh]">
+
+        <HeaderServices></HeaderServices>
+
         <div class="container mx-auto">
-            <HeaderServices></HeaderServices>
             <!-- titolo iniziale -->
             <div class="text-4xl sm:text-5xl flex flex-col items-center lg:items-start gap-2 tracking-tighter pb-20">
                 <span class="text-gray-300 show-title me-10" :style="{ 'opacity': titleShow ? '1' : '0' }">
@@ -60,7 +62,7 @@
 
         <!-- cards dei software -->
         <div class="bg-[#FAFAFA] py-12 flex justify-center gap-10 flex-wrap px-2">
-            <BigSlotLight v-for="(soft, index) in  software " class="softCards">
+            <BigSlotLight v-for="(soft, index) in software " class="softCards">
                 <!-- img -->
                 <div class="w-full mb-12">
                     <img :src="soft.img" alt="Immagine Software che utilizziamo">

@@ -113,16 +113,23 @@ export default {
         showMenu(index) {
             this.headerItems[index].isMenuOpen = true;
             this.activeIndex = index;
+            if (!this.linkClickedRecently) {
+                this.isOverlayVisible = true
+            }
+
         },
 
         hideMenu(index) {
             if (this.activeIndex === index) {
                 this.headerItems[index].isMenuOpen = false;
             }
+
+            this.isOverlayVisible = false
         },
 
         clickMenu() {
-            this.isMenuOpen = true;
+            this.isMenuOpen = true
+            this.isOverlayVisible = false
 
             if (this.isMenuOpen) {
 
@@ -132,7 +139,7 @@ export default {
                     this.linkClickedRecently = false;
                     this.isMenuOpen = false
                     this.activeIndex = null;
-                }, 1500);
+                }, 1200);
             }
         },
 
@@ -141,11 +148,9 @@ export default {
         },
 
         showOverlay() {
-
             this.isOverlayVisible = true;
-
         }
-    }
+    },
 };
 </script>
 
@@ -172,7 +177,7 @@ export default {
                             v-show="isMobileMenuVisible">
 
                             <ul class="pt-10">
-                                <li class="mb-4" v-for="(   item, index   ) in    headerItems   " :key="index">
+                                <li class="mb-4" v-for="(   item, index   ) in headerItems   " :key="index">
                                     <router-link :to="{ name: item.routeName }" @click="hideMobileMenu()">
                                         {{ item.title }}
                                         <span class="text-[12px] pl-2">
@@ -197,8 +202,8 @@ export default {
                 <!--header items PC-->
 
                 <ul class="sm:flex items-center hidden text-[16px]">
-                    <li v-for="(   item, index   ) in    headerItems   " key="index" @mouseover="showMenu(index)"
-                        class="py-2  hover:text-white">
+                    <li v-for="(   item, index   ) in headerItems" key="index" @mouseover="showMenu(index)"
+                        class="py-4  hover:text-white">
                         <router-link :to="{ name: item.routeName }" @click="clickMenu()">
                             <span class="py-2 px-6">
                                 {{ item.title }}
@@ -210,18 +215,21 @@ export default {
 
                         <!-- dropdown -->
                         <span v-if="canOpenMenu() && item.isMenuOpen && activeIndex === index"
-                            class="absolute bg-gradient-to-r from-[#232324] via-[#141415] to-[#232324] mt-1 top-[50px] left-0 right-0 flex flex-col z-40 text-[22px] font-semibold tracking-wide"
+                            class="absolute bg-white  mt-1 top-[68px] left-0 right-0 flex flex-col z-40 text-[22px] tracking-wide"
                             @mouseleave="hideMenu(index)" id="dropdownn">
 
                             <!-- titolo dropdown -->
                             <div class="py-8 flex justify-evenly items-center px-10">
-                                <span class="text-4xl title-gradient flex flex-col items-center">
+                                <span
+                                    class="text-3xl flex flex-col items-center text-[#c0c0c0] tracking-tighter font-sens">
                                     Virbit S.r.l.
                                 </span>
 
 
-                                <span class="text-sm text-[#D1D1D1] flex flex-col items-center">
-                                    {{ item.title }}
+                                <span class="text-sm text-[#6f6d6d] flex flex-col items-center">
+                                    <span>
+                                        {{ item.title }}
+                                    </span>
                                     <span>
                                         <font-awesome-icon :icon="['fas', item.icon]" class="pl-1" />
                                     </span>
@@ -231,8 +239,9 @@ export default {
 
                             <!-- lista dropdown -->
                             <div class="flex justify-center">
-                                <ul class="p-4 w-[30%] text-white flex flex-col  gap-6 mt-6 min-h-[50vh]">
-                                    <li v-for="(   subItem, subIndex   ) in    item.subCategories   " :key="subIndex">
+                                <ul
+                                    class="p-4 w-[30%] flex flex-col  gap-6 mt-6 text-[#323232] tracking-tight pb-12 font-semibold">
+                                    <li v-for="(   subItem, subIndex   ) in item.subCategories   " :key="subIndex">
                                         <router-link :to="{ name: subItem.routeName }" @click="clickMenu()">
                                             <span class="border-gray-400 hover:border-b">
                                                 {{ subItem.name }}
@@ -271,11 +280,12 @@ export default {
 
 .overlay {
     position: fixed;
-    top: 0;
+    top: 88px;
     left: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
     /* Colore di sfondo scuro semi-trasparente */
     z-index: 10;
     /* Assicura che l'overlay sia sopra tutti gli altri contenuti */

@@ -1,16 +1,17 @@
 <template>
-    <div class="py-1 bg-[#F5F5F7] px-2 tracking-tighter flex justify-between text-[#4d4c4c] mb-3 text-[12px] sm:hidden">
+    <div
+        class="py-1 bg-[#F5F5F7] px-2 tracking-tighter flex justify-between text-[#4d4c4c] mb-3 text-[12px] sm:text-[16px] sm:px-10">
         <span class="font-semibold ">
             Servizi
         </span>
-        <span class="text-[11px]">
+        <span class="text-[11px] sm:text-[14px]">
             <font-awesome-icon icon="fa-solid fa-ranking-star" />
         </span>
     </div>
 
 
     <!-- container cards -->
-    <div class="overflow-x-auto scrollbar" v-if="services.length > 0">
+    <div class="overflow-x-auto scrollbar mb-12" v-if="services.length > 0">
         <div class="flex justify-start gap-10 sm:justify-center sm:gap-20 relative">
             <!-- cards -->
             <router-link v-for="(service, index) in services" :key="index" :to="service.routeName">

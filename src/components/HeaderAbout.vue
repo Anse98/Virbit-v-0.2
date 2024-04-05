@@ -1,9 +1,10 @@
 <template>
-    <div class="py-1 bg-[#F5F5F7] px-2 tracking-tighter flex justify-between text-[#4d4c4c] mb-3 text-[12px] sm:hidden">
+    <div
+        class="py-1 bg-[#F5F5F7] px-2 tracking-tighter flex justify-between text-[#4d4c4c] mb-3 text-[12px] sm:text-[16px] sm:px-10">
         <span class="font-semibold ">
             About
         </span>
-        <span class="text-[11px]">
+        <span class="text-[11px] sm:text-[14px]">
             <font-awesome-icon icon="fa-solid fa-tower-broadcast" />
         </span>
     </div>

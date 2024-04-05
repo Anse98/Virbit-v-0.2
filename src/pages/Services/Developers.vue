@@ -90,7 +90,7 @@
                             class="lg:hidden bg-white shadow-lg p-2 rounded-full w-[14px] h-[14px]" />
                     </span>
 
-                    <div class="bg-white border absolute rounded-md text-[14px] p-2 leading-4 text-[#9c9a9a] w-[300px] lg:w-[200px] left-[-140px] text-center"
+                    <div class="bg-white border absolute rounded-md text-[14px] p-2 leading-4 text-[#9c9a9a] w-[300px] lg:w-[200px] left-[-140px] md:left-[-200px] md:top-[-10px] text-center"
                         ref="infoFramework" style="opacity: 0;">
                         <p class="z-50">
                             Un framework è un sistema che consente di estendere le funzionalità del
@@ -332,7 +332,7 @@ export default {
 
             gsap.to(element, {
                 opacity: targetOpacity,
-                duration: 1
+                duration: 0.5
             });
         },
 

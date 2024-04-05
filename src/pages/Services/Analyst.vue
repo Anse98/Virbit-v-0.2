@@ -1,7 +1,9 @@
 <template>
     <section>
+
+        <HeaderServices></HeaderServices>
+
         <div class="container mx-auto tracking-tighter">
-            <HeaderServices></HeaderServices>
             <!-- title -->
             <div class=" text-4xl md:text-5xl text-[#2c2c2c]">
                 <h1 class="main-title ps-2">
@@ -20,7 +22,7 @@
             </div>
 
             <!-- first text -->
-            <div class="px-2 text-[16px] leading-8 first-text opacity-0 pb-6 md:text-center">
+            <div class="px-2 text-[16px] leading-8 first-text opacity-0 pb-6 md:text-center md:text-[18px]">
                 <p>
                     Parla con un nostro Analista che ti proporrà piani di sviluppo a misura per te
                 </p>

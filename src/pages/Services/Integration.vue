@@ -1,8 +1,9 @@
 <template>
     <section>
-        <div class="container mx-auto tracking-tighter">
-            <HeaderServices></HeaderServices>
 
+        <HeaderServices></HeaderServices>
+
+        <div class="container mx-auto tracking-tighter">
             <!-- title -->
             <div class="text-4xl tracking-tighter text-center text-[#2c2c2c] mb-16 lg:pb-14 lg:text-5xl lg:text-start">
                 <h1 class="main-title">

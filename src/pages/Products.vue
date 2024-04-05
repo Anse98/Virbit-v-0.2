@@ -1,22 +1,8 @@
 <template>
     <section class="min-h-[100vh]">
-        <div class="container mx-auto">
-            <HeaderProducts></HeaderProducts>
-        </div>
 
-        <!-- page title small -->
-        <div class="tracking-tighter py-10 hidden md:block">
-            <div class="container mx-auto flex font-medium justify-between items-center px-20">
-                <!-- title -->
-                <span class="text-3xl text-[#454545]">
-                    <font-awesome-icon icon="fa-solid fa-rocket" />
-                </span>
-                <!-- icon -->
-                <span class="text-xl text-[#4d4c4c]">
-                    Prodotti
-                </span>
-            </div>
-        </div>
+        <HeaderProducts></HeaderProducts>
+
     </section>
 </template>
 

@@ -1,7 +1,9 @@
 <template>
     <section>
+
+        <HeaderServices></HeaderServices>
+
         <div class="container mx-auto text-center tracking-tighter">
-            <HeaderServices></HeaderServices>
             <!-- title -->
             <div class="pb-4 lg:pb-10">
                 <h1 class="main-title text-4xl lg:text-5xl text-[#2c2c2c]">
@@ -34,7 +36,7 @@
             <div class="pt-12 text-start text-3xl lg:text-4xl lg:text-center lg:pt-24">
                 <h3 class="px-2 cyber-cards-title lg:pb-8 text-[#2c2c2c] font-semibold">Di cosa ci occupiamo noi...</h3>
 
-                <div class="flex flex-wrap gap-24 justify-center py-8 text-center lg:gap-40">
+                <div class="flex flex-wrap gap-24 justify-center py-8 text-center lg:gap-40 px-3">
                     <LittleSlotLight v-for="(card, index) in cyberCards" :key="index" class="cyberCards">
                         <h4 class="text-2xl pb-4 leading-7 text-slate-700">{{ card.title }}</h4>
 

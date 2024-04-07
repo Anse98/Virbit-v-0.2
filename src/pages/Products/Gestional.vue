@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section class="h-[200vh]">
         <HeaderProducts></HeaderProducts>
         <div class="container mx-auto">
             <div class="tracking-tighter text-center py-6 flex items-end">

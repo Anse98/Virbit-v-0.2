@@ -1,8 +1,11 @@
 <template>
-    <div
-        class="bg-[#414141] px-2 tracking-tight flex justify-between text-[#faf8f8] mb-3 text-[15px] sm:text-[16px] sm:px-10 sticky top-0 left-0 right-0 z-20">
-        <span class="font-semibold ">
-            About
+    <div class="bg-[#414141] px-2 tracking-tight flex justify-between text-[#faf8f8] mb-3 text-[15px] sm:text-[16px] sm:px-10 sticky top-0 left-0 right-0 z-20"
+        id="headerAbout">
+        <span class="font-semibold flex gap-4 items-center">
+            <span>About</span>
+            <span class="font-normal text-[14px] sm:text-[15px] text-[#dcdcdc]" id="currentPageTitleAbout">
+                {{ currentPageAbout }}
+            </span>
         </span>
         <span class="text-[13px] sm:text-[14px]">
             <font-awesome-icon icon="fa-solid fa-tower-broadcast" />
@@ -25,7 +28,8 @@
             <!-- cards -->
             <router-link v-for="(info, index) in informations" :key="index" :to="info.routeName" class="card-item">
                 <LittleSlotLight class="slide-item h-[100%]"
-                    :style="{ 'transition-delay': index * 100 + 'ms', 'opacity': info.visible ? '1' : '0' }">
+                    :style="{ 'transition-delay': index * 100 + 'ms', 'opacity': info.visible ? '1' : '0' }"
+                    @click="setCurrentPage(info.title)">
                     <div>
                         <img :src="info.img" alt="">
                     </div>
@@ -84,6 +88,7 @@ export default {
 
             firstCardVisible: true,
             lastCardVisible: false,
+            currentPageAbout: '',
         };
     },
     methods: {
@@ -140,12 +145,49 @@ export default {
                 this.firstCardVisible = false;
             }
         },
+
+        setCurrentPage(title) {
+            this.currentPageAbout = title
+
+            // Salva la variabile currentPage nell'LocalStorage del browser
+            localStorage.setItem('currentPageAbout', title);
+        },
+
+        animateHeaderAbout() {
+            const headerAbout = document.getElementById('headerAbout');
+            const headerAboutTitle = document.getElementById('currentPageTitleAbout')
+            if (headerAbout) {
+                if (window.scrollY > 300) {
+                    headerAbout.classList.add('scrolled-sticky-header');
+                    headerAboutTitle.classList.add('color-black', 'page-current-title');
+                } else {
+                    headerAbout.classList.remove('scrolled-sticky-header');
+                    headerAbout.classList.add('restore-sticky-header');
+                    headerAboutTitle.classList.remove('color-black', 'page-current-title');
+                }
+            }
+
+        }
     },
     mounted() {
         gsap.registerPlugin(ScrollTrigger);
 
         this.showAllInformations();
         this.checkCardVisibility();
+
+        // eventlistener per animare barra header-service
+        window.addEventListener('scroll', this.animateHeaderAbout)
+
+        // Controlla se la variabile currentPage è già stata salvata nell'LocalStorage
+        const savedPage = localStorage.getItem('currentPageAbout');
+        if (savedPage) {
+            // Se presente, imposta la variabile currentPage al valore salvato
+            this.currentPageAbout = savedPage;
+        } else {
+            // Altrimenti, imposta la variabile currentPage al valore predefinito
+            this.currentPageAbout = '';
+        }
+
     }
 }
 </script>

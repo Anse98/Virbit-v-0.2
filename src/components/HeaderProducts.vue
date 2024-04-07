@@ -1,8 +1,11 @@
 <template>
-    <div
-        class="bg-[#414141] px-2 tracking-tight flex justify-between text-[#faf8f8] mb-3 text-[15px] sm:text-[16px] sm:px-10 sticky top-0 left-0 right-0 z-20">
-        <span class="font-semibold ">
-            Prodotti
+    <div class="bg-[#414141] px-2 tracking-tight flex justify-between text-[#faf8f8] mb-3 text-[15px] sm:text-[16px] sm:px-10 sticky top-0 left-0 right-0 z-20"
+        id="headerProduct">
+        <span class="font-semibold flex gap-4 items-center">
+            <span>Prodotti</span>
+            <span class="font-normal text-[14px] sm:text-[15px] text-[#dcdcdc]" id="currentPageTitleProd">
+                {{ currentPageProduct }}
+            </span>
         </span>
         <span class="text-[13px] sm:text-[14px]">
             <font-awesome-icon icon="fa-solid fa-rocket" />
@@ -24,7 +27,8 @@
             <!-- cards -->
             <router-link v-for="(product, index) in products" :key="index" :to="product.routeName" class="card-item">
                 <LittleSlotLight class="slide-item h-[100%]"
-                    :style="{ 'transition-delay': index * 100 + 'ms', 'opacity': product.visible ? '1' : '0' }">
+                    :style="{ 'transition-delay': index * 100 + 'ms', 'opacity': product.visible ? '1' : '0' }"
+                    @click="setCurrentPage(product.title)">
                     <div>
                         <img :src="product.img" alt="">
                     </div>
@@ -87,6 +91,7 @@ export default {
             ],
             firstCardVisible: true,
             lastCardVisible: false,
+            currentPageProduct: '',
         };
     },
     methods: {
@@ -143,6 +148,29 @@ export default {
                 this.firstCardVisible = false;
             }
         },
+
+        setCurrentPage(title) {
+            this.currentPageProduct = title
+
+            // Salva la variabile currentPage nell'LocalStorage del browser
+            localStorage.setItem('currentPageProduct', title);
+        },
+
+        animateHeaderProduct() {
+            const headerProduct = document.getElementById('headerProduct');
+            const headerProductTitle = document.getElementById('currentPageTitleProd')
+            if (headerProduct) {
+                if (window.scrollY > 300) {
+                    headerProduct.classList.add('scrolled-sticky-header');
+                    headerProductTitle.classList.add('color-black', 'page-current-title');
+                } else {
+                    headerProduct.classList.remove('scrolled-sticky-header');
+                    headerProduct.classList.add('restore-sticky-header');
+                    headerProductTitle.classList.remove('color-black', 'page-current-title');
+                }
+            }
+
+        }
     },
 
     mounted() {
@@ -150,6 +178,19 @@ export default {
 
         this.showAllProducts();
         this.checkCardVisibility();
+
+        // eventlistener per animare barra header-product
+        window.addEventListener('scroll', this.animateHeaderProduct)
+
+        // Controlla se la variabile currentPage è già stata salvata nell'LocalStorage
+        const savedPage = localStorage.getItem('currentPageProduct');
+        if (savedPage) {
+            // Se presente, imposta la variabile currentPage al valore salvato
+            this.currentPageProduct = savedPage;
+        } else {
+            // Altrimenti, imposta la variabile currentPage al valore predefinito
+            this.currentPageProduct = '';
+        }
     }
 }
 </script>

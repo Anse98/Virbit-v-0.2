@@ -3,7 +3,7 @@
     <!-- video mobile -->
     <div class="flex justify-center pb-6 md:hidden video-services">
         <div class="relative">
-            <video muted playsinline @ended="restartVideo()" id="service-video-mob">
+            <video muted autoplay playsinline @ended="restartVideo()" id="service-video-mob">
                 <source src="/Videos/Services-video-mob.mp4" type="video/mp4">
                 <i>Il tuo browser non supporta la riproduzione video.</i>
             </video>
@@ -177,7 +177,7 @@ export default {
 
     data() {
         return {
-            isVideoPlayingMob: false,
+            isVideoPlayingMob: true,
             isVideoPlayingDek: true
         };
     },

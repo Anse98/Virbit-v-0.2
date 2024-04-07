@@ -1,7 +1,33 @@
 <template>
     <section>
+        <HeaderAbout></HeaderAbout>
         <div>
             informazioni
         </div>
     </section>
 </template>
+
+<script>
+import HeaderAbout from '../../components/HeaderAbout.vue';
+
+export default {
+
+    components: {
+        HeaderAbout
+    },
+
+    data() {
+        return {
+
+        };
+    },
+
+    methods: {
+
+    },
+
+    mounted() {
+
+    },
+}
+</script>

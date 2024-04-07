@@ -1,26 +1,53 @@
 <template>
 
-    <div
-        class="lg:text-start py-12 lg:pt-16 lg:pb-24 pl-4 lg:pl-10 text-5xl lg:text-6xl font-semibold md:text-5xl tracking-tighter flex gap-5 title text-[#323232]">
-        <span class="">
-            Virbit
-        </span>
-
-        <span class="srl">
-            S.r.l.
-        </span>
-    </div>
-
     <!-- video mobile -->
-    <div class="flex justify-center py-6 md:hidden video-services">
-        <div class="relative max-w-[95vw]">
-            <video muted autoplay class="rounded-2xl" @ended="restartVideo()" id="service-video-mob">
+    <div class="flex justify-center pb-6 md:hidden video-services">
+        <div class="relative">
+            <video muted playsinline @ended="restartVideo()" id="service-video-mob">
                 <source src="/Videos/Services-video-mob.mp4" type="video/mp4">
                 <i>Il tuo browser non supporta la riproduzione video.</i>
             </video>
 
+            <!-- Overlay -->
+            <div class="absolute inset-0 bg-black opacity-60" ref="videoOverlay"></div>
+
+            <!-- titolo pagina -->
+            <div
+                class="absolute text-[#efeeee] left-[50%] transform translate-x-[-50%] top-[60%] translate-y-[-60%] title">
+
+                <div class="text-2xl font-light flex flex-col items-center gap-4">
+
+
+                    <h1 class="text-4xl font-medium">
+                        Virbit S.r.l.
+                    </h1>
+
+
+                    <p class="text-center">
+                        <i>
+                            Specializzati nell'ambito tech...
+                        </i>
+                    </p>
+
+                    <p>
+                        <i>
+                            e non solo.
+                        </i>
+                    </p>
+
+                    <router-link :to="{ name: 'about' }" class="mt-4">
+                        <span class="border p-2 rounded-xl text-lg cursor-pointer bg-[#efeeee] text-[#2f2f2f]">
+                            Scopri di più
+                        </span>
+                    </router-link>
+
+                </div>
+
+            </div>
+
+            <!-- bottone di pausa/play -->
             <button @click="toggleVideoMob()"
-                class="border w-[26px] h-[26px] rounded-full flex justify-center items-center shadow-lg absolute bottom-[8px] right-[10px] bg-white">
+                class="border w-[26px] h-[26px] rounded-full flex justify-center items-center shadow-lg absolute bottom-[12px] right-[16px] bg-white">
                 <font-awesome-icon icon="fa-solid fa-pause" v-show="isVideoPlayingMob" class="text-[#4d4c4c]" />
                 <font-awesome-icon icon="fa-solid fa-play" v-show="!isVideoPlayingMob"
                     class="text-[#4d4c4c] ps-[2px]" />
@@ -29,15 +56,55 @@
     </div>
 
     <!-- video desktop -->
-    <div class="hidden md:flex justify-center py-12" id="videoDekContainer">
-        <div class="relative flex justify-center" ref="videoContainer">
+    <div class="hidden md:flex justify-center" id="videoDekContainer">
+        <div class="relative flex justify-center video" ref="videoContainerDek">
             <video autoplay muted class="w-full" @ended="restartVideo()" id="service-video-dek" ref="video">
-                <source src="/Videos/Services-video-dek.mp4" type="video/mp4">
+                <source src="/Videos/Services-video-dek-2.mp4" type="video/mp4">
                 Il tuo browser non supporta la riproduzione video.
             </video>
 
+            <!-- Overlay -->
+            <div class="absolute inset-0 bg-black opacity-60" ref="videoOverlay"></div>
+
+            <!-- titolo pagina -->
+            <div class="absolute text-[#efeeee] right-[100px] top-[100px] title md:top-[40px]">
+
+                <div class="text-2xl font-light flex flex-col items-center gap-4">
+
+                    <div class="flex gap-2 items-center mb-8">
+                        <img src="/img/logo-3.png" alt="" class="w-[22px] lg:w-[42px]">
+                        <h1 class="text-5xl font-medium">
+                            Virbit S.r.l.
+                        </h1>
+                    </div>
+
+
+                    <p>
+                        <i>
+                            Specializzati nell'ambito tech...
+                        </i>
+                    </p>
+
+                    <p>
+                        <i>
+                            e non solo.
+                        </i>
+                    </p>
+
+                    <router-link :to="{ name: 'about' }" class="mt-4">
+                        <span
+                            class="border p-2 rounded-xl text-xl cursor-pointer hover:bg-[#efeeee] hover:text-[#2f2f2f]">
+                            Scopri di più
+                        </span>
+                    </router-link>
+
+                </div>
+
+            </div>
+
+            <!-- bottone di pausa/play -->
             <button @click="toggleVideoDek()"
-                class="border w-[26px] h-[26px] rounded-full flex justify-center items-center shadow-lg absolute bottom-[8px] right-[10px] bg-white">
+                class="border w-[26px] h-[26px] rounded-full flex justify-center items-center shadow-lg absolute bottom-[12px] right-[16px] bg-white">
                 <font-awesome-icon icon="fa-solid fa-pause" v-show="isVideoPlayingDek" class="text-[#4d4c4c]" />
                 <font-awesome-icon icon="fa-solid fa-play" v-show="!isVideoPlayingDek"
                     class="text-[#4d4c4c] ps-[2px]" />
@@ -110,7 +177,7 @@ export default {
 
     data() {
         return {
-            isVideoPlayingMob: true,
+            isVideoPlayingMob: false,
             isVideoPlayingDek: true
         };
     },
@@ -187,8 +254,9 @@ export default {
         handleScrollVideoWith() {
 
             // Ottieni l'elemento da ridurre
-            const videoContainer = this.$refs.videoContainer;
+            const videoContainer = this.$refs.videoContainerDek;
             const videoTag = this.$refs.video;
+            const videoOverlay = this.$refs.videoOverlay;
 
             // verifico che videoContainer sia presente per evitare errori quando scrollo nelle altre pagine
             if (videoContainer) {
@@ -205,12 +273,27 @@ export default {
                 const newBorderRadius = 30 * (newWidth / 100);
 
                 // Utilizza GSAP per animare la larghezza dell'elemento gradualmente
-                gsap.to(videoContainer, { duration: 0.5, width: `${newWidth}%` });
+                gsap.to(videoContainer,
+                    {
+                        duration: 0.5,
+                        width: `${newWidth}%`,
+                    });
 
-                gsap.to(videoTag, { duration: 0.5, borderRadius: `${newBorderRadius}px` });
+                gsap.to(videoTag,
+                    {
+                        duration: 0.5,
+                        borderRadius: `${newBorderRadius}px`
+                    });
+
+                gsap.to(videoOverlay,
+                    {
+                        duration: 0.5,
+                        borderRadius: `${newBorderRadius}px`
+                    });
 
                 if (window.scrollY === 0) {
                     gsap.to(videoTag, { duration: 0.5, borderRadius: "0px" });
+                    gsap.to(videoOverlay, { duration: 0.5, borderRadius: "0px" });
                 }
 
             }
@@ -275,6 +358,7 @@ export default {
         this.animateSecondImage();
 
         window.addEventListener('scroll', this.handleScrollVideoWith);
+
     },
 
     beforeDestroy() {

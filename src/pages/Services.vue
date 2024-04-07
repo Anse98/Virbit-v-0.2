@@ -8,13 +8,14 @@
                 <div class="text-4xl flex flex-col items-center show-title tracking-tight text-[#2c2c2c] px-2 md:text-5xl lg:text-6xl"
                     :style="{ 'opacity': titleShow ? '1' : '0' }">
                     <h1 class="text-center leading-tight">
-                        Specializzati nell'ambito tech
+                        Tu ci dici cosa fare
                         <span class="title-gradient">...</span>
                     </h1>
                     <!-- subtitle -->
                     <div class="tracking-tight flex justify-center show-sub-title lg:justify-end pt-2 mb-4"
                         :style="{ 'opacity': subTitleShow ? '1' : '0' }">
-                        <h4 class="text-gray-300 tracking-tighter">e non solo<span class="text-[#4d4c4c]">.</span></h4>
+                        <h4 class="text-gray-300 tracking-tighter">noi lo facciamo<span class="text-[#4d4c4c]">.</span>
+                        </h4>
                     </div>
                 </div>
             </div>

@@ -51,4 +51,8 @@ export default {
 .scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+.fade-opacity {
+  transition: opacity 0.3s ease;
+}
 </style>

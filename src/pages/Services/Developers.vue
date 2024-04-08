@@ -5,7 +5,7 @@
         <div
             class="container mx-auto text-4xl tracking-tighter text-[#2c2c2c] flex flex-col justify-center md:text-4xl lg:text-5xl lg:items-start mb-5">
             <h1 class="show-title pl-6 md:pb-6" :style="{ 'opacity': titleShow ? '1' : '0' }">Sviluppatori</h1>
-            <h1 class="pl-36 title-gradient of-what-title" id="ofWhat">
+            <h1 class="pl-48  title-gradient of-what-title" id="ofWhat">
                 Ma di cosa
                 <span class="text-[#2c2c2c]">?</span>
             </h1>
@@ -48,8 +48,8 @@
             </div>
 
             <!-- cards -->
-            <div class="px-2 overflow-x-auto scrollbar">
-                <div class="flex gap-24 justify-start py-10 md:justify-center md:flex-wrap lg:gap-36">
+            <div class="px-2 overflow-x-auto scrollbar" ref="langContainer" @scroll="ScrollLangContainer">
+                <div class="flex gap-12 justify-start py-10 md:justify-center md:flex-wrap lg:gap-36">
                     <LittleSlotLight v-for="(card, index) in langCards" :key="index" class="lang-card">
                         <!-- card title -->
                         <div class="text-2xl mb-10 text-slate-700">
@@ -69,6 +69,13 @@
                     </LittleSlotLight>
                 </div>
             </div>
+
+            <!-- freccia destra per far capire che ci sono altre card orizzontalmente -->
+            <div class="flex justify-end px-8 pb-6 md:hidden">
+                <font-awesome-icon icon="fa-solid fa-arrow-right-long" :class="{ 'opacity-0': isLastLangCardVisible }"
+                    class="fade-opacity" />
+            </div>
+
         </div>
 
         <div class="min-h-[60vh] tracking-tighter bg-[#FAFAFA]">
@@ -90,7 +97,7 @@
                             class="lg:hidden bg-white shadow-lg p-2 rounded-full w-[14px] h-[14px]" />
                     </span>
 
-                    <div class="bg-white border absolute rounded-md text-[14px] p-2 leading-4 text-[#9c9a9a] w-[300px] lg:w-[200px] left-[-140px] md:left-[-200px] md:top-[-10px] text-center"
+                    <div class="bg-white border absolute rounded-md text-[14px] p-2 leading-4 text-[#606060dd] w-[300px] lg:w-[200px] left-[-140px] md:left-[-200px] md:top-[-10px] text-center"
                         ref="infoFramework" style="opacity: 0;">
                         <p class="z-50">
                             Un framework è un sistema che consente di estendere le funzionalità del
@@ -102,8 +109,8 @@
             </div>
 
             <!-- cards -->
-            <div class="overflow-x-auto px-2 scrollbar">
-                <div class="flex gap-24 justify-start md:justify-center py-20 lg:gap-40">
+            <div class="overflow-x-auto px-2 scrollbar" ref="FrameContainer" @scroll="ScrollFrameContainer">
+                <div class="flex gap-12 justify-start md:justify-center py-20 lg:gap-40">
                     <LittleSlotLight v-for="(card, index) in frameworkCards" :key="index"
                         class="framework-card relative ps-10">
                         <!-- card title -->
@@ -115,14 +122,14 @@
                         <div class="w-[100px]">
                             <img :src="card.img" alt="">
                         </div>
-
-                        <!-- card description -->
-                        <!-- <div class=" inset-0 flex items-center justify-center text-center leading-6 text-[#2C2C2C]"
-                        :ref="'frameworkDescription_' + index">
-                        <p>{{ card.description }}</p>
-                    </div> -->
                     </LittleSlotLight>
                 </div>
+            </div>
+
+            <!-- freccia destra per far capire che ci sono altre card orizzontalmente -->
+            <div class="flex justify-end px-8 pb-6 md:hidden">
+                <font-awesome-icon icon="fa-solid fa-arrow-right-long" :class="{ 'opacity-0': isLastFrameCardVisible }"
+                    class="fade-opacity" />
             </div>
         </div>
     </section>
@@ -136,20 +143,20 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import HeaderServices from '../../components/HeaderServices.vue';
 
 
-
 export default {
 
     components: {
         BigSlotLight,
         LittleSlotLight,
-        HeaderServices
+        HeaderServices,
     },
 
     data() {
         return {
             titleShow: false,
-
             activeLangDescriptionIndex: null,
+            isLastLangCardVisible: false,
+            isLastFrameCardVisible: false,
 
             devCards: [
                 {
@@ -306,6 +313,20 @@ export default {
             this.activeLangDescriptionIndex = null;
         },
 
+        // fai sparire freccia se viene visualizzata ultima card linguaggi
+        ScrollLangContainer() {
+            const container = this.$refs.langContainer;
+            const containerRight = container.getBoundingClientRect().right;
+            const lastCard = document.querySelector('.lang-card:last-child');
+            const lastCardRight = lastCard.getBoundingClientRect().right;
+
+            if (lastCardRight <= containerRight + 1) {
+                this.isLastLangCardVisible = true;
+            } else {
+                this.isLastLangCardVisible = false;
+            }
+        },
+
         ///////////////////////////////////////////////////// FRAMEWORK
 
         // animazione titolo dei framework
@@ -370,6 +391,20 @@ export default {
                     opacity: 0,
                     duration: 0.5
                 });
+        },
+
+        // fai sparire freccia se viene visualizzata ultima card Framework
+        ScrollFrameContainer() {
+            const container = this.$refs.FrameContainer;
+            const containerRight = container.getBoundingClientRect().right;
+            const lastCard = document.querySelector('.framework-card:last-child');
+            const lastCardRight = lastCard.getBoundingClientRect().right;
+
+            if (lastCardRight <= containerRight + 1) {
+                this.isLastFrameCardVisible = true;
+            } else {
+                this.isLastFrameCardVisible = false;
+            }
         },
     },
 

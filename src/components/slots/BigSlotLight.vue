@@ -1,6 +1,6 @@
 <template>
     <div
-        class="p-3 flex flex-col items-center max-w-[300px] lg:max-w-[400px] justify-between  text-gray-600 tracking-tighter border rounded-2xl bg-white shadow-lg">
+        class="p-3 flex flex-col items-center justify-between  text-gray-600 tracking-tighter  border  rounded-2xl  bg-white shadow-lg relative">
         <slot></slot>
     </div>
 </template>
@@ -19,3 +19,18 @@ export default {
     }
 }
 </script>
+
+<style>
+.big-card {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    color: #1D1D1F;
+    letter-spacing: -0.05em;
+    border: solid 1px;
+    border-radius: 16px;
+    background-color: white;
+}
+</style>

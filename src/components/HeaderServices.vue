@@ -1,7 +1,7 @@
 <template>
-    <div class="bg-[#414141] px-2  tracking-tight flex justify-between text-[#faf8f8] mb-3 text-[15px] sm:text-[16px] sm:px-10 z-20"
+    <div class="bg-[#414141] px-2  tracking-tight flex justify-between items-center text-[#faf8f8] mb-3 text-[15px] sm:text-[16px] sm:px-10 z-20"
         id="headerService">
-        <span class="font-semibold flex gap-4 items-center">
+        <span class="font-semibold flex gap-4 items-center" id="containerHeaderSticky">
             <span>Servizi</span>
             <span class="font-normal text-[14px] sm:text-[15px] text-[#dcdcdc] md:hidden" id="currentPageTitle">
                 {{ currentPageService }}
@@ -29,7 +29,7 @@
                 @click="setCurrentPage(service.title)">
                 <LittleSlotLight class="slide-item h-[100%]"
                     :style="{ 'transition-delay': index * 100 + 'ms', 'opacity': service.visible ? '1' : '0' }">
-                    <div>
+                    <div class="w-[60px]">
                         <img :src="service.img" alt="">
                     </div>
 
@@ -172,14 +172,19 @@ export default {
         animateHeaderService() {
             const headerService = document.getElementById('headerService');
             const headerServiceTitle = document.getElementById('currentPageTitle')
+            const containerHeaderSticky = document.getElementById('containerHeaderSticky')
             if (headerService) {
                 if (window.scrollY > 300) {
                     headerService.classList.add('scrolled-sticky-header');
                     headerServiceTitle.classList.add('color-black', 'page-current-title');
+                    containerHeaderSticky.classList.add('flex-col');
+                    containerHeaderSticky.classList.remove('gap-4');
                 } else {
                     headerService.classList.remove('scrolled-sticky-header');
                     headerService.classList.add('restore-sticky-header');
                     headerServiceTitle.classList.remove('color-black', 'page-current-title');
+                    containerHeaderSticky.classList.remove('flex-col');
+                    containerHeaderSticky.classList.add('gap-4');
                 }
             }
         }

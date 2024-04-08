@@ -1,9 +1,9 @@
 <template>
-    <div class="bg-[#414141] px-2 tracking-tight flex justify-between text-[#faf8f8] mb-3 text-[15px] sm:text-[16px] sm:px-10 sticky top-0 left-0 right-0 z-20"
+    <div class="bg-[#414141] px-2 tracking-tight flex justify-between text-[#faf8f8] mb-3 text-[15px] sm:text-[16px] sm:px-10 sticky top-0 left-0 right-0 z-20 items-center"
         id="headerAbout">
-        <span class="font-semibold flex gap-4 items-center">
+        <span class="font-semibold flex gap-4 items-center" id="containerHeaderSticky">
             <span>About</span>
-            <span class="font-normal text-[14px] sm:text-[15px] text-[#dcdcdc]" id="currentPageTitleAbout">
+            <span class="font-normal text-[14px] sm:text-[15px] text-[#dcdcdc] md:hidden" id="currentPageTitleAbout">
                 {{ currentPageAbout }}
             </span>
         </span>
@@ -30,11 +30,11 @@
                 <LittleSlotLight class="slide-item h-[100%]"
                     :style="{ 'transition-delay': index * 100 + 'ms', 'opacity': info.visible ? '1' : '0' }"
                     @click="setCurrentPage(info.title)">
-                    <div>
+                    <div class="w-[60px]">
                         <img :src="info.img" alt="">
                     </div>
 
-                    <div class="text-[#4d4c4c]">
+                    <div class="text-[#4d4c4c] text-center">
                         <span>{{ info.title }}</span>
                     </div>
                 </LittleSlotLight>
@@ -160,10 +160,14 @@ export default {
                 if (window.scrollY > 300) {
                     headerAbout.classList.add('scrolled-sticky-header');
                     headerAboutTitle.classList.add('color-black', 'page-current-title');
+                    containerHeaderSticky.classList.add('flex-col');
+                    containerHeaderSticky.classList.remove('gap-4');
                 } else {
                     headerAbout.classList.remove('scrolled-sticky-header');
                     headerAbout.classList.add('restore-sticky-header');
                     headerAboutTitle.classList.remove('color-black', 'page-current-title');
+                    containerHeaderSticky.classList.remove('flex-col');
+                    containerHeaderSticky.classList.add('gap-4');
                 }
             }
 

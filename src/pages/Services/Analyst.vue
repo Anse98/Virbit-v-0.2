@@ -40,7 +40,7 @@
             <div class="flex flex-col flex-wrap items-center gap-8 md:flex-row md:justify-center">
                 <!-- cards -->
                 <BigSlotLight v-for="(analyst, index) in analystCards" :key="index"
-                    class="w-[350px] analyst-card h-[350px]">
+                    class="analyst-card w-[350px] md:min-h-[400px] cursor-pointer" @click="openModal(analyst)">
                     <!-- card title -->
                     <div class="text-2xl text-center pb-10 text-slate-700">
                         <h5>
@@ -55,10 +55,63 @@
                     </div>
 
                     <!-- card img -->
-                    <div class="w-[250px]">
+                    <div class="w-[250px] pb-6">
                         <img :src=analyst.img alt="">
                     </div>
+
+                    <!-- icona fondo card -->
+                    <div class="flex justify-end w-full px-3">
+                        <font-awesome-icon icon="fa-solid fa-arrow-right-long" />
+                    </div>
                 </BigSlotLight>
+            </div>
+        </div>
+
+        <!-- Modale se clicchi analyst card-->
+        <div v-if="showModal"
+            class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50 backdrop-blur-sm">
+            <div class="bg-white p-3 rounded-2xl w-[95vw] h-[88vh] tracking-tighter overflow-y-auto scrollbar">
+
+                <!-- close btn -->
+                <div class="flex justify-end pb-4 first-letter: z-50">
+                    <span @click="closeModal"
+                        class="border rounded-full w-[30px] h-[30px] flex justify-center items-center bg-[#37373A] bg-opacity-50 text-[#47474A] hover:text-white cursor-pointer">
+                        <font-awesome-icon icon="fa-solid fa-xmark" />
+                    </span>
+                </div>
+
+                <!-- titolo del modale -->
+                <div class="flex justify-center mt-10">
+                    <h2 class="text-4xl lg:text-6xl  text-center font-semibold">
+                        {{ selectedAnalyst.title }}
+                    </h2>
+                </div>
+
+                <!-- gif del modale-->
+                <div class="md:flex md:justify-center">
+                    <component :is="selectedAnalyst.component" />
+                </div>
+
+                <!-- descrizione chi è process analyst -->
+                <div
+                    class="text-[16px] md:text-[18px] lg:text-[20px] p-4 font-medium text-[#757575] mb-12 md:text-center">
+                    <p>
+                        {{ selectedAnalyst.description[0] }}
+                    </p>
+                </div>
+
+                <!-- img -->
+                <div class="md:flex md:justify-center">
+                    <img :src="selectedAnalyst.modalImg" alt="">
+                </div>
+
+                <div
+                    class="text-[16px] md:text-[18px] lg:text-[20px] p-4 font-medium text-[#757575] mt-12 md:text-center">
+                    <p>
+                        {{ selectedAnalyst.description[1] }}
+                    </p>
+                </div>
+
             </div>
         </div>
     </section>
@@ -69,12 +122,18 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import BigSlotLight from '../../components/slots/BigSlotLight.vue';
 import HeaderServices from '../../components/HeaderServices.vue';
+import ProcessAnalystGif from '../../components/gif/analyst/ProcessAnalystGif.vue';
+import DataAnalystGif from '../../components/gif/analyst/DataAnalystGif.vue';
+import CybersecurityAnalystGif from '../../components/gif/analyst/CybersecurityAnalystGif.vue';
 
 export default {
 
     components: {
         BigSlotLight,
-        HeaderServices
+        HeaderServices,
+        ProcessAnalystGif,
+        DataAnalystGif,
+        CybersecurityAnalystGif
     },
 
     data() {
@@ -83,21 +142,46 @@ export default {
                 {
                     title: 'Analisti di Processi Aziendali',
                     subTitle: 'Processes Analyst',
-                    img: '/img/services/analyst/processAnalyst.png'
+                    img: '/img/services/analyst/processAnalyst.png',
+                    modalImg: '/img/services/analyst/processAnalystModal.png',
+                    component: 'ProcessAnalystGif',
+                    description: [
+                        " Il principale compito di un Analista di Processo consiste nel garantire che un'azienda sia agile, competitiva e performante. In pratica, la sua mission è quella di migliorare il modo di lavorare attraverso soluzioni tecnologiche mirate e di coordinare l'intero iter aziendale, suggerendo miglioramenti procedurali e produttivi.",
+
+                        "Il process analyst supporta l'intero processo aziendale in termini di business, valutando le operazioni e i sistemi, perché rispondano esponenzialmente agli obiettivi prefissati."
+                    ]
                 },
 
                 {
                     title: 'Analisti di Sicurezza Informatica',
                     subTitle: 'Cybersecurity Analyst',
-                    img: '/img/services/analyst/analystCybersecurity.png'
+                    img: '/img/services/analyst/analystCybersecurity.png',
+                    component: 'CybersecurityAnalystGif',
+                    modalImg: '/img/services/analyst/cybersecurityAnalystModal.png',
+                    description: [
+                        "Il Cyber Security Analyst è un professionista fondamentale nel panorama tecnologico attuale, e si occupa di prevenire gli attacchi informatici e di proteggere l'azienda su diversi fronti: dati, software, hardware e reti.",
+
+                        "L'obiettivo di questo professionista è quello di implementare continuamente miglioramenti nella sicurezza della rete aziendale e salvaguardare dati sensibili da minacce esterne."
+                    ]
                 },
 
                 {
                     title: 'Analisti di Dati',
                     subTitle: 'Data Analyst',
-                    img: '/img/services/analyst/dataAnalyst.png'
+                    img: '/img/services/analyst/dataAnalyst.png',
+                    component: 'DataAnalystGif',
+                    modalImg: '/img/services/analyst/dataAnalystModal.png',
+                    description: [
+
+                        "La mansione principale, intorno alla quale ruota l’intera attività di data analisi, è la traduzione. Il profilo potrebbe essere definito un traduttore di numeri, il quale si occupa di trasformare i dati grezzi in informazioni di valore, ovvero in informazioni utili per le decisioni aziendali.",
+
+                        "Attraverso il valore generato dai dati le aziende hanno la possibilità di prendere decisioni in maniera tempestiva e di ottenere un vantaggio notevole in termini di competitività."
+                    ]
                 },
-            ]
+            ],
+
+            showModal: false,
+            selectedAnalyst: {}
         };
     },
 
@@ -159,6 +243,16 @@ export default {
                     toggleActions: "play none none none",
                 },
             });
+        },
+
+        // modale
+        openModal(analyst) {
+            this.selectedAnalyst = analyst;
+            this.showModal = true;
+        },
+
+        closeModal() {
+            this.showModal = false;
         },
     },
 

@@ -62,7 +62,7 @@
 
         <!-- cards dei software -->
         <div class="bg-[#FAFAFA] py-12 flex justify-center gap-10 flex-wrap px-2">
-            <BigSlotLight v-for="(soft, index) in software " class="softCards">
+            <BigSlotLight v-for="(soft, index) in software " class="softCards w-[300px] sm:w-[400px]">
                 <!-- img -->
                 <div class="w-full mb-12">
                     <img :src="soft.img" alt="Immagine Software che utilizziamo">

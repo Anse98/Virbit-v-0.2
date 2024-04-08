@@ -1,13 +1,11 @@
 <script>
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
-import ScrollToTop from './components/ScrollToTop.vue';
 
 export default {
   components: {
     Header,
     Footer,
-    ScrollToTop
   },
   data() {
     return {
@@ -58,7 +56,6 @@ export default {
 <template>
   <Header />
   <router-view></router-view>
-  <ScrollToTop />
   <Footer />
 </template>
 
@@ -93,8 +90,8 @@ export default {
 
 /* HeaderComponents */
 .scrolled-sticky-header {
-  padding: 12px 12px;
-  background-color: #F5F5F7;
+  padding: 0 12px;
+  background-color: #dddddd;
   color: #1D1D1F;
   opacity: 0.9;
   backdrop-filter: blur(6px);
@@ -115,11 +112,14 @@ export default {
   transition: all 0.6s ease;
 }
 
-.color-black {
-  color: #1D1D1F;
+.page-current-title {
+  font-size: 15px;
+  font-style: italic;
 }
 
-.page-current-title {
-  font-size: 16px;
+/*general style*/
+
+.color-black {
+  color: #1D1D1F;
 }
 </style>

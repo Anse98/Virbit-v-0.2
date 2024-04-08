@@ -31,7 +31,7 @@
 .modelViewPort {
     /* The black circle background around the model*/
     perspective: 1000px;
-    width: 20rem;
+    width: 17rem;
     aspect-ratio: 1;
     border-radius: 10%;
     background-color: rgb(44, 44, 44);

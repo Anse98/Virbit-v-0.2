@@ -40,7 +40,7 @@
             <div class="flex flex-col flex-wrap items-center gap-8 md:flex-row md:justify-center">
                 <!-- cards -->
                 <BigSlotLight v-for="(analyst, index) in analystCards" :key="index"
-                    class="analyst-card w-[350px] md:min-h-[400px] cursor-pointer" @click="openModal(analyst)">
+                    class="analyst-card w-[300px] md:min-h-[400px] cursor-pointer" @click="openModal(analyst)">
                     <!-- card title -->
                     <div class="text-2xl text-center pb-10 text-slate-700">
                         <h5>
@@ -75,41 +75,43 @@
                 <!-- close btn -->
                 <div class="flex justify-end pb-4 first-letter: z-50">
                     <span @click="closeModal"
-                        class="border rounded-full w-[30px] h-[30px] flex justify-center items-center bg-[#37373A] bg-opacity-50 text-[#47474A] hover:text-white cursor-pointer">
+                        class="border absolute z-50 rounded-full w-[30px] h-[30px] flex justify-center items-center bg-[#37373A] bg-opacity-50 text-[#47474A] hover:text-white cursor-pointer">
                         <font-awesome-icon icon="fa-solid fa-xmark" />
                     </span>
                 </div>
 
-                <!-- titolo del modale -->
-                <div class="flex justify-center mt-10">
-                    <h2 class="text-4xl lg:text-6xl  text-center font-semibold">
-                        {{ selectedAnalyst.title }}
-                    </h2>
-                </div>
+                <div class="px-7">
+                    <!-- titolo del modale -->
+                    <div class="flex justify-center mt-10">
+                        <h2 class="text-4xl lg:text-6xl  text-center font-semibold">
+                            {{ selectedAnalyst.title }}
+                        </h2>
+                    </div>
 
-                <!-- gif del modale-->
-                <div class="md:flex md:justify-center">
-                    <component :is="selectedAnalyst.component" />
-                </div>
+                    <!-- gif del modale-->
+                    <div class="md:flex md:justify-center">
+                        <component :is="selectedAnalyst.component" />
+                    </div>
 
-                <!-- descrizione chi è process analyst -->
-                <div
-                    class="text-[16px] md:text-[18px] lg:text-[20px] p-4 font-medium text-[#757575] mb-12 md:text-center">
-                    <p>
-                        {{ selectedAnalyst.description[0] }}
-                    </p>
-                </div>
+                    <!-- descrizione chi è process analyst -->
+                    <div
+                        class="text-[16px] md:text-[18px] lg:text-[20px] p-4 font-medium text-[#2f2f2f] mb-12 md:text-center">
+                        <p>
+                            {{ selectedAnalyst.description[0] }}
+                        </p>
+                    </div>
 
-                <!-- img -->
-                <div class="md:flex md:justify-center">
-                    <img :src="selectedAnalyst.modalImg" alt="">
-                </div>
+                    <!-- img -->
+                    <div class="md:flex md:justify-center">
+                        <img :src="selectedAnalyst.modalImg" alt="">
+                    </div>
 
-                <div
-                    class="text-[16px] md:text-[18px] lg:text-[20px] p-4 font-medium text-[#757575] mt-12 md:text-center">
-                    <p>
-                        {{ selectedAnalyst.description[1] }}
-                    </p>
+                    <div
+                        class="text-[16px] md:text-[18px] lg:text-[20px] p-4 font-medium text-[#2f2f2f] mt-12 md:text-center">
+                        <p>
+                            {{ selectedAnalyst.description[1] }}
+                        </p>
+                    </div>
                 </div>
 
             </div>
@@ -245,15 +247,25 @@ export default {
             });
         },
 
-        // modale
+        ///////////////////////////////////////////// MODALE
         openModal(analyst) {
             this.selectedAnalyst = analyst;
             this.showModal = true;
+            this.disableBodyScroll();
         },
 
         closeModal() {
             this.showModal = false;
+            this.enableBodyScroll();
         },
+
+        disableBodyScroll() {
+            document.body.classList.add('overflow-y-hidden');
+        },
+
+        enableBodyScroll() {
+            document.body.classList.remove('overflow-y-hidden');
+        }
     },
 
     mounted() {

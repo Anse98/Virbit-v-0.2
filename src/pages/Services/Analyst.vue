@@ -76,7 +76,7 @@
         <div v-if="showModal"
             class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50 backdrop-blur-sm">
             <div
-                class="bg-white p-3 rounded-2xl w-[95vw] h-[88vh] lg:w-[60vw] tracking-tighter overflow-y-auto scrollbar font-medium">
+                class="bg-white p-3 rounded-2xl w-[95vw] h-[88vh] lg:w-[60vw] tracking-tighter overflow-y-auto scrollbar font-medium ">
 
                 <!-- close btn -->
                 <div class="flex justify-end pb-4 first-letter: z-50">

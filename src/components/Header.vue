@@ -128,6 +128,8 @@ export default {
             if (checkboxMenu.checked) {
                 checkboxMenu.checked = false
             }
+
+            this.enableBodyScroll();
         },
 
         disableBodyScroll() {

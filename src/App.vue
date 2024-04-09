@@ -122,4 +122,8 @@ export default {
 .color-black {
   color: #1D1D1F;
 }
+
+.color-gray {
+  color: #dbd9d9;
+}
 </style>

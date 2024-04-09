@@ -5,11 +5,11 @@
 
         <div class="container mx-auto tracking-tighter">
             <!-- title -->
-            <div class=" text-4xl md:text-5xl text-[#2c2c2c]">
+            <div class=" text-4xl md:text-5xl text-[#2c2c2c] font-medium">
                 <h1 class="main-title ps-2">
                     Trasforma le tue idee
                 </h1>
-                <h1 class="flex justify-end pe-4 text-[#9c9a9a] sub-title opacity-0">
+                <h1 class="flex justify-end pe-4 color-gray sub-title opacity-0">
                     In realtà.
                 </h1>
             </div>
@@ -22,9 +22,11 @@
             </div>
 
             <!-- first text -->
-            <div class="px-2 text-[16px] leading-8 first-text opacity-0 pb-6 md:text-center md:text-[18px]">
+            <div
+                class="px-2 text-[18px] leading-8 first-text opacity-0 pb-6 md:text-center md:text-[20px] color-black font-medium">
                 <p>
-                    Parla con un nostro Analista che ti proporrà piani di sviluppo a misura per te
+                    Parla con un nostro Analista che ti proporrà piani di sviluppo a <span
+                        class="color-black font-semibold">misura per te.</span>
                 </p>
             </div>
 
@@ -40,9 +42,10 @@
             <div class="flex flex-col flex-wrap items-center gap-8 md:flex-row md:justify-center">
                 <!-- cards -->
                 <BigSlotLight v-for="(analyst, index) in analystCards" :key="index"
-                    class="analyst-card w-[300px] md:min-h-[400px] cursor-pointer" @click="openModal(analyst)">
+                    class="analyst-card w-[300px] lg:w-[450px] md:min-h-[400px] cursor-pointer"
+                    @click="openModal(analyst)">
                     <!-- card title -->
-                    <div class="text-2xl text-center pb-10 text-slate-700">
+                    <div class="text-2xl text-center pb-10 color-black font-medium">
                         <h5>
                             {{ analyst.title }}
                         </h5>
@@ -61,26 +64,29 @@
 
                     <!-- icona fondo card -->
                     <div class="flex justify-end w-full px-3">
-                        <font-awesome-icon icon="fa-solid fa-arrow-right-long" />
+                        <CardButton>
+                            <font-awesome-icon icon="fa-solid fa-caret-up" />
+                        </CardButton>
                     </div>
                 </BigSlotLight>
             </div>
         </div>
 
-        <!-- Modale se clicchi analyst card-->
+        <!------------ Modale se clicchi analyst card --------------->
         <div v-if="showModal"
             class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50 backdrop-blur-sm">
-            <div class="bg-white p-3 rounded-2xl w-[95vw] h-[88vh] tracking-tighter overflow-y-auto scrollbar">
+            <div
+                class="bg-white p-3 rounded-2xl w-[95vw] h-[88vh] lg:w-[60vw] tracking-tighter overflow-y-auto scrollbar font-medium">
 
                 <!-- close btn -->
                 <div class="flex justify-end pb-4 first-letter: z-50">
                     <span @click="closeModal"
-                        class="border absolute z-50 rounded-full w-[30px] h-[30px] flex justify-center items-center bg-[#37373A] bg-opacity-50 text-[#47474A] hover:text-white cursor-pointer">
+                        class="border absolute z-50 rounded-full w-[30px] h-[30px] flex justify-center items-center bg-[#353535] text-[#e3e3e3] hover:text-white cursor-pointer">
                         <font-awesome-icon icon="fa-solid fa-xmark" />
                     </span>
                 </div>
 
-                <div class="px-7">
+                <div class="px-2">
                     <!-- titolo del modale -->
                     <div class="flex justify-center mt-10">
                         <h2 class="text-4xl lg:text-6xl  text-center font-semibold">
@@ -89,13 +95,13 @@
                     </div>
 
                     <!-- gif del modale-->
-                    <div class="md:flex md:justify-center">
+                    <div class="flex justify-center">
                         <component :is="selectedAnalyst.component" />
                     </div>
 
                     <!-- descrizione chi è process analyst -->
                     <div
-                        class="text-[16px] md:text-[18px] lg:text-[20px] p-4 font-medium text-[#2f2f2f] mb-12 md:text-center">
+                        class="text-[18px] md:text-[20px] lg:text-[20px] p-4 font-medium text-[#2f2f2f] mb-12 md:text-center">
                         <p>
                             {{ selectedAnalyst.description[0] }}
                         </p>
@@ -106,6 +112,7 @@
                         <img :src="selectedAnalyst.modalImg" alt="">
                     </div>
 
+                    <!-- seconda descrizione -->
                     <div
                         class="text-[16px] md:text-[18px] lg:text-[20px] p-4 font-medium text-[#2f2f2f] mt-12 md:text-center">
                         <p>
@@ -127,6 +134,7 @@ import HeaderServices from '../../components/HeaderServices.vue';
 import ProcessAnalystGif from '../../components/gif/analyst/ProcessAnalystGif.vue';
 import DataAnalystGif from '../../components/gif/analyst/DataAnalystGif.vue';
 import CybersecurityAnalystGif from '../../components/gif/analyst/CybersecurityAnalystGif.vue';
+import CardButton from '../../components/slots/CardButton.vue';
 
 export default {
 
@@ -135,7 +143,8 @@ export default {
         HeaderServices,
         ProcessAnalystGif,
         DataAnalystGif,
-        CybersecurityAnalystGif
+        CybersecurityAnalystGif,
+        CardButton
     },
 
     data() {

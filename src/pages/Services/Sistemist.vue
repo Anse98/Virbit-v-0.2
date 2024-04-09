@@ -5,8 +5,9 @@
 
         <div class="container mx-auto">
             <!-- titolo iniziale -->
-            <div class="text-4xl sm:text-5xl flex flex-col items-center lg:items-start gap-2 tracking-tighter pb-20">
-                <span class="text-gray-300 show-title me-10" :style="{ 'opacity': titleShow ? '1' : '0' }">
+            <div
+                class="text-4xl sm:text-5xl flex flex-col items-center lg:items-start gap-2 tracking-tighter pb-20 font-medium">
+                <span class="color-gray show-title me-10" :style="{ 'opacity': titleShow ? '1' : '0' }">
                     Un po di chiarezza<span class="text-[#2c2c2c]">.</span>
                 </span>
 
@@ -28,15 +29,18 @@
                 <!-- image -->
                 <div class="ps-12 lg:ps-0 lg:pe-40 pt-12 ">
                     <img src="../../img/services/sistemists/software-engineer.png" alt=""
-                        class="w-[190px] sm:w-[250px]">
+                        class="w-[310px] sm:w-[250px]">
                 </div>
 
                 <!-- text -->
-                <div class="container mx-auto flex justify-end tracking-tighter text-[#2c2c2c] text-center pr-16 sm:text-[20px] lg:text-3xl opacity-0"
+                <div class="container text-lg mx-auto flex justify-end tracking-tighter color-black font-medium text-center pr-16 sm:text-[20px] lg:text-3xl opacity-0"
                     ref="whoIsSistemist">
                     <p class="w-[90%] lg:w-[70%]">
-                        Il sistemista non è altro che un professionista che si occupa della progettazione, installazione
-                        e configurazione
+                        Il sistemista non è altro che un <span class="color-black font-bold">professionista</span>
+                        che si occupa
+                        della <span class="color-black font-bold">progettazione,
+                            installazione
+                            e configurazione</span>
                         di un sistema informatico.
                     </p>
                 </div>
@@ -44,9 +48,12 @@
             </div>
 
             <div
-                class="container mx-auto flex justify-center lg:justify-end  tracking-tighter text-[#2c2c2c] text-center pt-4 pb-10 who-sistemist-2text sm:text-[20px] lg:text-3xl lg:pt-20 lg:pb-28">
+                class="container mx-auto flex justify-center lg:justify-end  tracking-tighter color-black font-medium text-lg text-center pt-4 pb-10 who-sistemist-2text sm:text-[20px] lg:text-3xl lg:pt-20 lg:pb-28">
                 <p class="lg:w-[70%] px-2" ref="whoIsSistemist2">
-                    Il suo compito fondamentale è quindi assicurare la qualità e il funzionamento dell'infrastruttura
+                    Il suo compito fondamentale è quindi assicurare la <span
+                        class="font-bold color-black">qualità</span> e il
+                    <span class="color-black font-bold">funzionamento
+                        dell'infrastruttura</span>
                     digitale.
                 </p>
             </div>
@@ -185,7 +192,7 @@ export default {
                     toggleActions: "play none none none"
                 },
                 autoAlpha: 0,
-                y: 40,
+                y: -40,
                 duration: 1,
                 ease: "power1.inOut",
             });
@@ -202,7 +209,7 @@ export default {
                 ease: "power2.out",
                 scrollTrigger: {
                     trigger: softCards,
-                    start: "top bottom-=150",
+                    start: "top 90%",
                     end: "top center",
                     toggleActions: "play none none none",
                 },

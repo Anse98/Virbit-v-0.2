@@ -4,8 +4,9 @@
         <!-- title -->
         <div
             class="container mx-auto text-4xl tracking-tighter text-[#2c2c2c] flex flex-col justify-center md:text-4xl lg:text-5xl lg:items-start mb-5">
-            <h1 class="show-title pl-6 md:pb-6" :style="{ 'opacity': titleShow ? '1' : '0' }">Sviluppatori</h1>
-            <h1 class="pl-48  title-gradient of-what-title" id="ofWhat">
+            <h1 class="show-title pl-6 md:pb-6 font-medium" :style="{ 'opacity': titleShow ? '1' : '0' }">Sviluppatori
+            </h1>
+            <h1 class="pl-40  text-[#9e9ea4] of-what-title" id="ofWhat">
                 Ma di cosa
                 <span class="text-[#2c2c2c]">?</span>
             </h1>
@@ -16,10 +17,11 @@
 
             <!-- cards -->
             <div class="flex justify-center gap-10 flex-wrap py-6 devCardsContainer">
-                <BigSlotLight class="w-[350px] dev-card" v-for="(card, index) in devCards" ref="devCards">
+                <BigSlotLight class="w-[300px] lg:w-[450px] dev-card cursor-pointer" v-for="(card, index) in devCards"
+                    ref="devCards" @click="openModal(card)">
                     <!-- title -->
-                    <div class="text-3xl mb-10 text-slate-700">
-                        <h2>{{ card.name }}</h2>
+                    <div class="text-3xl mb-10 color-black">
+                        <h2>{{ card.name[0] }}</h2>
                     </div>
 
                     <!-- img -->
@@ -28,13 +30,88 @@
                     </div>
 
                     <!-- description -->
-                    <div class="text-center text-[#9c9a9a]">
+                    <div class="text-center font-medium">
                         <p>
                             {{ card.description }}
                         </p>
                     </div>
 
+                    <!-- icona fondo card -->
+                    <div class="flex justify-end w-full px-3 pt-8">
+                        <CardButton>
+                            <font-awesome-icon icon="fa-solid fa-caret-up" />
+                        </CardButton>
+                    </div>
+
                 </BigSlotLight>
+            </div>
+        </div>
+
+        <!---------------- Modale se clicchi developer card --------------->
+        <div v-if="showModal"
+            class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50 backdrop-blur-sm">
+            <div
+                class="bg-white p-3 rounded-2xl w-[95vw] h-[88vh] lg:w-[60vw] tracking-tighter overflow-y-auto scrollbar font-medium">
+
+                <!-- close btn -->
+                <div class="flex justify-end pb-4 first-letter: z-50">
+                    <span @click="closeModal"
+                        class="border absolute z-50 rounded-full w-[30px] h-[30px] flex justify-center items-center bg-[#353535] text-[#e3e3e3] hover:text-white cursor-pointer">
+                        <font-awesome-icon icon="fa-solid fa-xmark" />
+                    </span>
+                </div>
+
+                <div class="px-2">
+                    <!-- gif del modale-->
+                    <div class="flex justify-center relative" v-if="selectedDeveloper.component">
+                        <component :is="selectedDeveloper.component" />
+                    </div>
+
+                    <!-- titolo del modale -->
+                    <div class="flex my-20 text-4xl md:text-5xl lg:text-6xl">
+                        <h2 class="font-semibold">
+                            {{ selectedDeveloper.name[0] }}.
+                            <span class="color-gray">
+                                {{ selectedDeveloper.modalSubTitle[0] }}
+                            </span>
+                        </h2>
+                    </div>
+                </div>
+
+                <!-- img -->
+                <div class="flex justify-center mb-14">
+                    <img :src="selectedDeveloper.modalImg[0]" alt="" class="lg:w-[500px]">
+                </div>
+
+                <!-- prima descrizione -->
+                <div class="text-[18px] md:text-[20px] lg:text-[22px] text-center">
+                    <p>
+                        {{ selectedDeveloper.modalDescriptions[0] }}
+                    </p>
+                </div>
+
+                <!-- secondo titolo -->
+                <div class="flex mt-20 text-4xl md:text-5xl lg:text-6xl" v-if="selectedDeveloper.name[1]">
+                    <h2 class="font-semibold">
+                        {{ selectedDeveloper.name[1] }}.
+                        <span class="color-gray">
+                            {{ selectedDeveloper.modalSubTitle[1] }}
+                        </span>
+                    </h2>
+                </div>
+
+                <!-- img 2-->
+                <div class="flex justify-center my-14" v-if="selectedDeveloper.modalImg[1]">
+                    <img :src="selectedDeveloper.modalImg[1]" alt="" class="lg:w-[500px]">
+                </div>
+
+                <!-- seconda descrizione -->
+                <div class="text-[18px] md:text-[20px] lg:text-[22px] text-center"
+                    v-if="selectedDeveloper.modalDescriptions[1]">
+                    <p>
+                        {{ selectedDeveloper.modalDescriptions[1] }}
+                    </p>
+                </div>
             </div>
         </div>
 
@@ -49,30 +126,41 @@
 
             <!-- cards -->
             <div class="px-2 overflow-x-auto scrollbar" ref="langContainer" @scroll="ScrollLangContainer">
-                <div class="flex gap-12 justify-start py-10 md:justify-center md:flex-wrap lg:gap-36">
-                    <LittleSlotLight v-for="(card, index) in langCards" :key="index" class="lang-card">
-                        <!-- card title -->
-                        <div class="text-2xl mb-10 text-slate-700">
-                            <h4>{{ card.name }}</h4>
-                        </div>
+                <div class="flex gap-12 justify-start py-10 md:justify-center md:flex-wrap lg:gap-30">
+                    <LittleSlotLight v-for="(card, index) in langCards" :key="index"
+                        class="lang-card rounded-2xl py-4 px-7 shadow-xl">
+                        <a :href="card.wikiLink" class="flex flex-col gap-3 h-full">
+                            <!-- card img -->
+                            <div class="w-[200px]">
+                                <img :src="card.img" alt="" class="w-[40px]">
+                            </div>
 
-                        <!-- card img -->
-                        <div class="w-[100px]">
-                            <img :src="card.img" alt="">
-                        </div>
+                            <!-- card title -->
+                            <div class="text-lg mt-4 color-black font-semibold w-full">
+                                <h4>{{ card.name }}</h4>
+                            </div>
 
-                        <!-- card description -->
-                        <div class="description inset-0 flex items-center justify-center text-center leading-6 text-[#2C2C2C]"
-                            :ref="'description_' + index" v-show="activeLangDescriptionIndex === index">
-                            <p class="bg-white border p-2">{{ card.description }}</p>
-                        </div>
+                            <!-- card description -->
+                            <div class="color-black font-medium  md:w-[200px]">
+                                <p>
+                                    {{ card.description }}
+                                </p>
+                            </div>
+
+                            <!-- link di riferimento wikipedia-->
+                            <div class="flex justify-end flex-grow items-end">
+                                <CardButton>
+                                    <font-awesome-icon icon="fa-brands fa-wikipedia-w" />
+                                </CardButton>
+                            </div>
+                        </a>
                     </LittleSlotLight>
                 </div>
             </div>
 
             <!-- freccia destra per far capire che ci sono altre card orizzontalmente -->
             <div class="flex justify-end px-8 pb-6 md:hidden">
-                <font-awesome-icon icon="fa-solid fa-arrow-right-long" :class="{ 'opacity-0': isLastLangCardVisible }"
+                <font-awesome-icon icon="fa-solid fa-caret-right" :class="{ 'opacity-0': isLastLangCardVisible }"
                     class="fade-opacity" />
             </div>
 
@@ -84,51 +172,46 @@
             <div class="py-8 text-3xl md:text-3xl flex flex-col font-semibold text-[#2C2C2C] items-center justify-between lg:flex-row lg:px-4 lg:text-4xl"
                 ref="frameworkTitle">
 
-                <h2 class="text-center pb-6 lg:pb-0">
+                <h2 class="text-center pb-2 lg:pb-0">
                     Alcuni dei framework che utilizziamo
                 </h2>
-
-                <div class="relative">
-                    <span class="text-[20px] text-[#4790D9] cursor-pointer lg:pe-10 flex flex-col items-center"
-                        @click="toggleInfoFramework()">
-                        <font-awesome-icon icon="fa-solid fa-lightbulb"
-                            class="hidden lg:block bg-white shadow-lg p-2 rounded-full w-[14px] h-[14px]" />
-                        <font-awesome-icon icon="fa-solid fa-info"
-                            class="lg:hidden bg-white shadow-lg p-2 rounded-full w-[14px] h-[14px]" />
-                    </span>
-
-                    <div class="bg-white border absolute rounded-md text-[14px] p-2 leading-4 text-[#606060dd] w-[300px] lg:w-[200px] left-[-140px] md:left-[-200px] md:top-[-10px] text-center"
-                        ref="infoFramework" style="opacity: 0;">
-                        <p class="z-50">
-                            Un framework è un sistema che consente di estendere le funzionalità del
-                            linguaggio di programmazione su cui è basato, fornendo allo sviluppatore una struttura
-                            coerente ed efficace al fine di effettuare azioni e comandi in modo semplice e veloce.
-                        </p>
-                    </div>
-                </div>
             </div>
 
             <!-- cards -->
             <div class="overflow-x-auto px-2 scrollbar" ref="FrameContainer" @scroll="ScrollFrameContainer">
-                <div class="flex gap-12 justify-start md:justify-center py-20 lg:gap-40">
+                <div class="flex gap-12 justify-start py-10 md:justify-center md:flex-wrap lg:gap-30">
                     <LittleSlotLight v-for="(card, index) in frameworkCards" :key="index"
-                        class="framework-card relative ps-10">
-                        <!-- card title -->
-                        <div class="text-2xl mb-10 text-slate-700 text-center z-10">
-                            <h4>{{ card.name }}</h4>
-                        </div>
+                        class="framework-card rounded-2xl py-4 px-7 shadow-xl">
+                        <a :href="card.frameLink" class="flex flex-col gap-3 h-full">
+                            <!-- card img -->
+                            <div class="w-[200px]">
+                                <img :src="card.img" alt="" class="w-[40px]">
+                            </div>
 
-                        <!-- card img -->
-                        <div class="w-[100px]">
-                            <img :src="card.img" alt="">
-                        </div>
+                            <!-- card title -->
+                            <div class="text-lg mt-4 color-black font-semibold w-full">
+                                <h4>{{ card.name }}</h4>
+                            </div>
+
+                            <!-- card description -->
+                            <div class="color-black font-medium  md:w-[200px]">
+                                <p>
+                                    {{ card.description }}
+                                </p>
+                            </div>
+
+                            <!-- link di riferimento wikipedia-->
+                            <div class="flex justify-end flex-grow items-end">
+                                <img :src="card.img" alt="" class="w-[30px]">
+                            </div>
+                        </a>
                     </LittleSlotLight>
                 </div>
             </div>
 
             <!-- freccia destra per far capire che ci sono altre card orizzontalmente -->
             <div class="flex justify-end px-8 pb-6 md:hidden">
-                <font-awesome-icon icon="fa-solid fa-arrow-right-long" :class="{ 'opacity-0': isLastFrameCardVisible }"
+                <font-awesome-icon icon="fa-solid fa-caret-right" :class="{ 'opacity-0': isLastFrameCardVisible }"
                     class="fade-opacity" />
             </div>
         </div>
@@ -141,6 +224,9 @@ import LittleSlotLight from '../../components/slots/LittleSlotLight.vue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import HeaderServices from '../../components/HeaderServices.vue';
+import CardButton from '../../components/slots/CardButton.vue';
+import ResponsiveAnimation from '../../components/gif/developers/ResponsiveAnimation.vue';
+import WebappAnimation from '../../components/gif/developers/WebappAnimation.vue';
 
 
 export default {
@@ -149,6 +235,9 @@ export default {
         BigSlotLight,
         LittleSlotLight,
         HeaderServices,
+        CardButton,
+        ResponsiveAnimation,
+        WebappAnimation
     },
 
     data() {
@@ -157,80 +246,140 @@ export default {
             activeLangDescriptionIndex: null,
             isLastLangCardVisible: false,
             isLastFrameCardVisible: false,
+            showModal: false,
+            selectedDeveloper: {},
 
             devCards: [
                 {
-                    name: 'Siti Web',
+                    name: [
+                        'Siti Web',
+                        'Il limite'
+                    ],
+
                     img: '/img/services/developers/website.png',
-                    description: 'Hai bisogno di un sito web per la tua azienda, attività o semplicemente per te stesso? Ci pensiamo noi!'
+                    description: 'Hai bisogno di un sito web per la tua azienda, attività o semplicemente per te stesso? Ci pensiamo noi!',
+                    component: 'ResponsiveAnimation',
+                    modalImg: [
+                        '/img/services/developers/websiteModal.png',
+                        '/img/services/developers/websiteModal2.png'
+                    ],
+                    modalSubTitle: [
+                        'Completamente responsive per ogni dispositivo.',
+                        "E' solo la tua fantasia."
+                    ],
+                    modalDescriptions: [
+                        "Mettici alla prova con Siti Web completi e che si adattano ad ogni tua esigenza. Tempi di sviluppo rapidi, ogni tua richiesta è una nostra priorità.",
+
+                        "Tu pensa a cosa vuoi creare, noi lo creiamo!"
+                    ]
                 },
 
                 {
-                    name: 'Web App',
+                    name: [
+                        'Web App',
+                        ''
+                    ],
                     img: '/img/services/developers/webapp.png',
-                    description: 'Sviluppiamo anche Web App su misura per te! Senza scroll della pagina e con tutte le funzionalità richieste.'
+                    description: 'Sviluppiamo anche Web App su misura per te! Senza scroll della pagina e con tutte le funzionalità richieste.',
+                    component: 'WebappAnimation',
+                    modalImg: [
+                        '/img/services/developers/WebappModal.png',
+                    ],
+                    modalSubTitle: [
+                        'Disegnate a misura per te.',
+                        "E' solo la tua fantasia."
+                    ],
+                    modalDescriptions: [
+                        "Nessuno scroll della pagina, tutto visibile a schermo e con tutte le funzioni da te richieste. Alla fine sono come Siti Web, solo tutto a portata di schermo!",
+                    ]
                 },
 
                 {
-                    name: 'Software Aziendali',
+                    name: [
+                        'Software Aziendali',
+                        'Crea'
+                    ],
                     img: '/img/services/developers/software.png',
-                    description: 'Software di calcolo, filtraggio, monitoraggio delle statistiche e altri tool utili per te e la tua attività!'
+                    description: 'Software di calcolo, filtraggio, monitoraggio delle statistiche e altri tool utili per te e la tua attività!',
+                    component: '',
+                    modalImg: [
+                        '/img/services/developers/softwareModal.png',
+                        '/img/services/developers/softwareModal2.png',
+                    ],
+                    modalSubTitle: [
+                        'Qualsiasi.',
+                        'Velocizza.'
+                    ],
+                    modalDescriptions: [
+                        "Da software di calcolo a software di monitoraggio delle statistiche, adattiamo il progetto per aiutare te e la tua azienda a risparmiare tempo e fatica.",
+
+                        "Lascia fare al software tutte quelle azioni noiose e ripetitive, concentrati invece sulle cose più importanti."
+                    ]
                 },
             ],
             langCards: [
                 {
                     name: 'Html5',
                     img: '/img/services/developers/HTML5.png',
-                    description: 'È praticamente impossibile parlare di web, della sua storia e del suo sviluppo senza citare HTML.HTML è un linguaggio che permette di impaginare e formattare pagine collegate fra di loro attraverso link - ovvero, i siti web.'
+                    description: 'La base dello sviluppo Web, senza non vai da nessuna parte.',
+                    wikiLink: 'https://it.wikipedia.org/wiki/HTML'
                 },
 
                 {
                     name: 'Css3',
                     img: '/img/services/developers/css.png',
-                    description: "Essenzialmente, il CSS è un linguaggio che gestisce il design e la presentazione delle pagine web (cioè l'aspetto estetico) e lavora in combinazione con l'HTML."
+                    description: "CSS ti permette di stilizzare la pagina come vuoi. 'Da un garage ad un loft' diceva qualcuno.",
+                    wikiLink: 'https://it.wikipedia.org/wiki/CSS'
                 },
 
                 {
                     name: 'Javascript',
                     img: '/img/services/developers/js.png',
-                    description: "JavaScript è un linguaggio di scripting utilizzato comunemente in ambito web per la creazione di effetti dinamici interattivi, tramite funzioni di script invocate da eventi innescati dall'utente sulla pagina web in uso"
+                    description: "Tutto ciò che riguarda interazione con gli utenti? Ci pensa Javascript.",
+                    wikiLink: 'https://it.wikipedia.org/wiki/JavaScript'
                 },
 
                 {
                     name: 'PHP',
                     img: '/img/services/developers/php.png',
-                    description: "PHP è un linguaggio di scripting open source generico, usato per lo più nello sviluppo web. PHP è un acronimo ricorsivo: significa che l'acronimo stesso è contenuto come prima parola nello scioglimento della sigla - infatti PHP sta per PHP: Hypertext Preprocessor."
+                    description: "Anche PHP è stato originariamente concepito per la programmazione di pagine dinamiche, ora è molto di più.",
+                    wikiLink: 'https://it.wikipedia.org/wiki/PHP'
                 },
 
                 {
                     name: 'C#',
                     img: '/img/services/developers/c-sharp.png',
-                    description: "C# (o C Sharp) è un linguaggio di programmazione moderno sviluppato da Microsoft e fa parte dell'ecosistema .NET. Nato nel 2000 come risposta ai linguaggi come Java, si è rapidamente affermato come uno dei linguaggi di programmazione più utilizzati al mondo."
+                    description: "C# (o C Sharp) è un linguaggio di programmazione moderno sviluppato da Microsoft e fa parte dell'ecosistema .NET.",
+                    wikiLink: 'https://it.wikipedia.org/wiki/C_sharp'
                 },
             ],
             frameworkCards: [
                 {
                     name: 'Bootstrap',
                     img: '/img/services/developers/bootstrap.png',
-                    description: 'Bootstrap è un framework css di sviluppo web gratuito e open source. È progettato per facilitare il processo di sviluppo di siti web responsive e mobile-first fornendo una raccolta di sintassi per i modelli di progettazione.'
+                    description: 'Bootstrap, un framework CSS per facilitare il processo di sviluppo di siti web responsive e mobile-first.Fornisce anche molti componenti già fatti.',
+                    frameLink: 'https://getbootstrap.com/'
                 },
 
                 {
                     name: 'Tailwind',
                     img: '/img/services/developers/tailwind.png',
-                    description: 'Tailwind CSS è un framework CSS di basso livello, molto personalizzabile, che offre tutti gli elementi di costruzione di cui hai bisogno per creare progetti su misura. Una potente alternativa a Bootstrap.'
+                    description: 'Tailwind CSS è un framework CSS di basso livello, molto personalizzabile, che offre tutti gli elementi di costruzione di cui hai bisogno per creare progetti su misura.',
+                    frameLink: 'https://tailwindcss.com/'
                 },
 
                 {
                     name: 'Vue Js',
                     img: '/img/services/developers/vue.png',
-                    description: 'Vue è un framework Javascript open source per la creazione di interfacce utente (UI, User Interface), quindi è usato principalmente per lo sviluppo front-end.'
+                    description: 'Vue è un framework Javascript per la creazione di interfacce utente (UI, User Interface), quindi è usato principalmente per lo sviluppo front-end.',
+                    frameLink: 'https://vuejs.org/'
                 },
 
                 {
                     name: 'Laravel',
                     img: '/img/services/developers/laravel.png',
-                    description: 'Laravel è un framework PHP per applicazioni web. Laravel semplifica alcune delle attività più comuni dei progetti web, come autenticazione, autorizzazione, routing, sessioni, caching. Possiede inoltre un motore di templating integrato, Blade, un sistema di migrazione database.'
+                    description: 'Laravel è un framework PHP per applicazioni web. Semplifica alcune delle attività più comuni dei progetti web, come autenticazione, autorizzazione, routing, sessioni, caching.',
+                    FrameLink: 'https://laravel.com/'
                 },
 
             ],
@@ -267,6 +416,26 @@ export default {
                 stagger: 0.3,
                 ease: "power2.out",
             });
+        },
+
+        ///////////////////////////////////////////// MODALE
+        openModal(developer) {
+            this.selectedDeveloper = developer;
+            this.showModal = true;
+            this.disableBodyScroll();
+        },
+
+        closeModal() {
+            this.showModal = false;
+            this.enableBodyScroll();
+        },
+
+        disableBodyScroll() {
+            document.body.classList.add('overflow-y-hidden');
+        },
+
+        enableBodyScroll() {
+            document.body.classList.remove('overflow-y-hidden');
         },
 
 

@@ -6,7 +6,7 @@
         <div class="container mx-auto text-center tracking-tighter">
             <!-- title -->
             <div class="pb-4 lg:pb-10">
-                <h1 class="main-title text-4xl lg:text-5xl text-[#2c2c2c]">
+                <h1 class="main-title text-4xl lg:text-5xl text-[#2c2c2c] font-medium">
                     Sicurezza Informatica
                 </h1>
                 <span class="text-[#9c9a9a] sub-title text-2xl lg:text-3xl opacity-0">
@@ -24,17 +24,20 @@
                 class="pt-12 text-start px-3 text-3xl lg:flex lg:flex-col lg:items-center lg:text-center lg:pt-24 lg:text-4xl text-[#2c2c2c]">
                 <h3 class="pb-6 main-title font-semibold">Cosa sarebbe?</h3>
 
-                <p class="text-[16px] sub-title opacity-0 lg:text-[18px]">
-                    La sicurezza informatica è la pratica di proteggere i sistemi critici e le informazioni sensibili
-                    dagli attacchi digitali. Note anche come sicurezza IT (information technology), le misure della
-                    sicurezza informaticasono progettate per combattere le minacce contro sistemi in rete e
+                <p class="text-[16px] sub-title opacity-0 lg:text-[18px] color-black font-medium">
+                    La sicurezza informatica è la pratica di <span class="font-bold">proteggere</span> i
+                    sistemi critici e le informazioni sensibili
+                    dagli <span class="font-bold">attacchi digitali.</span> Note anche come sicurezza IT
+                    (information technology), le misure della
+                    sicurezza informatica sono progettate per <span class="font-bold">combattere</span> le
+                    minacce contro sistemi in rete e
                     applicazioni, che hanno origine sia all'interno che all'esterno di un'organizzazione.
                 </p>
             </div>
 
             <!-- quello che facciamo -->
             <div class="pt-12 text-start text-3xl lg:text-4xl lg:text-center lg:pt-24">
-                <h3 class="px-2 cyber-cards-title lg:pb-8 text-[#2c2c2c] font-semibold">Di cosa ci occupiamo noi...</h3>
+                <h3 class="px-2 cyber-cards-title lg:pb-8 text-[#2c2c2c] font-semibold">Di cosa ci occupiamo noi</h3>
 
                 <div class="flex flex-wrap gap-24 justify-center py-8 text-center lg:gap-40 px-3">
                     <LittleSlotLight v-for="(card, index) in cyberCards" :key="index" class="cyberCards">

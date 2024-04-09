@@ -336,7 +336,7 @@ export default {
             gsap.from('.second-image', {
                 scrollTrigger: {
                     trigger: '.second-image',
-                    start: 'top 70%',
+                    start: 'top 90%',
                     end: '+=100',
                     toggleActions: "play none none none",
                 },

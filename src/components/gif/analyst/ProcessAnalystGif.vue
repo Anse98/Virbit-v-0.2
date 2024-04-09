@@ -1,54 +1,57 @@
 <template>
-    <div class="py-6">
-        <div class="loader"></div>
+
+    <div class="my-12">
+        <div class="gearbox">
+            <div class="overlay"></div>
+            <div class="gear one">
+                <div class="gear-inner">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+            </div>
+            <div class="gear two">
+                <div class="gear-inner">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+            </div>
+            <div class="gear three">
+                <div class="gear-inner">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+            </div>
+            <div class="gear four large">
+                <div class="gear-inner">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+            </div>
+        </div>
     </div>
+
+
 </template>
 
 <style scoped>
-.loader {
-    width: 165px;
-    height: 80px;
-    display: block;
-    margin: auto;
-    background-image: radial-gradient(circle 25px at 25px 25px, #FFF 100%, transparent 0), radial-gradient(circle 50px at 50px 50px, #FFF 100%, transparent 0), radial-gradient(circle 25px at 25px 25px, #FFF 100%, transparent 0), linear-gradient(#FFF 50px, transparent 0);
-    background-size: 50px 50px, 100px 76px, 50px 50px, 120px 40px;
-    background-position: 0px 30px, 37px 0px, 122px 30px, 25px 40px;
-    background-repeat: no-repeat;
-    position: relative;
-    box-sizing: border-box;
+@keyframes clockwise {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
-.loader::before {
-    content: '';
-    left: 60px;
-    bottom: 18px;
-    position: absolute;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background-color: #0066CC;
-    background-image: radial-gradient(circle 8px at 18px 18px, #FFF 100%, transparent 0), radial-gradient(circle 4px at 18px 0px, #FFF 100%, transparent 0), radial-gradient(circle 4px at 0px 18px, #FFF 100%, transparent 0), radial-gradient(circle 4px at 36px 18px, #FFF 100%, transparent 0), radial-gradient(circle 4px at 18px 36px, #FFF 100%, transparent 0), radial-gradient(circle 4px at 30px 5px, #FFF 100%, transparent 0), radial-gradient(circle 4px at 30px 5px, #FFF 100%, transparent 0), radial-gradient(circle 4px at 30px 30px, #FFF 100%, transparent 0), radial-gradient(circle 4px at 5px 30px, #FFF 100%, transparent 0), radial-gradient(circle 4px at 5px 5px, #FFF 100%, transparent 0);
-    background-repeat: no-repeat;
-    box-sizing: border-box;
-    animation: rotationBack 3s linear infinite;
-}
-
-.loader::after {
-    content: '';
-    left: 94px;
-    bottom: 15px;
-    position: absolute;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background-color: #0066CC;
-    background-image: radial-gradient(circle 5px at 12px 12px, #FFF 100%, transparent 0), radial-gradient(circle 2.5px at 12px 0px, #FFF 100%, transparent 0), radial-gradient(circle 2.5px at 0px 12px, #FFF 100%, transparent 0), radial-gradient(circle 2.5px at 24px 12px, #FFF 100%, transparent 0), radial-gradient(circle 2.5px at 12px 24px, #FFF 100%, transparent 0), radial-gradient(circle 2.5px at 20px 3px, #FFF 100%, transparent 0), radial-gradient(circle 2.5px at 20px 3px, #FFF 100%, transparent 0), radial-gradient(circle 2.5px at 20px 20px, #FFF 100%, transparent 0), radial-gradient(circle 2.5px at 3px 20px, #FFF 100%, transparent 0), radial-gradient(circle 2.5px at 3px 3px, #FFF 100%, transparent 0);
-    background-repeat: no-repeat;
-    box-sizing: border-box;
-    animation: rotationBack 4s linear infinite reverse;
-}
-
-@keyframes rotationBack {
+@keyframes counter-clockwise {
     0% {
         transform: rotate(0deg);
     }
@@ -56,5 +59,157 @@
     100% {
         transform: rotate(-360deg);
     }
+}
+
+.gearbox {
+    height: 150px;
+    width: 200px;
+    position: relative;
+    border: none;
+    overflow: hidden;
+    border-radius: 6px;
+    box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 0.1);
+}
+
+.gearbox .overlay {
+    border-radius: 6px;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    /* box-shadow: inset 0px 0px 20px black; */
+    transition: background 0.1s;
+}
+
+.gearbox .overlay {
+    background: transparent;
+}
+
+.gear {
+    position: absolute;
+    height: 60px;
+    width: 60px;
+    box-shadow: 0px -1px 0px 0px #888888, 0px 1px 0px 0px black;
+    border-radius: 30px;
+}
+
+.gear.large {
+    height: 120px;
+    width: 120px;
+    border-radius: 60px;
+}
+
+.gear.large:after {
+    height: 96px;
+    width: 96px;
+    border-radius: 48px;
+    margin-left: -48px;
+    margin-top: -48px;
+}
+
+.gear.one {
+    top: 12px;
+    left: 10px;
+}
+
+.gear.two {
+    top: 61px;
+    left: 60px;
+}
+
+.gear.three {
+    top: 110px;
+    left: 10px;
+}
+
+.gear.four {
+    top: 13px;
+    left: 128px;
+}
+
+.gear:after {
+    content: "";
+    position: absolute;
+    height: 36px;
+    width: 36px;
+    border-radius: 36px;
+    background: #111;
+    top: 50%;
+    left: 50%;
+    margin-left: -18px;
+    margin-top: -18px;
+    z-index: 3;
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1), inset 0px 0px 10px rgba(0, 0, 0, 0.1), inset 0px 2px 0px 0px #090909, inset 0px -1px 0px 0px #888888;
+}
+
+.gear-inner {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background: #555;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.large .gear-inner {
+    border-radius: 60px;
+}
+
+.gear.one .gear-inner {
+    animation: counter-clockwise 8s infinite linear;
+}
+
+.gear.two .gear-inner {
+    animation: clockwise 8s infinite linear;
+}
+
+.gear.three .gear-inner {
+    animation: counter-clockwise 8s infinite linear;
+}
+
+.gear.four .gear-inner {
+    animation: counter-clockwise 8s infinite linear;
+}
+
+.gear-inner .bar {
+    background: #555;
+    height: 16px;
+    width: 76px;
+    position: absolute;
+    left: 50%;
+    margin-left: -38px;
+    top: 50%;
+    margin-top: -8px;
+    border-radius: 2px;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.large .gear-inner .bar {
+    margin-left: -68px;
+    width: 136px;
+}
+
+.gear-inner .bar:nth-child(2) {
+    transform: rotate(60deg);
+}
+
+.gear-inner .bar:nth-child(3) {
+    transform: rotate(120deg);
+}
+
+.gear-inner .bar:nth-child(4) {
+    transform: rotate(90deg);
+}
+
+.gear-inner .bar:nth-child(5) {
+    transform: rotate(30deg);
+}
+
+.gear-inner .bar:nth-child(6) {
+    transform: rotate(150deg);
 }
 </style>

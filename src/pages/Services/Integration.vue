@@ -5,9 +5,10 @@
 
         <div class="container mx-auto tracking-tighter">
             <!-- title -->
-            <div class="text-4xl tracking-tighter text-center text-[#2c2c2c] mb-16 lg:pb-14 lg:text-5xl lg:text-start">
+            <div
+                class="text-4xl tracking-tighter text-center text-[#2c2c2c] mb-16 lg:pb-14 lg:text-5xl lg:text-start font-medium">
                 <h1 class="main-title">
-                    <span>Integrazione</span> tra diversi sistemi Informatici
+                    <span class="color-gray"> Integrazione</span> tra diversi sistemi Informatici
                 </h1>
             </div>
 
@@ -17,16 +18,20 @@
             </div>
 
             <!-- subtitle -->
-            <div class="ps-2 sub-title opacity-0 text-[#2c2c2c] lg:flex lg:justify-center">
-                <p class="text-2xl lg:text-3xl lg:pb-12">
+            <div class="ps-2 sub-title opacity-0 text-[#2c2c2c] lg:flex lg:justify-center py-6">
+                <p class="text-2xl lg:text-4xl lg:pb-12 font-semibold">
                     Fai comunicare tra loro sistemi informativi di nature diverse.
                 </p>
             </div>
 
-            <div class="mt-10 px-2 leading-8 lg:text-center lg:text-xl">
+            <div class="mt-10 text-[18px] px-2 leading-8 lg:text-center lg:text-2xl font-medium color-black">
                 <p>
-                    Immaginati un software di presenze che deve essere integrato con un software di gestione del
-                    personale, sono due programmi differenti ma che devono poter comunicare l'uno con l'altro!
+                    Immaginati un <span class="color-black font-bold">software di presenze</span> che deve essere
+                    <span class="color-black font-bold">integrato</span> con un
+                    <span class="color-black font-bold">software di gestione del
+                        personale</span>, sono due programmi differenti ma che devono poter <span
+                        class="color-black font-bold">comunicare</span>
+                    l'uno con l'altro!
                 </p>
             </div>
         </div>
@@ -39,11 +44,11 @@
                     <img src="/img/services/sistems_integration/integrationCube.png" alt="" class="w-[300px]">
                 </div>
 
-                <p class="text-[#3d3c3c] card-text lg:text-[16px]">
+                <p class="color-black card-text text-[16px] lg:text-[20px] font-medium">
                     In poche parole si mette una scatola (software) in mezzo ai due sistemi che devono comunicare
                     che
                     traduca i messaggi da un sistema verso l'altro. <br>
-                    <span class="font-semibold">Un interprete!</span>
+                    <span class="font-bold">Un interprete!</span>
                 </p>
             </div>
 

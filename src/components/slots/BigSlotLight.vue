@@ -1,6 +1,6 @@
 <template>
     <div
-        class="p-3 flex flex-col items-center justify-between  text-gray-600 tracking-tighter  border  rounded-2xl  bg-white shadow-lg relative">
+        class="p-3 flex flex-col items-center justify-between color-black tracking-tighter  border  rounded-2xl  bg-white shadow-lg relative font-medium">
         <slot></slot>
     </div>
 </template>

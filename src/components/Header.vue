@@ -105,8 +105,10 @@ export default {
 
             if (this.isMobileMenuVisible) {
                 this.isOverlayVisible = true
+                this.disableBodyScroll();
             } else {
                 this.isOverlayVisible = false
+                this.enableBodyScroll();
             }
 
             gsap.from("#menuItemsMob li",
@@ -126,6 +128,14 @@ export default {
             if (checkboxMenu.checked) {
                 checkboxMenu.checked = false
             }
+        },
+
+        disableBodyScroll() {
+            document.body.classList.add('overflow-y-hidden');
+        },
+
+        enableBodyScroll() {
+            document.body.classList.remove('overflow-y-hidden');
         },
 
         // pc
@@ -211,14 +221,24 @@ export default {
                         <div class="fixed w-full right-0 left-0 top-[54px] bg-[#FAFAFA] z-50 p-2 text-[22px] text-[#323232] tracking-tighter flex flex-col font-semibold min-h-[40vh]"
                             v-show="isMobileMenuVisible">
 
-                            <ul class="py-4 px-24" id="menuItemsMob">
+                            <div class="px-10 mb-6 text-[#a9a9a9] font-normal">
+                                <small>Virbit S.r.l.</small>
+                            </div>
+
+                            <ul class="py-4 px-12" id="menuItemsMob">
 
                                 <li class="mb-4" v-for="(   item, index   ) in headerItems   " :key="index">
-                                    <router-link :to="{ name: item.routeName }" @click="hideMobileMenu()">
-                                        {{ item.title }}
+                                    <router-link :to="{ name: item.routeName }" @click="hideMobileMenu()"
+                                        class="flex justify-between">
+
+                                        <span>
+                                            {{ item.title }}
+                                        </span>
+
                                         <span class="text-[12px] pl-2">
                                             <font-awesome-icon :icon="['fas', item.icon]" />
                                         </span>
+
                                     </router-link>
                                 </li>
 

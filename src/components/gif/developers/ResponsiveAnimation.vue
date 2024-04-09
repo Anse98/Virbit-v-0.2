@@ -1,8 +1,10 @@
 <template>
-    <div class="container">
-        <div class="loader"></div>
-        <div class="loader"></div>
-        <div class="loader"></div>
+    <div class="pt-40">
+        <div class="container">
+            <div class="loader"></div>
+            <div class="loader"></div>
+            <div class="loader"></div>
+        </div>
     </div>
 </template>
 

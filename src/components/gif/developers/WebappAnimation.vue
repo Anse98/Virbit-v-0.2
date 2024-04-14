@@ -55,7 +55,7 @@
 .pencil__stroke {
     animation-duration: 3s;
     animation-timing-function: linear;
-    animation-iteration-count: infinite;
+    animation-iteration-count: 1;
 }
 
 .pencil__body1,

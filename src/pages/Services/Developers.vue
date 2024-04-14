@@ -4,9 +4,9 @@
         <!-- title -->
         <div
             class="container mx-auto text-4xl tracking-tighter text-[#2c2c2c] flex flex-col justify-center md:text-4xl lg:text-5xl lg:items-start mb-5">
-            <h1 class="show-title pl-6 md:pb-6 font-medium" :style="{ 'opacity': titleShow ? '1' : '0' }">Sviluppatori
+            <h1 class="show-title pl-6 md:pb-6" :style="{ 'opacity': titleShow ? '1' : '0' }">Sviluppatori.
             </h1>
-            <h1 class="pl-40  text-[#9e9ea4] of-what-title" id="ofWhat">
+            <h1 class="title-gradient of-what-title pl-6 lg:pl-12" id="ofWhat">
                 Ma di cosa
                 <span class="text-[#2c2c2c]">?</span>
             </h1>
@@ -16,7 +16,7 @@
         <div class="bg-[#FAFAFA] min-h-[60vh] tracking-tighter">
 
             <!-- cards -->
-            <div class="flex justify-center gap-10 flex-wrap py-6 devCardsContainer">
+            <div class="flex justify-center gap-10 flex-wrap py-6 devCardsContainer px-3">
                 <BigSlotLight class="w-[300px] lg:w-[450px] dev-card cursor-pointer" v-for="(card, index) in devCards"
                     ref="devCards" @click="openModal(card)">
                     <!-- title -->
@@ -25,7 +25,7 @@
                     </div>
 
                     <!-- img -->
-                    <div class="w-[200px] mb-12">
+                    <div class="w-[300px] mb-12">
                         <img :src="card.img" alt="">
                     </div>
 
@@ -39,7 +39,7 @@
                     <!-- icona fondo card -->
                     <div class="flex justify-end w-full px-3 pt-8">
                         <CardButton>
-                            <font-awesome-icon icon="fa-solid fa-caret-up" />
+                            <font-awesome-icon icon="fa-brands fa-wpexplorer" />
                         </CardButton>
                     </div>
 
@@ -63,15 +63,15 @@
 
                 <div class="px-2">
                     <!-- gif del modale-->
-                    <div class="flex justify-center relative" v-if="selectedDeveloper.component">
+                    <div class="flex justify-center relative modal-gif" v-if="selectedDeveloper.component">
                         <component :is="selectedDeveloper.component" />
                     </div>
 
                     <!-- titolo del modale -->
-                    <div class="flex my-20 text-4xl md:text-5xl lg:text-6xl">
+                    <div class="flex my-20 text-4xl md:text-5xl lg:text-6xl modal-title">
                         <h2 class="font-semibold">
                             {{ selectedDeveloper.name[0] }}.
-                            <span class="color-gray">
+                            <span class="title-modal-gradient">
                                 {{ selectedDeveloper.modalSubTitle[0] }}
                             </span>
                         </h2>
@@ -84,7 +84,7 @@
                 </div>
 
                 <!-- prima descrizione -->
-                <div class="text-[18px] md:text-[20px] lg:text-[22px] text-center">
+                <div class="text-[18px] md:text-[20px] lg:text-[22px] text-center modal-first-descr">
                     <p>
                         {{ selectedDeveloper.modalDescriptions[0] }}
                     </p>
@@ -94,7 +94,7 @@
                 <div class="flex mt-20 text-4xl md:text-5xl lg:text-6xl" v-if="selectedDeveloper.name[1]">
                     <h2 class="font-semibold">
                         {{ selectedDeveloper.name[1] }}.
-                        <span class="color-gray">
+                        <span class="title-modal-gradient">
                             {{ selectedDeveloper.modalSubTitle[1] }}
                         </span>
                     </h2>
@@ -423,6 +423,38 @@ export default {
             this.selectedDeveloper = developer;
             this.showModal = true;
             this.disableBodyScroll();
+
+            this.$nextTick(() => {
+                gsap.from('.modal-title', {
+                    autoAlpha: 0,
+                    y: -20,
+                    duration: 1,
+                    ease: 'power3.out'
+                });
+            });
+
+            if (document.querySelector('.modal-gif')) {
+                this.$nextTick(() => {
+                    gsap.from('.modal-gif', {
+                        autoAlpha: 0,
+                        y: -20,
+                        delay: 0.2,
+                        duration: 1,
+                        ease: 'power3.out'
+                    });
+                });
+            }
+
+
+            this.$nextTick(() => {
+                gsap.from('.modal-first-descr', {
+                    autoAlpha: 0,
+                    y: -20,
+                    delay: 0.4,
+                    duration: 1,
+                    ease: 'power3.out'
+                });
+            });
         },
 
         closeModal() {

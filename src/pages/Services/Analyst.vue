@@ -5,11 +5,11 @@
 
         <div class="container mx-auto tracking-tighter">
             <!-- title -->
-            <div class=" text-4xl md:text-5xl text-[#2c2c2c] font-medium">
+            <div class=" text-4xl md:text-5xl text-[#2c2c2c]">
                 <h1 class="main-title ps-2">
                     Trasforma le tue idee
                 </h1>
-                <h1 class="flex justify-end pe-4 color-gray sub-title opacity-0">
+                <h1 class="flex justify-end pe-4 title-gradient sub-title opacity-0">
                     In realtà.
                 </h1>
             </div>
@@ -42,15 +42,16 @@
             <div class="flex flex-col flex-wrap items-center gap-8 md:flex-row md:justify-center">
                 <!-- cards -->
                 <BigSlotLight v-for="(analyst, index) in analystCards" :key="index"
-                    class="analyst-card w-[300px] lg:w-[450px] md:min-h-[400px] cursor-pointer"
+                    class="analyst-card relative w-[300px] lg:w-[450px] md:min-h-[400px] cursor-pointer bg-cover bg-center"
                     @click="openModal(analyst)">
                     <!-- card title -->
+
                     <div class="text-2xl text-center pb-10 color-black font-medium">
                         <h5>
                             {{ analyst.title }}
                         </h5>
 
-                        <h6 class="text-[#9c9a9a]">
+                        <h6 class="text-[#acacac]">
                             (<small class="text-[16px]">
                                 {{ analyst.subTitle }}
                             </small>)
@@ -65,7 +66,7 @@
                     <!-- icona fondo card -->
                     <div class="flex justify-end w-full px-3">
                         <CardButton>
-                            <font-awesome-icon icon="fa-solid fa-caret-up" />
+                            <font-awesome-icon icon="fa-brands fa-wpexplorer" />
                         </CardButton>
                     </div>
                 </BigSlotLight>
@@ -88,20 +89,20 @@
 
                 <div class="px-2">
                     <!-- titolo del modale -->
-                    <div class="flex justify-center mt-10">
+                    <div class="flex justify-center mt-10 modal-title">
                         <h2 class="text-4xl lg:text-6xl  text-center font-semibold">
                             {{ selectedAnalyst.title }}
                         </h2>
                     </div>
 
                     <!-- gif del modale-->
-                    <div class="flex justify-center">
+                    <div class="flex justify-center modal-gif">
                         <component :is="selectedAnalyst.component" />
                     </div>
 
                     <!-- descrizione chi è process analyst -->
                     <div
-                        class="text-[18px] md:text-[20px] lg:text-[20px] p-4 font-medium text-[#2f2f2f] mb-12 md:text-center">
+                        class="text-[18px] md:text-[20px] lg:text-[20px] p-4 font-medium text-[#2f2f2f] mb-12 md:text-center modal-first-descr">
                         <p>
                             {{ selectedAnalyst.description[0] }}
                         </p>
@@ -114,7 +115,7 @@
 
                     <!-- seconda descrizione -->
                     <div
-                        class="text-[16px] md:text-[18px] lg:text-[20px] p-4 font-medium text-[#2f2f2f] mt-12 md:text-center">
+                        class="text-[16px] md:text-[18px] lg:text-[20px] p-4 font-medium text-[#2f2f2f] mt-12 md:text-center modal-second-descr">
                         <p>
                             {{ selectedAnalyst.description[1] }}
                         </p>
@@ -184,7 +185,7 @@ export default {
                     modalImg: '/img/services/analyst/dataAnalystModal.png',
                     description: [
 
-                        "La mansione principale, intorno alla quale ruota l’intera attività di data analisi, è la traduzione. Il profilo potrebbe essere definito un traduttore di numeri, il quale si occupa di trasformare i dati grezzi in informazioni di valore, ovvero in informazioni utili per le decisioni aziendali.",
+                        "La mansione principale, intorno alla quale ruota l'intera attività di data analisi, è la traduzione. Il profilo potrebbe essere definito un traduttore di numeri, il quale si occupa di trasformare i dati grezzi in informazioni di valore, ovvero in informazioni utili per le decisioni aziendali.",
 
                         "Attraverso il valore generato dai dati le aziende hanno la possibilità di prendere decisioni in maniera tempestiva e di ottenere un vantaggio notevole in termini di competitività."
                     ]
@@ -261,6 +262,36 @@ export default {
             this.selectedAnalyst = analyst;
             this.showModal = true;
             this.disableBodyScroll();
+
+            /////// animazioni modale
+            this.$nextTick(() => {
+                gsap.from('.modal-title', {
+                    autoAlpha: 0,
+                    y: -20,
+                    duration: 1,
+                    ease: 'power3.out'
+                });
+            });
+
+            this.$nextTick(() => {
+                gsap.from('.modal-gif', {
+                    autoAlpha: 0,
+                    y: -20,
+                    delay: 0.2,
+                    duration: 1,
+                    ease: 'power3.out'
+                });
+            });
+
+            this.$nextTick(() => {
+                gsap.from('.modal-first-descr', {
+                    autoAlpha: 0,
+                    y: -20,
+                    delay: 0.4,
+                    duration: 1,
+                    ease: 'power3.out'
+                });
+            });
         },
 
         closeModal() {
@@ -274,7 +305,7 @@ export default {
 
         enableBodyScroll() {
             document.body.classList.remove('overflow-y-hidden');
-        }
+        },
     },
 
     mounted() {

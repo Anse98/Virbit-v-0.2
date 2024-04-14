@@ -5,9 +5,8 @@
 
         <div class="container mx-auto">
             <!-- titolo iniziale -->
-            <div
-                class="text-4xl sm:text-5xl flex flex-col items-center lg:items-start gap-2 tracking-tighter pb-20 font-medium">
-                <span class="color-gray show-title me-10" :style="{ 'opacity': titleShow ? '1' : '0' }">
+            <div class="text-4xl sm:text-5xl flex flex-col items-center lg:items-start gap-2 tracking-tighter">
+                <span class="title-gradient show-title me-10" :style="{ 'opacity': titleShow ? '1' : '0' }">
                     Un po di chiarezza<span class="text-[#2c2c2c]">.</span>
                 </span>
 
@@ -24,21 +23,21 @@
         <div class="flex flex-col items-center py-6">
 
 
-            <div class="flex lg:flex-col-reverse lg:items-center">
+            <div class="flex flex-col lg:flex-col-reverse lg:items-center">
 
                 <!-- image -->
                 <div class="ps-12 lg:ps-0 lg:pe-40 pt-12 ">
                     <img src="../../img/services/sistemists/software-engineer.png" alt=""
-                        class="w-[310px] sm:w-[250px]">
+                        class="w-[200px] sm:w-[250px]">
                 </div>
 
                 <!-- text -->
-                <div class="container text-lg mx-auto flex justify-end tracking-tighter color-black font-medium text-center pr-16 sm:text-[20px] lg:text-3xl opacity-0"
+                <div class="container text-lg mx-auto flex justify-end tracking-tighter color-black text-center pr-16 sm:text-[20px] lg:text-3xl opacity-0 pt-14"
                     ref="whoIsSistemist">
                     <p class="w-[90%] lg:w-[70%]">
-                        Il sistemista non è altro che un <span class="color-black font-bold">professionista</span>
+                        Il sistemista non è altro che un <span class="color-black font-medium">professionista</span>
                         che si occupa
-                        della <span class="color-black font-bold">progettazione,
+                        della <span class="color-black font-medium">progettazione,
                             installazione
                             e configurazione</span>
                         di un sistema informatico.
@@ -48,11 +47,11 @@
             </div>
 
             <div
-                class="container mx-auto flex justify-center lg:justify-end  tracking-tighter color-black font-medium text-lg text-center pt-4 pb-10 who-sistemist-2text sm:text-[20px] lg:text-3xl lg:pt-20 lg:pb-28">
+                class="container mx-auto flex justify-center lg:justify-end  tracking-tighter color-black text-lg text-center pt-4 pb-10 who-sistemist-2text sm:text-[20px] lg:text-3xl lg:pt-20 lg:pb-28">
                 <p class="lg:w-[70%] px-2" ref="whoIsSistemist2">
                     Il suo compito fondamentale è quindi assicurare la <span
-                        class="font-bold color-black">qualità</span> e il
-                    <span class="color-black font-bold">funzionamento
+                        class="font-medium color-black">qualità</span> e il
+                    <span class="color-black font-medium">funzionamento
                         dell'infrastruttura</span>
                     digitale.
                 </p>
@@ -233,7 +232,7 @@ export default {
 /* anmazione titolo iniziale */
 @keyframes moveQuestion {
     0% {
-        transform: translateY(-200%);
+        transform: translateY(-100%);
     }
 
     100% {

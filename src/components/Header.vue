@@ -1,7 +1,12 @@
 <script>
 import { gsap } from 'gsap';
+import MenuArrow from '../components/MenuArrow.vue'
 
 export default {
+
+    components: {
+        MenuArrow
+    },
 
     data() {
         return {
@@ -37,7 +42,8 @@ export default {
                             routeName: "developers"
                         },
                     ],
-                    icon: "ranking-star"
+                    icon: "ranking-star",
+                    arrow: true
                 },
 
                 {
@@ -60,7 +66,8 @@ export default {
                             name: "GDPR",
                         },
                     ],
-                    icon: "rocket"
+                    icon: "rocket",
+                    arrow: true
                 },
 
 
@@ -69,22 +76,8 @@ export default {
                     title: "About",
                     isMenuOpen: false,
                     routeName: "about",
-                    subCategories: [
-                        {
-                            name: "Dove ci Trovi",
-                        },
-
-                        {
-                            name: "Contattaci",
-                        },
-
-                        {
-                            name: "Informazioni",
-                        },
-
-
-                    ],
-                    icon: "tower-broadcast"
+                    icon: "tower-broadcast",
+                    arrow: false
                 }
             ],
 
@@ -115,7 +108,7 @@ export default {
                 {
                     duration: 0.6,
                     opacity: 0,
-                    y: 40,
+                    y: -40,
                     stagger: 0.1
                 });
         },
@@ -142,12 +135,43 @@ export default {
 
         // pc
         showMenu(index) {
-            this.headerItems[index].isMenuOpen = true;
-            this.activeIndex = index;
-            if (!this.linkClickedRecently) {
-                this.isOverlayVisible = true
+            // Se il menu cliccato è già aperto, lo chiudi
+            if (this.activeIndex === index) {
+                this.headerItems[index].isMenuOpen = !this.headerItems[index].isMenuOpen;
+                this.enableBodyScroll();
+            } else {
+                // Chiudi il menu precedente, se aperto
+                if (this.activeIndex !== null) {
+                    this.headerItems[this.activeIndex].isMenuOpen = false;
+                }
+                // Apri il nuovo menu
+                this.headerItems[index].isMenuOpen = true;
+                if (this.headerItems[index].title === 'About') {
+                    this.$router.push({ name: this.headerItems[index].routeName })
+                    this.headerItems[index].isMenuOpen = false;
+                    this.isOverlayVisible = false
+                }
+                // Imposta l'indice attivo sul nuovo menu
+                this.activeIndex = index;
+
+                gsap.from("#menuItemsDek li",
+                    {
+                        duration: 0.4,
+                        autoAlpha: 0,
+                        y: -20,
+                        stagger: 0.1
+                    });
+            }
+            // Mostra l'overlay se un menu è aperto
+            this.isOverlayVisible = this.headerItems.some(item => item.isMenuOpen);
+
+            if (this.headerItems[index].isMenuOpen) {
+                this.disableBodyScroll();
+            } else {
+                this.enableBodyScroll();
             }
         },
+
 
         hideMenu(index) {
             if (this.activeIndex === index) {
@@ -249,28 +273,35 @@ export default {
                     </transition>
                 </div>
 
-                <div class="overlay" v-show="isOverlayVisible" @click="hideMobileMenu"></div>
+                <div class="overlay" v-show="isOverlayVisible"></div>
 
 
                 <!--header items PC-->
 
                 <ul class="sm:flex items-center hidden text-[16px]">
-                    <li v-for="(   item, index   ) in headerItems" key="index" @mouseover="showMenu(index)"
-                        class="py-4  hover:text-black">
-                        <router-link :to="{ name: item.routeName }" @click="clickMenu()">
-                            <span class="py-2 px-6">
-                                {{ item.title }}
-                                <font-awesome-icon :icon="['fas', item.icon]" class="pl-1 text-[14px]" />
+                    <li v-for="(   item, index   ) in headerItems" key="index" @click="showMenu(index)"
+                        class="py-4  hover:text-black hover:cursor-pointer">
+                        <div>
+                            <span class="py-2 px-6 font-semibold flex items-center gap-2">
+
+                                <span>
+                                    {{ item.title }}
+                                </span>
+
+                                <!-- freccia menu -->
+                                <span v-if="item.arrow" :class="{ 'rotateArrow': item.isMenuOpen }" class="rotate">
+                                    <font-awesome-icon icon="fa-solid fa-chevron-down" class="text-[10px]" />
+                                </span>
                             </span>
-                        </router-link>
+                        </div>
 
 
 
                         <!-- dropdown -->
                         <transition name="fade">
-                            <span v-show="canOpenMenu() && item.isMenuOpen && activeIndex === index"
+                            <span v-show="item.isMenuOpen && activeIndex === index"
                                 class="absolute bg-[#FAFAFC]  mt-1 top-[68px] left-0 right-0 flex flex-col z-40 text-[22px] tracking-wide menu"
-                                @mouseleave="hideMenu(index)" id="dropdownn">
+                                id="dropdownn">
 
                                 <!-- titolo dropdown -->
                                 <div class="py-8 flex justify-evenly items-center px-10">
@@ -295,9 +326,9 @@ export default {
 
                                 <div class="flex justify-center">
                                     <ul class="p-4 w-[30%] flex flex-col  gap-6 mt-6 text-[#323232] tracking-tight pb-12 font-semibold"
-                                        id="menuItemsDek">
+                                        id="menuItemsDek" v-if="item.subCategories">
                                         <li v-for="(   subItem, subIndex   ) in item.subCategories   " :key="subIndex">
-                                            <router-link :to="{ name: subItem.routeName }" @click="clickMenu()">
+                                            <router-link :to="{ name: subItem.routeName }">
                                                 <span class="border-gray-400 hover:border-b">
                                                     {{ subItem.name }}
                                                 </span>
@@ -410,5 +441,16 @@ export default {
     stroke-dashoffset: 0;
     transform-origin: left;
     transform: rotateZ(-45deg) translate(-5px, 5px);
+}
+
+.rotateArrow {
+    transition: transform 0.3s;
+    /* Transizione per l'effetto di rotazione */
+    transform-origin: center;
+    /* Imposta l'origine della trasformazione al centro */
+}
+
+.rotateArrow.rotate {
+    transform: translateY(30%) rotate(180deg);
 }
 </style>

@@ -9,7 +9,7 @@ export default {
   },
   data() {
     return {
-
+      isLoading: true,
     }
   },
   methods: {
@@ -48,20 +48,32 @@ export default {
   },
 
   mounted() {
-
+    setTimeout(() => {
+      // Dopo il ritardo, imposta isLoading a falso per nascondere il loader
+      this.isLoading = false;
+    }, 2000); // Ritardo di 2 secondi (2000 millisecondi)
   }
 }
 </script>
 
 <template>
-  <Header />
-  <router-view></router-view>
-  <Footer />
+  <div>
+    <Header />
+    <router-view></router-view>
+    <Footer />
+  </div>
 </template>
 
 <style>
 .title-gradient {
-  background: linear-gradient(to right, #95a4b9, #dce4eb);
+  background: linear-gradient(to top, #c4c5c7 0%, #dcdddf 52%, #ebebeb 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.title-modal-gradient {
+  background: radial-gradient(circle at 12.3% 19.3%, rgb(85, 88, 218) 0%, rgb(95, 209, 249) 100.2%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -94,7 +106,7 @@ export default {
   background-color: #dddddd;
   color: #1D1D1F;
   opacity: 0.9;
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(3px);
   border-bottom: gray solid 0.5px;
   position: sticky;
   top: 0;
@@ -124,6 +136,6 @@ export default {
 }
 
 .color-gray {
-  color: #dbd9d9;
+  color: #a7a7a8;
 }
 </style>

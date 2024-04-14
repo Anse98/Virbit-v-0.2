@@ -5,15 +5,14 @@
 
         <div class="container mx-auto tracking-tighter">
             <!-- title -->
-            <div
-                class="text-4xl tracking-tighter text-center text-[#2c2c2c] mb-16 lg:pb-14 lg:text-5xl lg:text-start font-medium">
+            <div class="text-4xl tracking-tighter text-center text-[#2c2c2c] mb-16 lg:pb-14 lg:text-5xl lg:text-start">
                 <h1 class="main-title">
-                    <span class="color-gray"> Integrazione</span> tra diversi sistemi Informatici
+                    Integrazione tra diversi sistemi Informatici
                 </h1>
             </div>
 
             <!-- img -->
-            <div class="jumbo opacity-0 lg:flex lg:justify-end lg:pb-10">
+            <div class="jumbo opacity-0 py-10 lg:flex lg:justify-end lg:pb-10">
                 <img src="../../img/jumboIntegration.png" alt="" class="lg:w-[700px]">
             </div>
 
@@ -24,7 +23,7 @@
                 </p>
             </div>
 
-            <div class="mt-10 text-[18px] px-2 leading-8 lg:text-center lg:text-2xl font-medium color-black">
+            <div class="mt-10 text-[18px] px-2 leading-8 lg:text-center lg:text-2xl font-medium color-black watch">
                 <p>
                     Immaginati un <span class="color-black font-bold">software di presenze</span> che deve essere
                     <span class="color-black font-bold">integrato</span> con un

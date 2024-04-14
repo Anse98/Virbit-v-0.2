@@ -20,7 +20,8 @@
     margin-top: -50px;
     border-radius: 5px;
     background: #1e3f57;
-    animation: dot1_ 3s cubic-bezier(0.55, 0.3, 0.24, 0.99) infinite;
+    animation: dot1_ 3s cubic-bezier(0.55, 0.3, 0.24, 0.99);
+    animation-iteration-count: 1;
 }
 
 .loader:nth-child(2) {

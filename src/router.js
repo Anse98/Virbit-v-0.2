@@ -13,9 +13,6 @@ import Gestional from './pages/Products/Gestional.vue';
 import Internet from './pages/Products/Internet.vue';
 import Gdpr from './pages/Products/Gdpr.vue';
 import Telephony from './pages/Products/Telephony.vue';
-import WhereWeAre from './pages/About/WhereWeAre.vue';
-import Contact from './pages/About/Contact.vue';
-import Informations from './pages/About/Informations.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -104,23 +101,6 @@ const router = createRouter({
         },
 
         //about
-        {
-            path: '/about/where-we-are',
-            name: 'whereWeAre',
-            component: WhereWeAre
-        },
-
-        {
-            path: '/about/contact',
-            name: 'contact',
-            component: Contact
-        },
-
-        {
-            path: '/about/informations',
-            name: 'Informations',
-            component: Informations
-        },
 
 
         //MODO PER DEFINIRE PATH NOT FOUND, SEMPRE IN FONDO

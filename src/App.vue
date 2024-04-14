@@ -18,33 +18,7 @@ export default {
 
   watch: {
 
-    // controllo per reimpostare la variabile current Page negli HeaderComponents
-    '$route'() {
-      // Ottieni l'URL corrente
-      const currentRoute = this.$route.path;
 
-      // Verifica se la parola "service" è presente nell'URL
-      const isServicePage = currentRoute.match(/services\/.*/);
-
-      // Verifica se la parola "product" è presente nell'URL
-      const isProductPage = currentRoute.match(/products\/.*/);
-
-      // Verifica se la parola "about" è presente nell'URL
-      const isAboutPage = currentRoute.match(/about\/.*/);
-
-      // Se la pagina corrente non è una pagina di servizio, prodotti o about, imposta currentPage... a una stringa vuota
-      if (!isServicePage) {
-        localStorage.setItem('currentPageService', '');
-      }
-
-      if (!isProductPage) {
-        localStorage.setItem('currentPageProduct', '');
-      }
-
-      if (!isAboutPage) {
-        localStorage.setItem('currentPageAbout', '');
-      }
-    }
   },
 
   mounted() {

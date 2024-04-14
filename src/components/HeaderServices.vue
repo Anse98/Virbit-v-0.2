@@ -1,16 +1,4 @@
 <template>
-    <div class="bg-[#414141] px-2  tracking-tight flex justify-between items-center text-[#faf8f8] mb-3 text-[15px] sm:text-[16px] sm:px-10 z-20"
-        id="headerService">
-        <span class="font-semibold flex gap-4 items-center" id="containerHeaderSticky">
-            <span>Servizi</span>
-            <span class="font-normal text-[14px] sm:text-[15px] text-[#dcdcdc] md:hidden" id="currentPageTitle">
-                {{ currentPageService }}
-            </span>
-        </span>
-        <span class="text-[13px] sm:text-[14px]">
-            <font-awesome-icon icon="fa-solid fa-ranking-star" />
-        </span>
-    </div>
 
     <!-- container cards -->
     <div class="flex mb-12 justify-center relative">
@@ -25,8 +13,7 @@
             v-if="services.length > 0" ref="scrollContainer" @scroll="checkCardVisibility">
 
             <!-- cards -->
-            <router-link v-for="(service, index) in services" :key="index" :to="service.routeName" class="card-item"
-                @click="setCurrentPage(service.title)">
+            <router-link v-for="(service, index) in services" :key="index" :to="service.routeName" class="card-item">
                 <LittleSlotLight class="slide-item h-[100%]"
                     :style="{ 'transition-delay': index * 100 + 'ms', 'opacity': service.visible ? '1' : '0' }">
                     <div class="w-[60px]">
@@ -162,33 +149,6 @@ export default {
             }
         },
 
-        setCurrentPage(title) {
-            this.currentPageService = title
-
-            // Salva la variabile currentPage nell'LocalStorage del browser
-            localStorage.setItem('currentPageService', title);
-        },
-
-        animateHeaderService() {
-            const headerService = document.getElementById('headerService');
-            const headerServiceTitle = document.getElementById('currentPageTitle')
-            const containerHeaderSticky = document.getElementById('containerHeaderSticky')
-            if (headerService) {
-                if (window.scrollY > 300) {
-                    headerService.classList.add('scrolled-sticky-header');
-                    headerServiceTitle.classList.add('color-black', 'page-current-title');
-                    containerHeaderSticky.classList.add('flex-col');
-                    containerHeaderSticky.classList.remove('gap-4');
-                } else {
-                    headerService.classList.remove('scrolled-sticky-header');
-                    headerService.classList.add('restore-sticky-header');
-                    headerServiceTitle.classList.remove('color-black', 'page-current-title');
-                    containerHeaderSticky.classList.remove('flex-col');
-                    containerHeaderSticky.classList.add('gap-4');
-                }
-            }
-        }
-
     },
 
     mounted() {
@@ -197,19 +157,6 @@ export default {
         this.showAllServices();
 
         this.checkCardVisibility();
-
-        // eventlistener per animare barra header-service
-        window.addEventListener('scroll', this.animateHeaderService)
-
-        // Controlla se la variabile currentPage è già stata salvata nell'LocalStorage
-        const savedPage = localStorage.getItem('currentPageService');
-        if (savedPage) {
-            // Se presente, imposta la variabile currentPage al valore salvato
-            this.currentPageService = savedPage;
-        } else {
-            // Altrimenti, imposta la variabile currentPage al valore predefinito
-            this.currentPageService = '';
-        }
     },
 }
 </script>

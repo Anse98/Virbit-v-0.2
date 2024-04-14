@@ -53,17 +53,21 @@ export default {
                     subCategories: [
                         {
                             name: "Gestionali",
+                            routeName: "gestional"
                         },
 
                         {
                             name: "Internet",
+                            routeName: "internet"
                         },
                         {
                             name: "Telefonia",
+                            routeName: "telephony"
                         },
 
                         {
                             name: "GDPR",
+                            routeName: "gdpr"
                         },
                     ],
                     icon: "rocket",
@@ -93,24 +97,43 @@ export default {
 
     methods: {
         // mobile
-        toggleMobileMenu() {
+        toggleMobileMenu(index) {
+            // Cambia la visibilità del menu mobile come desiderato
             this.isMobileMenuVisible = !this.isMobileMenuVisible;
 
             if (this.isMobileMenuVisible) {
-                this.isOverlayVisible = true
+                this.activeIndex = null
+            } else {
+                this.activeIndex = index
+            }
+            // Aggiorna la visibilità dell'overlay
+            this.isOverlayVisible = this.isMobileMenuVisible;
+            // Imposta lo scrolling del corpo come desiderato
+            if (this.isMobileMenuVisible) {
                 this.disableBodyScroll();
             } else {
-                this.isOverlayVisible = false
                 this.enableBodyScroll();
             }
+            // Aggiungi eventuali animazioni qui
+        },
 
-            gsap.from("#menuItemsMob li",
-                {
-                    duration: 0.6,
-                    opacity: 0,
-                    y: -40,
-                    stagger: 0.1
-                });
+        openSubMenu(index) {
+
+            if (this.headerItems[index].title === 'About') {
+                this.$router.push({ name: this.headerItems[index].routeName })
+                this.activeIndex = null;
+                this.hideMobileMenu();
+            } else {
+                if (this.activeIndex === index) {
+                    this.activeIndex = null;
+                } else {
+                    // Altrimenti, imposta l'indice dell'elemento del menu principale attualmente cliccato
+                    this.activeIndex = index;
+                }
+            }
+
+
+
         },
 
         hideMobileMenu() {
@@ -252,23 +275,24 @@ export default {
                             </div>
 
                             <ul class="py-4 px-12" id="menuItemsMob">
-
-                                <li class="mb-4" v-for="(   item, index   ) in headerItems   " :key="index">
-                                    <router-link :to="{ name: item.routeName }" @click="hideMobileMenu()"
-                                        class="flex justify-between">
-
-                                        <span>
-                                            {{ item.title }}
+                                <li class="mb-4" v-for="(item, index) in headerItems" :key="index">
+                                    <div @click="openSubMenu(index)" class="flex justify-between items-center">
+                                        <span>{{ item.title }}</span>
+                                        <span class="text-[12px] pl-2" v-if="item.arrow">
+                                            <font-awesome-icon icon="fa-solid fa-chevron-right" />
                                         </span>
+                                    </div>
 
-                                        <span class="text-[12px] pl-2">
-                                            <font-awesome-icon :icon="['fas', item.icon]" />
-                                        </span>
-
-                                    </router-link>
+                                    <!-- secondo menu mobile -->
+                                    <ul v-if="activeIndex === index" class="mt-4">
+                                        <router-link v-for="(subItem, subIndex) in item.subCategories" :key="subIndex"
+                                            :to="{ name: subItem.routeName }" @click="hideMobileMenu()">
+                                            <li class="text-[18px] text-[#6E6E73] mb-4 ps-4">{{ subItem.name }}</li>
+                                        </router-link>
+                                    </ul>
                                 </li>
-
                             </ul>
+
                         </div>
                     </transition>
                 </div>
